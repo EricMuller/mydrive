@@ -15,7 +15,7 @@ router.register(r'restnotes', views.ReSTNoteViewSet)
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browseable API.
 urlpatterns = [
-    url(r'^services', include(router.urls)),
+    url(r'^apis/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', index),
 ]

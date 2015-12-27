@@ -38,10 +38,7 @@ class Document(models.Model):
 	path= models.CharField(max_length=512)
 	contentType=models.CharField(max_length=30)
 
-		
-
 class Language(Code):
-
 	pass
 
 class ReSTNote(models.Model):
@@ -49,3 +46,6 @@ class ReSTNote(models.Model):
 	codeSystem = models.ForeignKey(System , verbose_name='systeme')
 	codeLangage =	models.ForeignKey(Language, verbose_name='Langage')
 	reStText = models.ForeignKey(ReStText,verbose_name='ReST Texte')
+
+
+

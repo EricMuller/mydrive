@@ -21,7 +21,7 @@ class LanguageAdmin(admin.ModelAdmin):
 class ReSTTextForm(forms.ModelForm):
     contents = forms.CharField( widget=forms.Textarea(attrs={'rows': 5, 'cols': 100}))
     class Meta:
-    	fields = ('id', 'contents',)
+        fields = ['id', 'contents', ]
         model = ReStText
 
 class ReStTextAdmin(admin.ModelAdmin):

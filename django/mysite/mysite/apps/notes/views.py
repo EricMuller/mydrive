@@ -15,6 +15,10 @@ from mysite.apps.notes.serializers import  GroupSerializer
 from mysite.apps.notes.serializers import NoteSerializer
 from mysite.apps.notes.serializers import ReSTNoteSerializer
 
+from rest_framework.renderers import JSONRenderer
+from rest_framework.renderers import HTMLFormRenderer
+from rest_framework.renderers import BrowsableAPIRenderer
+
 from rest_framework import viewsets
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -23,6 +27,9 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    #renderer_classes = (JSONRenderer,  HTMLFormRenderer )
+   # renderer_classes = (JSONRenderer, BrowsableAPIRenderer )
+
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -45,10 +52,6 @@ class ReSTNoteViewSet(viewsets.ModelViewSet):
     """
     queryset = ReSTNote.objects.all()
     serializer_class = ReSTNoteSerializer
-
-
-
-
 
 def home(request):
     return render_to_response("index.html", RequestContext(request, {}))

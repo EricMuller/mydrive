@@ -18,7 +18,7 @@ urlpatterns = [
     # Examples:
     # url(r'^$', 'mysite.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
-	url(r'^$', 'mysite.apps.notes.views.home', name='home'),
+	url(r'^$','mysite.apps.notes.views.home', name='home'),
 	url(r'^infusion/', infusion),
     url(r'^digitalworld/', digitalworld),
     url(r'^bliss/', bliss),
