@@ -8,7 +8,6 @@ from django.shortcuts import RequestContext
 def hello(request):
     return HttpResponse("Hello world")
 
-
 def note(request, offset):
     try:
         offset = int(offset)
@@ -28,4 +27,8 @@ def digitalworld(request):
 
 def bliss(request):
     
-    return render_to_response("bliss/index.html", RequestContext(request, {}))    
+    return render_to_response("bliss/index.html", RequestContext(request, {}))  
+
+def site(request):
+    
+    return render_to_response("index.html", RequestContext(request, {}))  

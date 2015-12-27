@@ -50,7 +50,8 @@ INSTALLED_APPS = (
     'rest_framework',
     'mysite.apps.notes',
     'mysite.apps.photofolio',
-    'mysite.mytemplates',
+   # 'mysite.mytemplates',
+    'rest_framework_swagger',
     #'haystack',
 
 )
@@ -121,18 +122,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 #MEDIA_URL = ''
 #MEDIA_ROOT = '/static/'
-#PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
-STATIC_URL = '/static/'
-#STATIC_ROOT = os.path.join(PROJECT_PATH,'static')
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+STATIC_ROOT = os.path.join(PROJECT_PATH,'static')
 #STATIC_ROOT = os.path.join(PROJECT_PATH, '..', 'static')
 
- #STATICFILES_FINDERS = (
- #   'django.contrib.staticfiles.finders.FileSystemFinder',
- #   'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#)
+STATIC_URL = '/static/'
+#STATIC_URL = os.path.join(PROJECT_PATH,'static')
 
+STATICFILES_FINDERS  = (
+   'django.contrib.staticfiles.finders.FileSystemFinder',
+   'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
 
 TEMPLATE_DIRS = (
-    os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
+    os.path.join(os.path.dirname(__file__), '/templates').replace('\\','/'),
+    os.path.join(PROJECT_PATH, 'templates/')
     #'/home/webdev/work/django/mysite/mysite/templates',
 )

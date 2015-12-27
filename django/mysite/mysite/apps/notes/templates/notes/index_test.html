@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>skelJS Example</title>
+skelJS Loader
+Loads, configures, and initializes skelJS in one shot.
+    <script src="{{STATIC_URL}}notes/skel.min.js">
+    {
+      prefix: "style",
+      resetCSS: true,
+      boxModel: "border",
+      grid: { gutters: 30 },
+      breakpoints: {
+        wide: { range: "1200-", containers: 1140, grid: { gutters: 50 } },
+        narrow: { range: "481-1199", containers: 960 },
+        mobile: { range: "-480", containers: "fluid", lockViewport: true, grid: { collapse: true } }
+      }
+    }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+        <div id="header" class="row">
+          <div class="4u">
+            <h1>Example</h1>
+          </div>
+          <nav id="nav" class="8u">
+            <a href="#">Home</a>
+            <a href="#">About Me</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact</a>
+          </nav>
+        </div>
+      <!-- Hero -->
+        <section id="hero">
+          <h2>Hello world.</h2>
+          <p>Lorem ipsum dolor sit amet sed magna etiam adipiscing.</p>
+          <a href="#" class="button">Get Started</a>
+        </section>
+      <!-- Features -->
+        <div class="row">
+          <section class="4u">
+            <h2>Heading</h2>
+            <p>Lorem ipsum dolor sit amet sed magna etiam adipiscing elit.
+            adipiscing elit nec fringilla urna tempor in. Cras et sodales
+            consectetur viverra lorem ipsum.</p>
+          </section>
+          <section class="4u">
+            <h2>Heading</h2>
+            <p>Lorem ipsum dolor sit amet sed magna etiam adipiscing elit.
+            adipiscing elit nec fringilla urna tempor in. Cras et sodales
+            consectetur viverra lorem ipsum.</p>
+          </section>
+          <section class="4u">
+            <h2>Heading</h2>
+            <p>Lorem ipsum dolor sit amet sed magna etiam adipiscing elit.
+            adipiscing elit nec fringilla urna tempor in. Cras et sodales
+            consectetur viverra lorem ipsum.</p>
+          </section>
+        </div>
+      <!-- Main -->
+        <div class="row">
+          <!-- Content -->
+            <section class="8u">
+              <h2>Heading</h2>
+              <p>Lorem ipsum dolor sit amet sed magna etiam adipiscing elit.
+              adipiscing elit nec fringilla urna tempor in. Cras et sodales
+              consectetur viverra lorem ipsum. Lorem ipsum dolor sit amet
+              sed magna etiam adipiscing elit adipiscing elit nec fringilla
+              urna tempor in. Cras et sodales consectetur viverra.</p>
+            </section>
+          <!-- Sidebar -->
+            <section class="4u">
+              <h2>Heading</h2>
+              <p>Lorem ipsum dolor sit amet sed magna etiam adipiscing elit.
+              adipiscing elit nec fringilla urna tempor in. Cras et sodales
+              consectetur viverra lorem ipsum.</p>
+            </section>
+        </div>
+      <!-- Footer -->
+        <div id="footer">
+          © Example. All rights reserved.
+        </div>
+    </div>
+  </body>
+</html>
