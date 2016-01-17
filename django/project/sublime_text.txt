@@ -1,0 +1,17 @@
+
+    Goto Anything (“cmd+p”) is used for quickly finding and opening files. Just type in a part of a path and filename within a project and you can easily open that file. This is great for quickly opening files in large Django projects.
+    
+    Goto Line Number (“ctrl+g”) takes you to a specific line number in an active file.
+    
+    Goto Symbol (“cmd+r”) lists all functions and classes within a file to make them easier to find. Simply start typing the one you want.
+    
+    Go to beginning of line (cmd+left-arrow-key) and Go to end of line (cmd+right-arrow-key)
+    
+    Delete current line (ctrl+shift+k)
+    
+    Multi-Edit is by far my favorite shortcut
+        Select a word, press “cmd+d” to select the next same word, then press “cmd+d” again to select the next same word…
+        Press “cmd+click” to create a cursor for editing every where you click
+    
+    Block select (“option+left-mouse-click) is used to select a block of text. Perfect for removing blank space when formatting a CSV file.
+

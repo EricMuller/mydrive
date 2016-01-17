@@ -1,0 +1,21 @@
+{
+  "name": "public",
+  "version": "0.0.0",
+  "authors": [
+    "Eric <e.mul@free.fr>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8",
+    "mdr-angular-file": "~1.0.4"
+  }
+}

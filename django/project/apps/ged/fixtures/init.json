@@ -1,0 +1,29 @@
+
+[
+  {
+    "model": "mysite.apps.ged.models.Basket",
+    "pk": 1,
+    "fields": {
+      "libelle": "scan",
+      "description": "Scan files"
+    }
+  },
+  {
+    "model": "mysite.apps.ged.models.Basket",
+    "pk": 2,
+    "fields": {
+      "libelle": "download",
+      "description": "Download files"
+    }
+  },
+  {
+    "model": "mysite.apps.ged.models.Document",
+    "pk": 1,
+    "fields": {
+      "name": "scan",
+      "path": "Scan files",
+      "basket": 1
+  	}
+  }
+  
+]

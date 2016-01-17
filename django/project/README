@@ -1,0 +1,11 @@
+
+
+# dontwork for now
+pyinstaller --name=mysite manage.py 
+
+
+# collect all static for apache directory
+python3 manage.py collectstatic
+
+#run django without static file
+python3 manage.py runserver 0.0.0.0:8000 --nostatic

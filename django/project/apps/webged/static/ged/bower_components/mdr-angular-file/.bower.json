@@ -1,0 +1,41 @@
+{
+  "name": "mdr-angular-file",
+  "version": "1.0.4",
+  "description": "File Upload Drag and Drop",
+  "main": [
+    "dist/mdr-file.css",
+    "dist/mdr-file.js"
+  ],
+  "authors": [
+    "Alfredo Barron"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "bootstrap",
+    "file",
+    "upload",
+    "draganddrop",
+    "directive",
+    "component"
+  ],
+  "moduleType": [],
+  "homepage": "https://github.com/Modulr/angular-file",
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "angular": "~1.4.7"
+  },
+  "_release": "1.0.4",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.4",
+    "commit": "4d8c89e8fb644f9979f27c162adb26954936bbb2"
+  },
+  "_source": "git://github.com/Modulr/angular-file.git",
+  "_target": "~1.0.4",
+  "_originalSource": "mdr-angular-file",
+  "_direct": true
+}

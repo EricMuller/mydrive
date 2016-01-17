@@ -1,0 +1,20 @@
+
+
+
+
+.mdr-file-dad .mdr-file-dad-content div:first-child {
+
+ 	padding-top: 15px;
+
+}
+
+.row .mdr-file-dad-content:first-child
+{
+
+ 	padding-top: 15px !important;
+
+}	
+
+.row .test{
+	padding-top: 10px !important;	
+}
