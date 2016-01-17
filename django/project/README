@@ -1,11 +1,28 @@
 
+#####################################################
+#My personnal GED 
+#####################################################
+Application ged 	:  back rest
+Application webged  :  front angular
+#####################################################
 
-# dontwork for now
-pyinstaller --name=mysite manage.py 
 
+#pip3 install -r requirement.txt
+
+#run
+python3 manage.py runserver
+
+
+
+#####################################################
+
+#use with apache frontal
 
 # collect all static for apache directory
 python3 manage.py collectstatic
 
 #run django without static file
 python3 manage.py runserver 0.0.0.0:8000 --nostatic
+
+# dontwork for now
+pyinstaller --name=mysite manage.py 
