@@ -16,6 +16,8 @@
 
 		<script src="{{STATIC_URL}}ged/bower_components/jquery/dist/jquery.min.js"></script>
 		<script language="javascript">var STATIC_URL = "{{STATIC_URL|escapejs }}";</script>
+	<!--	<script language="javascript">var X_CSRFToken = "{{ csrf_token|escapejs }}";</script>-->
+		
 		<script src="{{STATIC_URL}}ged/js/skel/skel.min.js"></script>
 		<script src="{{STATIC_URL}}ged/js/skel/skel-layers.min.js"></script>
 		<script src="{{STATIC_URL}}ged/js/skel/init.js"></script>
@@ -25,12 +27,16 @@
 			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/style.css" />
 			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/style-desktop.css" />
 			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/style-wide.css" />
-
 		</noscript>
 		
+		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/tree/tree.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/mdr-file/mdr-file.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/filetypes/filetypes.css" />
-		<link  rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/bootstrap/dist/css/bootstrap.min.css"></script>
+		<link  rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
+
+
+</script>
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.min.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="{{STATIC_URL}}ged/css/ie/v8.css" /><![endif]-->
 	</head>
@@ -64,6 +70,7 @@
 									<!--<li class="current"><a href="#">Latest Post</a></li>-->
 									<li><a href="#/upload">Upload</a></li>
 									<li><a href="#/archives">Archives</a></li>
+									<li><a href="#/fileplan">File Plan</a></li>
 									<li><a href="#/about">About Me</a></li>
 									<li><a href="#/contact">Contact Me</a></li>
 								</ul>
@@ -195,11 +202,18 @@
 		<!--<script src="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.js"></script>-->
 		<script src="{{STATIC_URL}}ged/js/mdr-file/mdr-file.js" ></script>
 		<script src="{{STATIC_URL}}ged/js/app/app.js"></script>
+		<script type="text/javascript" src="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
 		<!--<script src="/javascripts/offcanvas.js"></script>-->
 		<!--<script src="/javascripts/posts/ctrl.js"></script>-->
 		<!--<script src="{{STATIC_URL}}ged/js/controllers.js"></script>-->
-		
+		<script>
+		// Add the CSRF Token
+		var app = angular.module('myApp'); // Not including a list of dependent modules 	(2nd parameter to `module`) "re-opens" the module for additional configuration
+		app.config(['$httpProvider', function($httpProvider) {
+    	$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
+		}]);
+</script>
 	</body>
 </html>

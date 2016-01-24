@@ -19,8 +19,8 @@ def test(request):
     return dispatch(request, 'test')
 
 
-def dispatch(request, name):
-    return render_to_response("ged/" + name + ".html",
+def dispatch(request,  name):
+    return render_to_response("ged/"+ name + ".html",
                               RequestContext(request, {}))
 
 def partials(request, name):

@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Basket(models.Model):
-    code = models.CharField(max_length=30)
+    code = models.CharField(primary_key=True, max_length=30)
     libelle = models.CharField(max_length=30)
     description = models.CharField(max_length=256)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -27,7 +27,7 @@ class Document(models.Model):
     version = models.IntegerField(default=0)
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    basket = models.ForeignKey(Basket, verbose_name='Basket')
+    basket = models.ForeignKey(Basket, verbose_name='Basket', default=None)
 
     @classmethod
     def create(cls, name, path, contentType, version, basket):
@@ -44,4 +44,11 @@ class UploadFile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+
+class Folder(models.Model):
+    
+    name = models.CharField(max_length=256)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
 

@@ -1,5 +1,5 @@
 
-var app = angular.module('myApp', ['ngRoute','mdr.file']);
+var app = angular.module('myApp', ['ngRoute','mdr.file','ui.tree']);
 
 app.config(['$routeProvider',
     function($routeProvider) { 
@@ -23,6 +23,9 @@ app.config(['$routeProvider',
         }).when('/upload', {
             templateUrl: 'partials/upload.html',
             controller: 'uploadCtrl'
+        }).when('/fileplan', {
+            templateUrl: 'partials/fileplan.html',
+            controller: 'fileplanCtrl'
         })
         .otherwise({
             redirectTo: '/home'
@@ -114,13 +117,13 @@ function InstantSearchCtrl($scope){
 function archivesCtrl($scope, $http, $rootScope) {
   	
   //	$rootScope.selectedMenu='Archives';
-
+  $scope.showIt=true;
 
 	$rootScope.selectedMenuName('Archives');
 
 	var d = new Date();
   	console.log(d);
-  	$http.get("/notes/apis/restnotes/")
+  	$http.get("apis/documents/")
   		.success(function(response) {
   			$scope.names = response;
   			$scope.text=d;
@@ -153,6 +156,61 @@ function  uploadCtrl($scope, $rootScope,$window) {
 		}
 	}
 	);
+}
+
+function  fileplanCtrl($scope, $rootScope) {
+            
+  $rootScope.selectedMenuName('File Plan');
+  
+  
+  $scope.data=
+    [
+      {
+        "id": 1,
+        "title": "Travail",
+        "items": [
+          {
+            "id": 11,
+            "title": "Contrat",
+            "items": []
+          },
+          {
+            "id": 12,
+            "title": "Fiches de paie",
+            "items": []
+          }
+        ]
+      }
+      ,
+      {
+        "id": 2,
+        "title": "Vie courante",
+        "items": [
+          {
+            "id": 21,
+            "title": "Factures",
+            "items": []
+          }
+         ]
+      },
+      {
+        "id": 3,
+        "title": "Sante",
+        "items": [
+            {
+              "id": 31,
+              "title": "Medecin",
+              "items": []
+            },
+            {
+              "id": 32,
+              "title": "Ophtalmo",
+              "items": []
+            }
+         ]
+      }
+    ];
+
 }
 
 function  aboutCtrl($scope, $rootScope) {
@@ -203,6 +261,7 @@ function appCtrl($scope, $rootScope) {
 	$rootScope.selectedMenuName('Welcome');
 	$scope.uploadFiles = [];
 
+
 }
 
 app.controller('appCtrl', ['$scope','$rootScope',appCtrl]);
@@ -216,6 +275,8 @@ app.controller('textCtrl', textCtrl);
 app.controller('uploadCtrl', ['$scope','$rootScope','$window',uploadCtrl]);
 app.controller('aboutCtrl', aboutCtrl);
 app.controller('contactCtrl', contactCtrl);
+
+app.controller('fileplanCtrl', fileplanCtrl);
 
 
 app.directive('myDirective', function (httpPostFactory) {

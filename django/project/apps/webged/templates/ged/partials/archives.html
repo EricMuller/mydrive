@@ -27,6 +27,13 @@
 
 									<!--
 									<a href="#" class="image featured"><img src="{{STATIC_URL}}notes/images/pic01.jpg" alt="" /></a>
+									name = models.CharField(max_length=256)
+    path = models.CharField(max_length=512)
+    contentType = models.CharField(max_length=30)
+    version = models.IntegerField(default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    basket = models.ForeignKey(Basket, verbose_name='Basket', default=None)
 									-->
 
 									{% verbatim %}
@@ -38,29 +45,33 @@
 											<thead>
 												<tr>
 													<th scope="col" title="Id">Id</th>
-													<th scope="col" title="Titre">TitreT</th>
-													<th scope="col" title="System">System</th>
-													<th scope="col" title="Langage">Langage</th>
+													<th scope="col" title="name">name</th>
+													<th scope="col" title="contentType">content-type</th>
+													<th scope="col" title="basket">basket</th>
+													<th scope="col" title="created_at">created_at</th>
+													<th scope="col" title="updated_at">updated_at</th>
 												</tr>
 											</thead>
 											<tbody>
 											  <tr ng-repeat="x in names">
 											    <td>{{ x.id }}</td>
-											    <td>{{ x.titre }}</td>
-											    <td>{{ x.codeSystem }}</td>
-											    <td>{{ x.codeLangage }}</td>
+											    <td>{{ x.name }}</td>
+											    <td>{{ x.contentType }}</td>
+											    <td>{{ x.basket }}</td>
+											    <td>{{ x.created_at | date: 'yyyy-MM-dd hh:m' }}</td>
+											    <td>{{ x.updated_at | date: 'yyyy-MM-dd hh:m' }}</td>
 											  </tr>
 										  </tbody>
 										</table>
 									</div>
 									</div>
 									
-									<input type="checkbox" ng-model="showIt">
+									<!--<input type="checkbox" ng-model="showIt">
 									<div ng-controller="textCtrl"> 
 										<input type="text" ng-model="text">
 										text={{ text }}
 									</div>
-									
+									-->
 									{% endverbatim %}
 
 							</article>

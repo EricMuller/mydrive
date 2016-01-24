@@ -31,6 +31,34 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.100']
 
+#logging
+
+lLOGGING = {
+    'disable_existing_loggers': False,
+    'version': 1,
+    'handlers': {
+        'console': {
+            # logging handler that outputs log messages to terminal
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG', # message level to be written to console
+        },
+    },
+    'loggers': {
+        '': {
+            # this sets root level logger to log debug and higher level
+            # logs to console. All other loggers inherit settings from
+            # root level logger.
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False, # this tells logger to send logging message
+                                # to its parent (will send if set to True)
+        },
+        'django.db': {
+            # django also has database level logging
+        },
+    },
+}
+
 # Application definition
 
 
@@ -58,10 +86,12 @@ INSTALLED_APPS = (
     # 'mysite.mytemplates',
     'rest_framework_swagger',
     # 'haystack',
+    # 'debug_toolbar',
 
 )
 
 MIDDLEWARE_CLASSES = (
+    
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,6 +100,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'django.middleware.transaction.TransactionMiddleware',
 )
 
 REST_FRAMEWORK = {
@@ -82,10 +114,10 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        #'rest_framework.permissions.AllowAny',
-        'rest_framework.permissions.DjangoModelPermissions',
-    ),
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #    'rest_framework.permissions.AllowAny',
+    #    'rest_framework.permissions.DjangoModelPermissions',
+    # ),
 }
 
 ROOT_URLCONF = 'mysite.urls'

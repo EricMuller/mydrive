@@ -3,17 +3,17 @@
   <head>
     <title>Download Example</title>
 
-    <link href="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.min.css">
+    <link href="{{STATIC_URL}}webged/bower_components/mdr-angular-file/dist/mdr-file.min.css">
     
     
 
     </head>
 
     <body> 
-{% verbatim %}
+
 		<!--<mdr-file url="/test/upload.php" model="file">-->
-			
-		<mdr-file url="/ged/upload/" size="100" >
+		<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" >
+			{% verbatim %}
 		<!-- model="model" 
 		data="{hola:'mundo'}" headers="{token:'shhh'}" 
 		size="5" limit="10" formats="'jpg,png,gif,pdf'" disabled="false" multiple="true" 

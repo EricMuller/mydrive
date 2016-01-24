@@ -28,7 +28,7 @@ class BasketSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('code', 'libelle', 'description')
 
 
-class DocumentSerializer(serializers.HyperlinkedModelSerializer):
+class DocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Document

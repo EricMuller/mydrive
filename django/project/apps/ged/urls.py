@@ -1,15 +1,14 @@
 from django.conf.urls import url
 from django.conf.urls import include
-
+from ged import views
 from rest_framework import routers
-from ged.views import restviews
 
 
 router = routers.DefaultRouter()
-router.register(r'users', restviews.UserViewSet)
-router.register(r'groups', restviews.GroupViewSet)
-router.register(r'documents', restviews.DocumentViewSet)
-router.register(r'baskets', restviews.BasketViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'documents', views.DocumentViewSet)
+router.register(r'baskets', views.BasketViewSet)
 
 # url(r'^apis/UploadFile/$', restviews.SnippetList.as_view(),name = 'UploadFile-list'),
 # url(r'^apis/UploadFile/(?P<pk>[0-9]+)$', restviews.SnippetList.as_view(),name = 'UploadFile-detail'),
