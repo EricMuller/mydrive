@@ -1,8 +1,12 @@
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
+# from django.core.exceptions import ValidationError
 from ged.models import Basket
 from ged.models import Document
 from ged.models import UploadFile
+from ged.models import Folder
+
 
 from rest_framework import serializers
 
@@ -42,5 +46,12 @@ class UploadFileSerializer(serializers.HyperlinkedModelSerializer):
         model = UploadFile
         fields = ('name', 'created_at', 'updated_at')
 
+
+class FolderSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Folder
+        fields = (
+            'id', 'libelle', 'node_l', 'node_r', 'created_at', 'updated_at')
 
 

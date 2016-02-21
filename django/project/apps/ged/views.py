@@ -5,23 +5,27 @@ from django.contrib.auth.models import Group
 from ged.models import Basket
 from ged.models import Document
 from ged.models import UploadFile
+from ged.models import Folder
 
+from ged.modules.tree import TreeSerializer
 
 from ged.serializers import UserSerializer
 from ged.serializers import GroupSerializer
 from ged.serializers import BasketSerializer
 from ged.serializers import DocumentSerializer
 from ged.serializers import UploadFileSerializer
+from ged.serializers import FolderSerializer
 
+from ged.modules.tree import Tree
 
 from rest_framework import authentication
 from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework import permissions
-from rest_framework import renderers
-from rest_framework import mixins
-from rest_framework import generics
-from rest_framework.permissions import AllowAny
+# from rest_framework import renderers
+# from rest_framework import mixins
+# from rest_framework import generics
+# from rest_framework.permissions import AllowAny
 
 from rest_framework.decorators import list_route
 from rest_framework.decorators import detail_route
@@ -63,6 +67,38 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+
+
+class FolderViewSet(viewsets.ModelViewSet):
+
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Folder.objects.all()
+    serializer_class = FolderSerializer
+
+
+class TreeViewSet(viewsets.ViewSet):
+
+    def list(self, request):
+        queryset = Tree().buildTree()
+        serializer = TreeSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+        pass
+
+    def retrieve(self, request, pk=None):
+        pass
+
+    def update(self, request, pk=None):
+        pass
+
+    def partial_update(self, request, pk=None):
+        pass
+
+    def destroy(self, request, pk=None):
+        pass
 
 
 class BasketViewSet(viewsets.ModelViewSet):

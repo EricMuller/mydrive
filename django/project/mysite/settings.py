@@ -31,16 +31,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.100']
 
-#logging
+# logging
 
-lLOGGING = {
+LOGGING = {
     'disable_existing_loggers': False,
     'version': 1,
     'handlers': {
         'console': {
             # logging handler that outputs log messages to terminal
             'class': 'logging.StreamHandler',
-            'level': 'DEBUG', # message level to be written to console
+            'level': 'DEBUG',  # message level to be written to console
         },
     },
     'loggers': {
@@ -50,11 +50,24 @@ lLOGGING = {
             # root level logger.
             'handlers': ['console'],
             'level': 'DEBUG',
-            'propagate': False, # this tells logger to send logging message
-                                # to its parent (will send if set to True)
+            'propagate': False,  # this tells logger to send logging message
+            # to its parent (will send if set to True)
         },
         'django.db': {
             # django also has database level logging
+            'level': 'DEBUG',
+            'handers': ['console'],
+        },
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handers': ['console'],
+        },
+        'django.db.backends.schema': {
+            'propagate': False,  # don't log schema queries, django >= 1.7
+        },
+        'ged.services.folders': {
+            'level': 'DEBUG',
+            'handers': ['console'],
         },
     },
 }
@@ -91,7 +104,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -152,8 +165,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
 
 
 # upload files

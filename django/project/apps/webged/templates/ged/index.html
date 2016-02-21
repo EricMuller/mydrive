@@ -14,6 +14,8 @@
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<!--<script src="{% static "/js/jquery.min.js" %}"></script>-->
 
+ 
+
 		<script src="{{STATIC_URL}}ged/bower_components/jquery/dist/jquery.min.js"></script>
 		<script language="javascript">var STATIC_URL = "{{STATIC_URL|escapejs }}";</script>
 	<!--	<script language="javascript">var X_CSRFToken = "{{ csrf_token|escapejs }}";</script>-->
@@ -21,6 +23,11 @@
 		<script src="{{STATIC_URL}}ged/js/skel/skel.min.js"></script>
 		<script src="{{STATIC_URL}}ged/js/skel/skel-layers.min.js"></script>
 		<script src="{{STATIC_URL}}ged/js/skel/init.js"></script>
+		 <!-- Compiled and minified CSS -->
+   
+	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">-->
+  <!-- Compiled and minified JavaScript -->
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 
 		<noscript>
 			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/skel.css" />
@@ -30,10 +37,14 @@
 		</noscript>
 		
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/tree/tree.css" />
+		<!--<link rel="stylesheet" href="{{STATIC_URL}}ged/css/fab/fab.css" />-->
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/mdr-file/mdr-file.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/filetypes/filetypes.css" />
 		<link  rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
+
+ 
+
 
 
 </script>
@@ -215,5 +226,29 @@
     	$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
 		}]);
 </script>
+
+<!--
+<main>
+	<nav class="floating-menu">
+		<h3>Floating Menu</h3>
+
+		<a href="http://www.quackit.com/css/">CSS</a>
+		<a href="http://www.quackit.com/html/">HTML</a>
+		<a href="http://www.quackit.com/coldfusion/">ColdFusion</a>
+		<a href="http://www.quackit.com/database/">Database</a>
+	</nav>
+</main>	
+-->
+  <div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
+    <a class="btn-floating btn-large red">
+      <i class="large mdi-navigation-menu"></i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    </ul>
+  </div>
 	</body>
 </html>

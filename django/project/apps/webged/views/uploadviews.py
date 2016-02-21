@@ -63,10 +63,19 @@ def post(request):
 
             basket = Basket.objects.get(code="SCAN")
 
-            document = Document.create(
-                up_file.name, new_file_name, up_file.content_type, 1, basket)
+            if basket is None:
 
-            document.save()
+                response_data['status'] = "error"
+                response_data[
+                    'description'] = """We're sorry, no default
+                     basket SCAN defined"""
+
+            else:
+
+                document = Document.create(
+                    up_file.name, new_file_name,
+                    up_file.content_type, 1, basket)
+                document.save()
 
             return JsonResponse(response_data)
 
