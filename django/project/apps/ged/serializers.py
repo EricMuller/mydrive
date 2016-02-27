@@ -1,7 +1,6 @@
 
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
-# from django.core.exceptions import ValidationError
 from ged.models import Basket
 from ged.models import Document
 from ged.models import UploadFile
@@ -53,5 +52,3 @@ class FolderSerializer(serializers.HyperlinkedModelSerializer):
         model = Folder
         fields = (
             'id', 'libelle', 'node_l', 'node_r', 'created_at', 'updated_at')
-
-

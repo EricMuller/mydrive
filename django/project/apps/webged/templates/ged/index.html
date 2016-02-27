@@ -55,7 +55,7 @@
 		Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
 		Set it to "right-sidebar" to, you guessed it, position it on the right.
 	-->
-	<body  ng-app="myApp" class="left-sidebar" ng-controller="appCtrl"> 
+	<body  ng-app="my-ged" class="left-sidebar" ng-controller="appCtrl"> 
 
 		<!-- Wrapper -->
 			<div id="wrapper">
@@ -81,7 +81,7 @@
 									<!--<li class="current"><a href="#">Latest Post</a></li>-->
 									<li><a href="#/upload">Upload</a></li>
 									<li><a href="#/archives">Archives</a></li>
-									<li><a href="#/fileplan">File Plan</a></li>
+									<li><a href="#/plan">File Plan</a></li>
 									<li><a href="#/about">About Me</a></li>
 									<li><a href="#/contact">Contact Me</a></li>
 								</ul>
@@ -210,9 +210,23 @@
 		<script src="{{STATIC_URL}}ged/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular/angular.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular-route/angular-route.min.js"></script>
+		<script src="{{STATIC_URL}}ged/bower_components/restangular/dist/restangular.min.js"></script>
 		<!--<script src="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.js"></script>-->
 		<script src="{{STATIC_URL}}ged/js/mdr-file/mdr-file.js" ></script>
+
 		<script src="{{STATIC_URL}}ged/js/app/app.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/common/common.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/common/directives/mydirective.dir.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/home/home.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/home/home.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/archives/archives.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/archives/archives.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/upload/upload.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/upload/upload.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/upload/filters/bytestosize.fil.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/plan/plan.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/plan/plan.ctrl.js"></script>
+		
 		<script type="text/javascript" src="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
@@ -221,7 +235,7 @@
 		<!--<script src="{{STATIC_URL}}ged/js/controllers.js"></script>-->
 		<script>
 		// Add the CSRF Token
-		var app = angular.module('myApp'); // Not including a list of dependent modules 	(2nd parameter to `module`) "re-opens" the module for additional configuration
+		var app = angular.module('my-ged'); // Not including a list of dependent modules 	(2nd parameter to `module`) "re-opens" the module for additional configuration
 		app.config(['$httpProvider', function($httpProvider) {
     	$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
 		}]);
