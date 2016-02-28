@@ -1,4 +1,4 @@
-<h1>File Plan</h1>
+<h1>Plan</h1>
 
 {% verbatim %}
 
@@ -24,27 +24,29 @@
 
 <script type="text/ng-template" id="nodes_renderer.html">
   <div ui-tree-handle class="tree-node tree-node-content">
-    <a class="btn btn-success btn-xs" ng-if="node.items && node.items.length > 0" data-nodrag ng-click="toggle(this)"><span
+    <a class="btn btn-success btn-xs"    data-nodrag ng-click="toggle(this)">
+    <span
         class="glyphicon"
         ng-class="{
           'glyphicon-chevron-right': collapsed,
           'glyphicon-chevron-down': !collapsed
-        }"></span>
+        }">
+     </span>
     </a>
-    {{node.title}}
-     <!--<input type="text" ng-model="node.title">-->
+    {{node.libelle}}
+     <!--<input type="text" ng-model="node.libelle">-->
 
-    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)">
+    <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeItem(this)">
     	<span class="glyphicon glyphicon-remove"></span>
     </a>
-    <!--
-    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span>
+    
+    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;">
+      <span class="glyphicon glyphicon-plus"></span>
     </a>
-    -->
 
   </div>
 
-  <ol ui-tree-nodes="" ng-model="node.items" ng-class="{hidden: collapsed}">
+  <ol ui-tree-nodes="" ng-model="node.items" data-nodrop-enabled ng-class="{hidden: collapsed}">
     <li ng-repeat="node in node.items" ui-tree-node ng-include="'nodes_renderer.html'">
     </li>
   </ol>
@@ -52,29 +54,31 @@
 </script>
 
 <div class="row">
-  <div class="col-sm-6">
-    <div ui-tree id="tree-root">
-      <ol ui-tree-nodes ng-model="data" data-clone-enabled="true">
-        <li ng-repeat="node in data" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+  <div class="col-sm-3">
+    <div ui-tree id="tree-root" data-nodrop-enabled>
+      <ol ui-tree-nodes ng-model="plan" data-nodrop-enabled data-clone-enabled="false">
+        <li ng-repeat="node in plan" ui-tree-node ng-include="'nodes_renderer.html'"></li>
       </ol>
     </div>
       <div class="info">
       {{info}}
     </div>
-    <pre class="code">{{ data | json }}</pre>
+    <pre class="code" ng-model="plan" >{{ plan | json }}</pre>
   </div>
-<div class="col-sm-6">
+<div class="col-sm-9">
+</div>  
+<!--<div class="col-sm-6">
   <div ui-tree id="tree-root2">
-      <ol ui-tree-nodes ng-model="data2" data-clone-enabled="true" data-nodrop-enabled="true">
-        <li ng-repeat="node in data2" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+      <ol ui-tree-nodes ng-model="folders" data-clone-enabled="true" data-nodrop-enabled="true">
+        <li ng-repeat="node in folders" ui-tree-node ng-include="'nodes_renderer.html'"></li>
       </ol>
     </div>
       <div class="info">
       {{info}}
     </div>
-    <pre class="code">{{ data2 | json }}</pre>
+    <pre class="code">{{ folders | json }}</pre>
   </div>
-  
+  -->
 </div>
 
 

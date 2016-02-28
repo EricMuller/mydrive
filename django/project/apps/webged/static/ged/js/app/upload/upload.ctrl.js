@@ -1,4 +1,5 @@
-angular.module('my-ged.upload').controller('uploadCtrl',['$scope','$rootScope','$window',
+angular.module('my-ged.upload')
+    .controller('uploadCtrl',['$scope','$rootScope','$window',
 
 	function  ($scope, $rootScope,$window) {
             

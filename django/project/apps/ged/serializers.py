@@ -48,6 +48,7 @@ class UploadFileSerializer(serializers.HyperlinkedModelSerializer):
 
 class FolderSerializer(serializers.HyperlinkedModelSerializer):
 
+
     class Meta:
         model = Folder
         fields = (

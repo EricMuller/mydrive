@@ -1,0 +1,52 @@
+
+           
+           var data1=[
+                  {
+                    "id": 1,
+                    "code": "TRAVAIL",
+                    "title": "Travail",
+                    "items": [
+                      {
+                        "id": 11,
+                        "code": "Contrat",
+                        "title": "Contrat",
+                        "items": []
+                      },
+                      {
+                        "id": 12,
+                        "code": "fiche de paie",
+                        "title": "Fiches de paie",
+                        "items": []
+                      }
+                    ]
+                  }
+                  ,
+                  {
+                    "id": 2,
+                    "title": "Vie courante",
+                    "code": "Vie courante",
+                    "items": [
+                      {
+                        "id": 21,
+                        "title": "Factures",
+                        "items": []
+                      }
+                     ]
+                  },
+                  {
+                    "id": 3,
+                    "title": "Sante",
+                    "items": [
+                        {
+                          "id": 31,
+                          "title": "Medecin",
+                          "items": []
+                        },
+                        {
+                          "id": 32,
+                          "title": "Ophtalmo",
+                          "items": []
+                        }
+                     ]
+                  }
+                ];

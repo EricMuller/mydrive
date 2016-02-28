@@ -19,6 +19,11 @@ class Tree:
         # folder.save()
         # return folder
 
+    def findRoot(self):
+
+        folder = Folder.objects.get(node_l=1)
+        return folder
+
     def createRoot(self, libelle):
 
         folder = Folder.create(1, 2, libelle)
@@ -40,42 +45,46 @@ class Tree:
 
         folder.save()
 
-        return parent
+        return folder
 
     def remove(self, id):
 
+       
         folder = Folder.objects.get(pk=id)
 
         decalage = folder.node_r - folder.node_l + 1
 
         node_r = folder.node_r
         node_l = folder.node_l
-
+        print("get")
         Folder.objects.filter(
             node_l__gte=folder.node_l, node_r__lte=folder.node_r).delete()
-
+        print("get1")
         Folder.objects.filter(node_r__gte=node_r).update(
             node_r=F('node_r') - decalage)
-
+        print("get2")
         Folder.objects.filter(node_l__gt=node_l).update(
             node_l=F('node_l') - decalage)
 
-    def removeElement(self, id):
+        pass
+    #def removeElement(self, id):
 
-        folder = Folder.objects.get(pk=id)
+        # folder = Folder.objects.get(pk=id)
 
-        Folder.objects.filter(node_l__gte=folder.node_l).update(
-            node_l=F('node_l') - 2)
+        #Folder.objects.filter(node_l__gte=folder.node_l).update(
+        #    node_l=F('node_l') - 2)
 
-        Folder.objects.filter(node_r__gte=folder.node_l).update(
-            node_r=F('node_r') - 2)
+        # Folder.objects.filter(node_r__gte=folder.node_l).update(
+        #     node_r=F('node_r') - 2)
 
-        folder.delete()
+        # folder.delete()
 
     def buildTree(self):
 
         folders = Folder.objects.all().prefetch_related(
-            'parent').order_by('node_l')
+             'parent').order_by('node_l')
+
+        #folders = Folder.objects.all().order_by('node_l')
 
         parents = {}
         tree = []
@@ -85,22 +94,22 @@ class Tree:
                 parents[folder.id] = root
                 tree.append(root)
             else:
-                if folder.parent_id in parents:
-                    parent = parents[folder.parent_id]
-                    node = TreeFolder(folder)
-                    parent.items.append(node)
+                node = TreeFolder(folder)
+                parent = parents[folder.parent_id]
+                parent.items.append(node)
+                parents[folder.id] = node
 
         return tree
 
 
-class TreeFolder(Folder):
+class TreeFolder():
 
-    def __init__(self, f):
-        self.id = f.id
-        self.node_l = f.node_l
-        self.node_r = f.node_r
-        self.libelle = f.libelle
-        self.updated_at = f.updated_at
+    def __init__(self, folder):
+        self.id = folder.id
+        self.node_l = folder.node_l
+        self.node_r = folder.node_r
+        self.libelle = folder.libelle
+        self.updated_at = folder.updated_at
         self.items = []
 
 

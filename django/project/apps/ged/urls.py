@@ -10,7 +10,10 @@ router.register(r'groups', views.GroupViewSet)
 router.register(r'documents', views.DocumentViewSet)
 router.register(r'baskets', views.BasketViewSet)
 router.register(r'folders', views.FolderViewSet)
-router.register(r'tree', views.TreeViewSet, base_name='tree')
+router.register(r'plan', views.TreeViewSet, base_name='plan')
+  
+# url(r'^snippets/(?P<pk>[0-9]+)/$', views.SnippetDetail.as_view()),
+#router.register(r'plan', views.TreeViewSet.as_view({'post': 'create', 'get': 'list', 'delete': 'destroy'}), base_name='plan')
 
 # url(r'^apis/UploadFile/$', restviews.SnippetList.as_view(),name = 'UploadFile-list'),
 # url(r'^apis/UploadFile/(?P<pk>[0-9]+)$', restviews.SnippetList.as_view(),name = 'UploadFile-detail'),

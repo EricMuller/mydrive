@@ -1,90 +1,59 @@
-angular.module('my-ged.plan').controller('planCtrl',['$scope','$rootScope',
+angular.module('my-ged.plan')
+  .controller('planCtrl',['$scope','$rootScope','plan','folders','planSvc',
 
-	
-function  ($scope, $rootScope) {
-            
-  $rootScope.selectedMenuName('File Plan');
-  
-  $scope.remove = function (scope) {
-    scope.remove();
-  };
+      function  ($scope, $rootScope, plan, folders, planSvc) {
+                  
+        $rootScope.selectedMenuName('File Plan');
 
-  $scope.toggle = function (scope) {
-    scope.toggle();
-  };
+        $scope.removeItem = function (scope) {
+         
+          var nodeData = scope.$modelValue;
+          var node ={
+            id: nodeData.id ,
+            libelle: nodeData.libelle + '.' + (nodeData.items.length + 1),
+            items: []
+          };
 
-  $scope.newSubItem = function (scope) {
-    var nodeData = scope.$modelValue;
-   // debugger
-    nodeData.items.push({
-      id: nodeData.id * 10 + nodeData.items.length,
-      title: nodeData.title + '.' + (nodeData.items.length + 1),
-      items: []
-    });
-  };
+          planSvc.removeChild(node).then(function(newNode){
+              scope.remove();
+          });          
+          
 
-$scope.data2=[
-      {
-        "id": 1,
-        "code": "TRAVAIL",
-        "title": "Travail",
-        "items": []
-      },
-      ];
+        };
 
-  $scope.data=
-    [
-      {
-        "id": 1,
-        "code": "TRAVAIL",
-        "title": "Travail",
-        "items": [
-          {
-            "id": 11,
-            "code": "Contrat",
-            "title": "Contrat",
-            "items": []
-          },
-          {
-            "id": 12,
-            "code": "fiche de paie",
-            "title": "Fiches de paie",
-            "items": []
-          }
-        ]
+        $scope.toggle = function (scope) {
+
+          var nodeData = scope.$modelValue;
+
+          console.log(nodeData)
+
+          $scope.selectedNode = nodeData;
+          scope.toggle();
+        };
+
+        $scope.newSubItem = function (scope) {
+          var nodeData = scope.$modelValue;
+
+
+          var node ={
+            id: nodeData.id,
+            libelle: nodeData.libelle + '.' + (nodeData.items.length + 1),
+            items: []
+          };
+
+          planSvc.addChild(node).then(function(newNode){
+              newNode.items = [];
+              nodeData.items.push(newNode);
+          });
+
+
+        };
+
+        $scope.plan = plan ;
+        $scope.folders = folders;
+        $scope.selectedNode = {};
+        
       }
-      ,
-      {
-        "id": 2,
-        "title": "Vie courante",
-        "code": "Vie courante",
-        "items": [
-          {
-            "id": 21,
-            "title": "Factures",
-            "items": []
-          }
-         ]
-      },
-      {
-        "id": 3,
-        "title": "Sante",
-        "items": [
-            {
-              "id": 31,
-              "title": "Medecin",
-              "items": []
-            },
-            {
-              "id": 32,
-              "title": "Ophtalmo",
-              "items": []
-            }
-         ]
-      }
-    ];
-
-}
 
 
 ])

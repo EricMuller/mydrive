@@ -1,4 +1,5 @@
 import datetime
+import sys
 
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
@@ -31,6 +32,10 @@ from rest_framework.decorators import list_route
 from rest_framework.decorators import detail_route
 
 from rest_framework.response import Response
+from rest_framework import status
+
+
+from ged.modules.tree import Tree
 
 
 class DefaultsMixin(object):
@@ -78,14 +83,18 @@ class FolderViewSet(viewsets.ModelViewSet):
     serializer_class = FolderSerializer
 
 
-class TreeViewSet(viewsets.ViewSet):
+class TreeViewSetDetail(viewsets.ViewSet):
 
     def list(self, request):
-        queryset = Tree().buildTree()
-        serializer = TreeSerializer(queryset, many=True)
-        return Response(serializer.data)
+
+        pass
+
+    def destroy(self, request, pk=None):
+
+        pass
 
     def create(self, request):
+
         pass
 
     def retrieve(self, request, pk=None):
@@ -97,7 +106,55 @@ class TreeViewSet(viewsets.ViewSet):
     def partial_update(self, request, pk=None):
         pass
 
+        # return Response({}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class TreeViewSet(viewsets.ViewSet):
+
+    http_method_names = ['get', 'post', 'head', 'delete']
+
+    def list(self, request):
+        queryset = Tree().buildTree()
+        serializer = TreeSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+
+        print(request.data)
+
+        serializer = FolderSerializer(data=request.data)
+        if serializer.is_valid():
+            # serializer.save()
+            print(serializer.data)
+            root = Folder.objects.get(pk=request.data['id'])
+            tree = Tree()
+            folder = tree.createChild(root.id, serializer.data['libelle'])
+
+            return Response(FolderSerializer(folder).data,
+                            status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def destroy(self, request, pk=None):
+
+        try:
+            tree = Tree()
+            tree.remove(pk)
+            return Response({"status": "succces"},
+                            status=status.HTTP_201_CREATED)
+        except:
+
+            print(sys.exc_info())
+            return Response({"status":  "error"},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def retrieve(self, request, pk=None):
+        pass
+
+    def update(self, request, pk=None):
+        pass
+
+    def partial_update(self, request, pk=None):
         pass
 
 
@@ -121,7 +178,6 @@ class BasketViewSet(viewsets.ModelViewSet):
 
         snippet = "Highlight"
         return Response(snippet)
-pass
 
 
 class SnippetList(generics.ListCreateAPIView):
