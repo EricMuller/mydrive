@@ -1,0 +1,217 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+  <link rel="stylesheet" href="{{STATIC_URL}}ged/css/material/material.css" />
+
+  <!-- perso-->
+  <link rel="stylesheet" href="{{STATIC_URL}}ged/css/tree/tree.css" />
+    <link rel="stylesheet" href="{{STATIC_URL}}ged/css/login/login.css" />
+    <!--<link rel="stylesheet" href="{{STATIC_URL}}ged/css/fab/fab.css" />-->
+    <link rel="stylesheet" href="{{STATIC_URL}}ged/css/mdr-file/mdr-file.css" />
+    <link rel="stylesheet" href="{{STATIC_URL}}ged/css/filetypes/filetypes.css" />
+    <link  rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
+    <link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.min.css" />
+
+</head>
+<body ng-app="my-ged" ng-cloak>
+  <!--   Your HTML content here -->  
+  
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+  <script language="javascript">var STATIC_URL = "{{STATIC_URL|escapejs }}";</script>
+
+  
+
+<!--layout="column"-->
+
+      <div ng-controller="appCtrl"  layout="column"  ng-cloak>
+          
+
+
+              <md-toolbar md-scroll-shrink>
+
+                <div class="md-toolbar-tools" >
+                    <md-button  class="md-icon-button" aria-label="Toggle">
+                      <md-icon  ng-click="toggleLeft()" md-svg-icon="{{STATIC_URL}}ged/images/icons/navigation/svg/design/ic_apps_36px.svg"></md-icon>
+                    </md-button>
+                    <span>Welcome to MyGED</span>
+
+                    <span flex></span>
+                    <md-button class="md-icon-button" aria-label="Favorite">  
+                      <md-icon md-svg-icon="{{STATIC_URL}}ged/img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" aria-label="More">
+                      <md-icon md-svg-icon="{{STATIC_URL}}ged/images/icons/navigation/svg/design/ic_more_vert_36px.svg"></md-icon>
+                    </md-button>
+                  </div>
+              </md-toolbar>
+
+        
+      <md-content flex style="height:100%">        
+
+
+          <section layout="row" flex style="padding-top: 0px;">
+            
+            <!-- left "$mdMedia('xs-md')gt-md-->
+          
+
+
+           <md-sidenav class="md-sidenav-left md-whiteframe-z2" style="width: 200px;"  md-component-id="left" 
+            md-is-locked-open="true">
+                
+                <!--                
+                <md-toolbar class="md-theme-indigo">
+                  <md-button  class="md-icon-button" aria-label="Toggle">
+                      <md-icon  ng-click="close()" md-svg-icon="{{STATIC_URL}}ged/images/icons/navigation/svg/design/ic_apps_36px.svg"></md-icon>
+                      </md-button>
+                </md-toolbar>
+                -->
+               
+                 <md-button ng-click="close()" class="md-primary" hide-gt-md>
+                    Close Sidenav Left
+                  </md-button>
+                  <p hide-xs show-gt-md>
+                      <nav id="nav"  >
+                          <ul>
+                            <!--<li class="current"><a href="#">Latest Post</a></li>-->
+                            <li><a href="#/login">login</a></li>
+                            <li><a href="#/upload">Upload</a></li>
+                            <li><a href="#/archives">Archives</a></li>
+                            <li><a href="#/plan">File Plan</a></li>
+                            <!--<li><a href="#/about">About Me</a></li>
+                            <li><a href="#/contact">Contact Me</a></li>-->
+                          </ul>
+                    </nav>
+                  </p>
+                   {% verbatim %} 
+                    <!--  <md-list>
+                        <md-list-item class="md-3-line" ng-repeat="item in messages">
+                        <!--  <img ng-src="{{item.face}}?{{$index}}" class="face" alt="{{item.who}}">-->
+                      <!--    <div class="md-list-item-text">
+                            <h3>{{item.what}}</h3>
+                          </div>
+                          <md-divider md-inset ng-if="!$last"></md-divider>
+                        </md-list-item>
+                      </md-list>
+                      -->
+
+<!--
+                 <md-menu>
+                  <md-button aria-label="Open phone interactions menu" class="md-icon-button" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
+                    <md-icon md-menu-origin md-svg-icon="call:phone"></md-icon>
+                  </md-button>
+                  <md-menu-content width="4">
+                    <md-menu-item>
+                      <md-button ng-click="ctrl.redial($event)">
+                        <md-icon md-svg-icon="call:dialpad" md-menu-align-target></md-icon>
+                        Redial
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                      <md-button disabled="disabled" ng-click="ctrl.checkVoicemail()">
+                        <md-icon md-svg-icon="call:voicemail"></md-icon>
+                        Check voicemail
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item>
+                      <md-button ng-click="ctrl.toggleNotifications()">
+                        <md-icon md-svg-icon="social:notifications-{{ctrl.notificationsEnabled ? 'off' : 'on'}}"></md-icon>
+                        {{ctrl.notificationsEnabled ? 'Disable' : 'Enable' }} notifications
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+
+-->
+                
+                {% endverbatim %}
+            </md-sidenav>
+
+            <!-- content -->
+            
+              <!-- <div layout="column" layout-fill >-->
+              <div flex>
+                      <ng-view></ng-view>
+              </div>
+
+            <!--  </div> <div flex></div>-->
+              
+            
+          </section>
+</md-content>
+      </div>
+
+    <script src="{{STATIC_URL}}ged/bower_components/jquery/dist/jquery.min.js"></script>
+   
+    <script src="{{STATIC_URL}}ged/bower_components/angular-route/angular-route.min.js"></script>
+    <script src="{{STATIC_URL}}ged/bower_components/underscore/underscore-min.js"></script>
+    <script src="{{STATIC_URL}}ged/bower_components/restangular/dist/restangular.min.js"></script>
+    <!--<script src="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.js"></script>-->
+    <script src="{{STATIC_URL}}ged/js/mdr-file/mdr-file.js" ></script>
+    <script type="text/javascript" src="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+
+    <!-- Application Module  -->
+    <script src="{{STATIC_URL}}ged/js/app/app.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/common/common.mdl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/common/directives/mydirective.dir.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/common/directives/ngautocomplete.dir.js"></script>
+
+    
+<!-- material service -->
+    <script src="{{STATIC_URL}}ged/js/app/common/material/material.mdl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/common/material/toast.svc.js"></script>
+
+    <script src="{{STATIC_URL}}ged/js/app/login/login.mdl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/login/login.ctrl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/login/login.svc.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/home/home.mdl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/home/home.ctrl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/archives/archives.mdl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/archives/archives.ctrl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/upload/upload.mdl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/upload/upload.ctrl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/upload/filters/bytestosize.ftr.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/plan/plan.mdl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/plan/plan.ctrl.js"></script>
+    <script src="{{STATIC_URL}}ged/js/app/plan/plan.svc.js"></script>
+    
+
+    
+    
+    
+    <!-- Your application bootstrap  -->
+    <script>
+    // Add the CSRF Token
+    var app = angular.module('my-ged'); // Not including a list of dependent modules  (2nd parameter to `module`) "re-opens" the module for additional configuration
+    app.config(['$httpProvider', function($httpProvider) {
+      $httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
+    }]);
+
+    app.config(function($mdThemingProvider) {
+  $mdThemingProvider.theme('altTheme')
+    .primaryPalette('purple') // specify primary color, all
+                            // other color intentions will be inherited
+                            // from default
+});
+    </script>
+
+  
+</body>
+</html>
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved. 
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->

@@ -8,7 +8,7 @@
     PlanSvc.$inject = ['$rootScope', '$q', 'Restangular'];
 
 
-    function PlanSvc( $rootScope ,$q , Restangular ) {
+    function PlanSvc( $rootScope , $q, Restangular) {
         var self = this;
 
         var service = {
@@ -22,7 +22,6 @@
         return service;
 
         function getFolders() {
-
            return Restangular.one("folders").get()  ;      
         }
         
@@ -38,21 +37,14 @@
            return deferred.promise;
 */
            return Restangular.one("plan").get();
-
         }
 
         function removeChild(node){
-           
            return Restangular.one("plan",node.id).customDELETE()  ;      
-
         }
 
         function addChild(node){
-          
-          
            return Restangular.all("plan").post(node)  ;      
-
-
         }
 
         function updateChild(parentId,libelle){

@@ -1,6 +1,6 @@
   
-var app = angular.module('my-ged', ['ngRoute','mdr.file','ui.tree','my-ged.home','my-ged.archives'
-  ,'my-ged.upload','my-ged.plan','restangular']);
+var app = angular.module('my-ged', ['ngRoute','mdr.file','ui.tree','ngMaterial','material','my-ged.home','my-ged.archives'
+  ,'my-ged.upload','my-ged.plan','my-ged.login','my-ged.common', 'restangular']);
 
 app.config(['$routeProvider',
     function($routeProvider) { 

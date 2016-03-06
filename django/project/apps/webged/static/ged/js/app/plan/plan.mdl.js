@@ -1,4 +1,4 @@
-angular.module('my-ged.plan', [ 'ngRoute']).config(
+angular.module('my-ged.plan', [ 'ngRoute' ]).config(
 		function($routeProvider) {
 			 $routeProvider
         		.when('/plan', {

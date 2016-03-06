@@ -1,7 +1,6 @@
 angular.module('my-ged.plan')
-  .controller('planCtrl',['$scope','$rootScope','plan','folders','planSvc',
-
-      function  ($scope, $rootScope, plan, folders, planSvc) {
+  .controller('planCtrl',['$scope','$rootScope','plan','folders','planSvc', 'toast',
+      function  ($scope, $rootScope, plan, folders,  planSvc , toast) {
                   
         $rootScope.selectedMenuName('File Plan');
 
@@ -44,6 +43,7 @@ angular.module('my-ged.plan')
           planSvc.addChild(node).then(function(newNode){
               newNode.items = [];
               nodeData.items.push(newNode);
+              toast.showSimpleToast('ok');
           });
 
 
@@ -55,5 +55,4 @@ angular.module('my-ged.plan')
         
       }
 
-
-])
+]);

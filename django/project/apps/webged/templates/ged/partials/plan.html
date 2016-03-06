@@ -54,7 +54,7 @@
 </script>
 
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-6">
     <div ui-tree id="tree-root" data-nodrop-enabled>
       <ol ui-tree-nodes ng-model="plan" data-nodrop-enabled data-clone-enabled="false">
         <li ng-repeat="node in plan" ui-tree-node ng-include="'nodes_renderer.html'"></li>
@@ -65,7 +65,7 @@
     </div>
     <pre class="code" ng-model="plan" >{{ plan | json }}</pre>
   </div>
-<div class="col-sm-9">
+<div class="col-sm-6">
 </div>  
 <!--<div class="col-sm-6">
   <div ui-tree id="tree-root2">

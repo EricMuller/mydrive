@@ -18,6 +18,15 @@ def test(request):
     # return HttpResponse(html)
     return dispatch(request, 'test')
 
+def material(request):
+    # now = datetime.datetime.now()
+    # html = "<html><body>It is now %s.</body></html>" % now
+    # return HttpResponse(html)
+    # now = datetime.datetime.now()
+    # t = get_template('ged/index.html')
+    # html = t.render(Context({'current_date': now}))
+    # return HttpResponse(html)
+    return dispatch(request, 'material')
 
 def dispatch(request,  name):
     return render_to_response("ged/"+ name + ".html",

@@ -14,8 +14,6 @@
 		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
 		<!--<script src="{% static "/js/jquery.min.js" %}"></script>-->
 
- 
-
 		<script src="{{STATIC_URL}}ged/bower_components/jquery/dist/jquery.min.js"></script>
 		<script language="javascript">var STATIC_URL = "{{STATIC_URL|escapejs }}";</script>
 	<!--	<script language="javascript">var X_CSRFToken = "{{ csrf_token|escapejs }}";</script>-->
@@ -34,31 +32,30 @@
 			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/style.css" />
 			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/style-desktop.css" />
 			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/style-wide.css" />
+			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/font-awesome.min.css" />
+
 		</noscript>
 		
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/tree/tree.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/login/login.css" />
 		<!--<link rel="stylesheet" href="{{STATIC_URL}}ged/css/fab/fab.css" />-->
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/mdr-file/mdr-file.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/filetypes/filetypes.css" />
 		<link  rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
-
- 
-
-
-
-</script>
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.min.css" />
+
+		
 		<!--[if lte IE 8]><link rel="stylesheet" href="{{STATIC_URL}}ged/css/ie/v8.css" /><![endif]-->
 	</head>
 	<!--
 		Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
 		Set it to "right-sidebar" to, you guessed it, position it on the right.
 	-->
-	<body  ng-app="my-ged" class="left-sidebar" ng-controller="appCtrl"> 
+	<body  ng-app="my-ged" class="left-sidebar" ng-controller="appCtrl" ng-cloak> 
 
 		<!-- Wrapper -->
-			<div id="wrapper">
+			<div id="wrapper" ng-show1="isAuthenticated">
 
 				<!-- Content -->
 					<div id="content">
@@ -68,7 +65,7 @@
 					</div>
 
 				<!-- Sidebar -->
-					<div id="sidebar">
+					<div id="sidebar" >
 					
 						<!-- Logo -->
 						{% verbatim %}
@@ -76,9 +73,11 @@
 							<h1 id="logo"><a href="#" ng-model="selectedMenu">{{ selectedMenu }}</a></h1>
 						{% endverbatim %}
 						<!-- Nav -->
-							<nav id="nav">
+							<nav id="nav"  >
+
 								<ul>
 									<!--<li class="current"><a href="#">Latest Post</a></li>-->
+									<li><a href="#/login">login</a></li>
 									<li><a href="#/upload">Upload</a></li>
 									<li><a href="#/archives">Archives</a></li>
 									<li><a href="#/plan">File Plan</a></li>
@@ -205,19 +204,35 @@
 			</div>
 		
 		<!--<script src="{{STATIC_URL}}ged/js/jquery.min.js"></script> -->
-		
+		 
+
 		
 		<script src="{{STATIC_URL}}ged/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular/angular.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular-route/angular-route.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/underscore/underscore-min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/restangular/dist/restangular.min.js"></script>
+
+		<script src="{{STATIC_URL}}ged/bower_components/angular-animate/angular-animate.min.js"></script>
+  		<script src="{{STATIC_URL}}ged/bower_components/angular-aria/angular-aria.min.js"></script>
+  		<script src="{{STATIC_URL}}ged/bower_components/angular-messages/angular-messages.min.js"></script>
+		<script src="{{STATIC_URL}}ged/bower_components/angular-material/angular-material.min.js"></script>
+
 		<!--<script src="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.js"></script>-->
 		<script src="{{STATIC_URL}}ged/js/mdr-file/mdr-file.js" ></script>
 
 		<script src="{{STATIC_URL}}ged/js/app/app.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/common.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/directives/mydirective.dir.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/common/directives/ngautocomplete.dir.js"></script>
+
+		<!-- material service -->
+    	<script src="{{STATIC_URL}}ged/js/app/common/material/material.mdl.js"></script>
+    	<script src="{{STATIC_URL}}ged/js/app/common/material/toast.svc.js"></script>
+
+		<script src="{{STATIC_URL}}ged/js/app/login/login.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/login/login.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/login/login.svc.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/home/home.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/home/home.ctrl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/archives/archives.mdl.js"></script>
@@ -228,6 +243,7 @@
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.ctrl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.svc.js"></script>
+		
 		
 		<script type="text/javascript" src="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
@@ -255,7 +271,7 @@
 	</nav>
 </main>	
 -->
-  <div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;">
+  <div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;display:none;">
     <a class="btn-floating btn-large red">
       <i class="large mdi-navigation-menu"></i>
     </a>

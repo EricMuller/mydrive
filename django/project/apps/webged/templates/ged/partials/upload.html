@@ -3,7 +3,7 @@
   <head>
     <title>Download Example</title>
 
-    <link href="{{STATIC_URL}}webged/bower_components/mdr-angular-file/dist/mdr-file.min.css">
+    <!--<link href="{{STATIC_URL}}webged/bower_components/mdr-angular-file/dist/mdr-file.min.css">-->
     
     
 
@@ -12,7 +12,7 @@
     <body> 
 
 		<!--<mdr-file url="/test/upload.php" model="file">-->
-		<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" >
+		<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" style="width:500px" >
 			{% verbatim %}
 		<!-- model="model" 
 		data="{hola:'mundo'}" headers="{token:'shhh'}" 
@@ -22,7 +22,7 @@
 		
 		<div class="mdr-file-dad" style="margin-top:18pt">
 
-		<div class="row mdr-file-dad-content">'
+		<div class="row mdr-file-dad-content">
  				<!--"col-sm-3 col-md-3 col-lg-3 test-->
 	  			<div class="col-lm-3 test" ng-repeat="file in uploadFiles" >
 	    			<div class="thumbnail" >

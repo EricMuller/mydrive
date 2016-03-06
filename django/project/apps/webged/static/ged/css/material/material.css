@@ -1,0 +1,5 @@
+
+md-backdrop ~ md-content {
+	position: fixed;
+	overflow: hidden;
+}
