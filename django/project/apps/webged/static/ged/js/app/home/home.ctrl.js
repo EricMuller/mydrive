@@ -12,6 +12,18 @@ angular.module('my-ged.home',['ngMaterial']).controller('appCtrl',['$scope','$ro
 
 		$scope.uploadFiles = [];
 
+
+
+		//
+
+		$scope.$on('connectionStateChanged', function (event, data) {
+
+
+  				console.log(data); 
+
+  				
+		});
+
 		// bar 
 
 		$scope.toggleLeft = buildDelayedToggler('left');

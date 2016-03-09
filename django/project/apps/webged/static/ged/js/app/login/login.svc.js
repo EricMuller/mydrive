@@ -5,38 +5,40 @@
         .module('my-ged.login')
         .service('loginSvc', LoginSvc);
 
-    LoginSvc.$inject = ['$rootScope', '$q', 'Restangular'];
+    LoginSvc.$inject = ['$rootScope', '$q', 'Restangular' ,'userSvc'];
 
+    function LoginSvc($rootScope, $q, Restangular, userSvc) {
 
-    function LoginSvc( $rootScope ,$q , Restangular ) {
         var self = this;
 
         var service = {
-            login: login,
-            getUsers: getUsers
+            signIn: signIn,
+            signOut: signOut
         };
 
         return service;
 
-        function login() {
-
-          /* var data = ;
+        function signIn(username,password) {
             
-           var deferred = $q.defer();
+            //$http.post('/api/authenticate', { username: username, password: password })
+            //    .success(function (response) {
+            //        callback(response);
+            //    }); 
 
-           deferred.resolve(data);
-
-            //return $q.when(data);
-           return deferred.promise;
-*/
-           return Restangular.one("plan").get();
-        }
-
-        function getUsers(){
-
-          return Restangular.one("users").get();
+            
+            return userSvc.getByUsername(username); 
+            
+            /*$rootScope.$broadcast("connectionStateChanged", {
+               someProp: 'signIn OK'     
+            });*/
 
         }
+
+        function signOut() {
+        
+            $rootScope.$broadcast("connectionStateChanged");
+        }
+
     }
 
 })();

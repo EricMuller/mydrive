@@ -4,6 +4,7 @@ from webged.views import uploadviews
 
 urlpatterns = [
     url(r'^test/', htmlviews.test),
+    url(r'^login/', htmlviews.login),
     url(r'^partials/(?P<name>[-_\w]+)', htmlviews.partials),
     url(r'upload/', uploadviews.post),
     # ged/test

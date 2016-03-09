@@ -5,8 +5,8 @@ angular.module('my-ged.login', [ 'ngRoute']).config(
             		templateUrl: 'partials/login.html',
             		controller: 'loginCtrl',
             		resolve: {
-         				   users : function(loginSvc){
-                				return loginSvc.getUsers();
+         				   users : function(userSvc){
+                				return userSvc.getAll();
                 			}
         			}
         		});

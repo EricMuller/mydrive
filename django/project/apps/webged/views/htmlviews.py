@@ -1,4 +1,4 @@
-
+from django.contrib.auth.decorators import login_required
 # from django.http import HttpResponse
 # from django.shortcuts import render
 from django.shortcuts import render_to_response
@@ -18,6 +18,7 @@ def test(request):
     # return HttpResponse(html)
     return dispatch(request, 'test')
 
+
 def material(request):
     # now = datetime.datetime.now()
     # html = "<html><body>It is now %s.</body></html>" % now
@@ -28,14 +29,21 @@ def material(request):
     # return HttpResponse(html)
     return dispatch(request, 'material')
 
-def dispatch(request,  name):
-    return render_to_response("ged/"+ name + ".html",
+
+def dispatch(request, name):
+    return render_to_response("ged/" + name + ".html",
                               RequestContext(request, {}))
+
 
 def partials(request, name):
     return render_to_response("ged/partials/" + name + ".html",
                               RequestContext(request, {}))
 
-def index(request):
 
+def login(request):
+    return dispatch(request, 'login')
+
+
+#@login_required( login_url='/ged/#/login')
+def index(request):
     return dispatch(request, 'index')

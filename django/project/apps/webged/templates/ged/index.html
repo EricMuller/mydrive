@@ -25,7 +25,7 @@
    
 	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">-->
   <!-- Compiled and minified JavaScript -->
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+  <!--	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>-->
 
 		<noscript>
 			<link rel="stylesheet" href="{{STATIC_URL}}ged/css/skel.css" />
@@ -52,10 +52,10 @@
 		Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
 		Set it to "right-sidebar" to, you guessed it, position it on the right.
 	-->
-	<body  ng-app="my-ged" class="left-sidebar" ng-controller="appCtrl" ng-cloak> 
+	<body  ng-app="my-ged" class="left-sidebar" ng-controller="appCtrl" > 
 
-		<!-- Wrapper -->
-			<div id="wrapper" ng-show1="isAuthenticated">
+		<!-- Wrapper ng-show1="isAuthenticated">-->
+			<div id="wrapper" >
 
 				<!-- Content -->
 					<div id="content">
@@ -70,7 +70,7 @@
 						<!-- Logo -->
 						{% verbatim %}
 							
-							<h1 id="logo"><a href="#" ng-model="selectedMenu">{{ selectedMenu }}</a></h1>
+							<h1 id="logo" ng-cloak><a href="#" ng-model="selectedMenu">{{ selectedMenu }}</a></h1>
 						{% endverbatim %}
 						<!-- Nav -->
 							<nav id="nav"  >
@@ -131,7 +131,7 @@
 								</ul>
 							</section>
 					    -->
- 						<!-- Calendar -->
+ 						<!-- Calendar 
 							<section class="box calendar">
 								<div class="inner">
 									<table>
@@ -191,7 +191,7 @@
 										</tbody>
 									</table>
 								</div>
-							</section>
+							</section>-->
 						
 						<!-- Copyright -->
 							<ul id="copyright">
@@ -202,13 +202,17 @@
 					</div>
 
 			</div>
-		
+<!--
+			root =angular.element('body').scope()
+			root..globals.currentUser=true
+-->
 		<!--<script src="{{STATIC_URL}}ged/js/jquery.min.js"></script> -->
 		 
 
 		
 		<script src="{{STATIC_URL}}ged/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular/angular.min.js"></script>
+		<script src="{{STATIC_URL}}ged/bower_components/angular-cookies/angular-cookies.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular-route/angular-route.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/underscore/underscore-min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/restangular/dist/restangular.min.js"></script>
@@ -224,7 +228,7 @@
 		<script src="{{STATIC_URL}}ged/js/app/app.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/common.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/directives/mydirective.dir.js"></script>
-		<script src="{{STATIC_URL}}ged/js/app/common/directives/ngautocomplete.dir.js"></script>
+		<!--<script src="{{STATIC_URL}}ged/js/app/common/directives/ngautocomplete.dir.js"></script>-->
 
 		<!-- material service -->
     	<script src="{{STATIC_URL}}ged/js/app/common/material/material.mdl.js"></script>
@@ -232,6 +236,8 @@
 
 		<script src="{{STATIC_URL}}ged/js/app/login/login.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/login.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/login/sign.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/login/users.svc.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/login.svc.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/home/home.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/home/home.ctrl.js"></script>
@@ -253,12 +259,13 @@
 		<!--<script src="{{STATIC_URL}}ged/js/controllers.js"></script>-->
 		<script>
 		// Add the CSRF Token
-		var app = angular.module('my-ged'); // Not including a list of dependent modules 	(2nd parameter to `module`) "re-opens" the module for additional configuration
+		var app = angular.module('my-ged'); 
+		// Not including a list of dependent modules 	(2nd parameter to `module`) "re-opens" the module for additional configuration
 		app.config(['$httpProvider', function($httpProvider) {
-    	$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
+    		$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
 		}]);
-</script>
 
+</script>
 <!--
 <main>
 	<nav class="floating-menu">
@@ -271,16 +278,6 @@
 	</nav>
 </main>	
 -->
-  <div class="fixed-action-btn horizontal click-to-toggle" style="bottom: 45px; right: 24px;display:none;">
-    <a class="btn-floating btn-large red">
-      <i class="large mdi-navigation-menu"></i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-      <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-      <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-    </ul>
-  </div>
+  
 	</body>
 </html>

@@ -36,6 +36,7 @@ def bliss(request):
                               RequestContext(request, {}))
 
 
+
 def site(request):
 
     return render_to_response("index.html",

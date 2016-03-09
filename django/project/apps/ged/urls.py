@@ -17,7 +17,7 @@ router.register(r'plan', views.TreeViewSet, base_name='plan')
 
 # url(r'^apis/UploadFile/$', restviews.SnippetList.as_view(),name = 'UploadFile-list'),
 # url(r'^apis/UploadFile/(?P<pk>[0-9]+)$', restviews.SnippetList.as_view(),name = 'UploadFile-detail'),
-# print(router.urls)
+print(router.urls)
 
 urlpatterns = [
     url(r'^', include(router.urls)),

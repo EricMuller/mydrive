@@ -1,5 +1,8 @@
   
-var app = angular.module('my-ged', ['ngRoute','mdr.file','ui.tree','ngMaterial','material','my-ged.home','my-ged.archives'
+(function () {
+    'use strict';
+
+var app = angular.module('my-ged', ['ngRoute','ngCookies','mdr.file','ui.tree','ngMaterial','material','my-ged.home','my-ged.archives'
   ,'my-ged.upload','my-ged.plan','my-ged.login','my-ged.common', 'restangular']);
 
 app.config(['$routeProvider',
@@ -13,7 +16,17 @@ app.config(['$routeProvider',
     }
 ]);
 
-
+app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push(function ($location) {
+        return {
+            'responseError': function (rejection) {
+                if (rejection.status === 401) {
+                    $location.url('/ged/#/login?returnUrl=' + $location.path());
+                }
+            }
+        };
+    });
+});
 app.config(function(RestangularProvider) {
       RestangularProvider.setBaseUrl('apis/');
       //RestangularProvider.setMethodOverriders(["put", "delete"]);
@@ -65,9 +78,63 @@ app.factory('httpPostFactory', function ($http) {
     };
 });
 
+run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
 
+function run($rootScope, $location, $cookieStore, $http) {
+        // keep user logged in after page refresh
+        $rootScope.globals={};
+        //$rootScope.globals = $cookieStore.get('globals') || {};
+        
+        /*if ($rootScope.globals.currentUser) {
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+        }*/
+ 
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in and trying to access a restricted page
+            var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
+            var loggedIn = $rootScope.globals.currentUser;
+            debugger
+            if (restrictedPage && !loggedIn) {
+                $location.path('/login');
+            }
+        });
+    }
 
+app.run(run);
 
+/*
+app.run(['$location', '$rootScope', '$log', 'loginSvc', '$route',
+        function ($location, $rootScope, $log, loginSvc, $route) {
+ 
+              function handleRouteChangeStart(event, next, current) {
+   
+                  var returnUrl = $location.url();
+
+                 /* if (!next.allowAnonymous && !authService.isAuthenticated()) {
+                      $log.log('authentication required. redirect to login');
+   
+                      var returnUrl = $location.url();
+                      $log.log('returnUrl=' + returnUrl);
+   
+                      //TODO: BUG -> THIS IS NOT PREVENTING THE CURRENT ROUTE
+                      //This has a side effect, which is load of the controller/view configured to the route
+                      //The redirect to login occurs later.
+                      //Possible solutions: 
+                      // 1 - use $locationChangeStart (it is hard to get the route being used)
+                      // 2 - Use a resolver in controller, returning a promise, and reject when needs auth
+                      event.preventDefault();
+                  */
+  /*                console.log('handleRouteChangeStart'+returnUrl);
+                  event.preventDefault();
+                  $location.path('/login').search({ returnUrl: returnUrl })
+                  
+                  }
+
+              $rootScope.$on('$routeChangeStart', handleRouteChangeStart);
+             
+ 
+        }]);
+*/
 /*
 http://docs.angularjs.org/api/ng.$interpolateProvider
 app.config(function($interpolateProvider) {
@@ -76,3 +143,4 @@ $interpolateProvider.endSymbol('}]}');
 });
 */
 
+})();

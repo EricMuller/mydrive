@@ -35,9 +35,6 @@ from rest_framework.response import Response
 from rest_framework import status
 
 
-from ged.modules.tree import Tree
-
-
 class DefaultsMixin(object):
     """Default settings for view authentication, permissions,
     filtering and pagination."""
@@ -145,7 +142,7 @@ class TreeViewSet(viewsets.ViewSet):
         except:
 
             print(sys.exc_info())
-            return Response({"status":  "error"},
+            return Response({"status": "error"},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def retrieve(self, request, pk=None):
@@ -170,7 +167,7 @@ class BasketViewSet(viewsets.ModelViewSet):
     @list_route(methods=['get', ])
     def code(self, request, pk=None):
 
-        snippet = "code"
+        snippet = pk
         return Response(snippet)
 
     @detail_route(methods=['get', ])
