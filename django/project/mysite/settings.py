@@ -185,7 +185,11 @@ STATIC_URL = '/static/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
+)   
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'handlers.custom_exception_handler'
+}
 
 # STATICFILES_DIRS = [
 # os.path.join(BASE_DIR, "static"),

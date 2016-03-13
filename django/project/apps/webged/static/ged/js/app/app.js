@@ -11,11 +11,11 @@ app.config(['$routeProvider',
         $routeProvider.otherwise({
             redirectTo: '/home'
         });
-
         //$locationProvider.html5Mode(true);
     }
 ]);
 
+/*
 app.config(function ($httpProvider) {
     $httpProvider.interceptors.push(function ($location) {
         return {
@@ -27,12 +27,8 @@ app.config(function ($httpProvider) {
         };
     });
 });
-app.config(function(RestangularProvider) {
-      RestangularProvider.setBaseUrl('apis/');
-      //RestangularProvider.setMethodOverriders(["put", "delete"]);
-      RestangularProvider.setRequestSuffix('/?format=json');
-      RestangularProvider.setDefaultHeaders({'Content-Type': 'application/json'});
-});
+*/
+
 
 app.filter('searchFor', function(){
 
@@ -78,22 +74,20 @@ app.factory('httpPostFactory', function ($http) {
     };
 });
 
-run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
+run.$inject = ['$rootScope', '$location', 'loginSvc', '$http'];
 
-function run($rootScope, $location, $cookieStore, $http) {
+function run($rootScope, $location, loginSvc, $http) {
         // keep user logged in after page refresh
         $rootScope.globals={};
-        //$rootScope.globals = $cookieStore.get('globals') || {};
-        
+        loginSvc.restoreglobals();
         /*if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }*/
- 
+
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-            var loggedIn = $rootScope.globals.currentUser;
-            debugger
+            var loggedIn = $rootScope.globals.authtoken;
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
             }

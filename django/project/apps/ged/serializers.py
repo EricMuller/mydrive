@@ -10,6 +10,7 @@ from ged.models import Folder
 from rest_framework import serializers
 
 
+
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -47,7 +48,6 @@ class UploadFileSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class FolderSerializer(serializers.HyperlinkedModelSerializer):
-
 
     class Meta:
         model = Folder

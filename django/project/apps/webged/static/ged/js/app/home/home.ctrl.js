@@ -1,7 +1,8 @@
 	
-angular.module('my-ged.home',['ngMaterial']).controller('appCtrl',['$scope','$rootScope','$timeout','$mdSidenav','$log',
+angular.module('my-ged.home')
+.controller('homeCtrl',['$scope','$rootScope','$timeout','$mdSidenav','$log','loginSvc',
 
-	function($scope, $rootScope, $timeout, $mdSidenav, $log) {
+	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc) {
 		
 		$rootScope.selectedMenuName= function(title){
 			$rootScope.selectedMenu=title;
@@ -9,26 +10,20 @@ angular.module('my-ged.home',['ngMaterial']).controller('appCtrl',['$scope','$ro
 		};
 		
 		$rootScope.selectedMenuName('Welcome');
-
 		$scope.uploadFiles = [];
 
-
-
-		//
-
 		$scope.$on('connectionStateChanged', function (event, data) {
-
-
   				console.log(data); 
-
-  				
 		});
 
 		// bar 
-
 		$scope.toggleLeft = buildDelayedToggler('left');
 	    $scope.toggleRight = buildToggler('right');
 	    
+
+	    $scope.signOut = function(){
+	    	loginSvc.signOut();
+	    }
 	    $scope.isOpenRight = function(){
 	      return $mdSidenav('right').isOpen();
 	    };

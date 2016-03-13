@@ -5,10 +5,10 @@
         .module('my-ged.plan')
         .service('planSvc', PlanSvc);
 
-    PlanSvc.$inject = ['$rootScope', '$q', 'Restangular'];
+    PlanSvc.$inject = ['$rootScope', '$q', 'TokenRestangular'];
 
 
-    function PlanSvc( $rootScope , $q, Restangular) {
+    function PlanSvc( $rootScope , $q, TokenRestangular) {
         var self = this;
 
         var service = {
@@ -22,7 +22,7 @@
         return service;
 
         function getFolders() {
-           return Restangular.one("folders").get()  ;      
+           return TokenRestangular.one("folders").get()  ;      
         }
         
         function getPlan() {
@@ -36,15 +36,15 @@
             //return $q.when(data);
            return deferred.promise;
 */
-           return Restangular.one("plan").get();
+           return TokenRestangular.one("plan").get();
         }
 
         function removeChild(node){
-           return Restangular.one("plan",node.id).customDELETE()  ;      
+           return TokenRestangular.one("plan",node.id).customDELETE()  ;      
         }
 
         function addChild(node){
-           return Restangular.all("plan").post(node)  ;      
+           return TokenRestangular.all("plan").post(node)  ;      
         }
 
         function updateChild(parentId,libelle){

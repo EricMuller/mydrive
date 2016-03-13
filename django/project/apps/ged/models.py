@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.models import Group
+# from django.contrib.auth.models import Group
 
 # from django.utils import timezone
 
@@ -78,10 +78,8 @@ class Node(DateModel):
 
 
 class Folder(Node):
-
     # groups = models.ManyToManyField(Group)
     # download = models.BooleanField(default=True)
-
     def __str__(self):
         return self.libelle
 

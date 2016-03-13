@@ -30,7 +30,6 @@
           */
             var deferred = $q.defer();
             Restangular.one("users").getList().then(function(users){
-                
                 var filtered = $filter('filter')(users , { username: username });
                 var user = filtered.length ? filtered[0] : null;
                 deferred.resolve(user);

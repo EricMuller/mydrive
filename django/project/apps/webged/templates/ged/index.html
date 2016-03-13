@@ -52,35 +52,30 @@
 		Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
 		Set it to "right-sidebar" to, you guessed it, position it on the right.
 	-->
-	<body  ng-app="my-ged" class="left-sidebar" ng-controller="appCtrl" > 
+	<body  ng-app="my-ged" class="left-sidebar" ng-controller="homeCtrl" > 
 
 		<!-- Wrapper ng-show1="isAuthenticated">-->
 			<div id="wrapper" >
-
-				<!-- Content -->
-					<div id="content">
-
-					 	<ng-view></ng-view>
-
-					</div>
-
-				<!-- Sidebar -->
-					<div id="sidebar" >
 					
+					<!-- Content -->
+					<div id="content">
+					 	<ng-view></ng-view>
+					</div>
+					<!-- Sidebar -->
+					<div id="sidebar" >
 						<!-- Logo -->
 						{% verbatim %}
-							
 							<h1 id="logo" ng-cloak><a href="#" ng-model="selectedMenu">{{ selectedMenu }}</a></h1>
 						{% endverbatim %}
 						<!-- Nav -->
 							<nav id="nav"  >
-
 								<ul>
 									<!--<li class="current"><a href="#">Latest Post</a></li>-->
-									<li><a href="#/login">login</a></li>
-									<li><a href="#/upload">Upload</a></li>
-									<li><a href="#/archives">Archives</a></li>
-									<li><a href="#/plan">File Plan</a></li>
+									<li data-hide-when-connected ><a href="#/login">login</a></li>
+									<li data-show-when-connected ><a href="#/logout" ng-click="signOut()">logout</a></li>
+									<li data-show-when-connected ><a href="#/upload">Upload</a></li>
+									<li data-show-when-connected ><a href="#/archives">Archives</a></li>
+									<li data-show-when-connected ><a href="#/plan">File Plan</a></li>
 									<!--<li><a href="#/about">About Me</a></li>
 									<li><a href="#/contact">Contact Me</a></li>-->
 								</ul>
@@ -194,9 +189,11 @@
 							</section>-->
 						
 						<!-- Copyright -->
+						{% verbatim %}
 							<ul id="copyright">
-								<li>&copy; Eric.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy;{{globals.username}}.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
+						{% endverbatim %}
 						
 
 					</div>
@@ -207,9 +204,6 @@
 			root..globals.currentUser=true
 -->
 		<!--<script src="{{STATIC_URL}}ged/js/jquery.min.js"></script> -->
-		 
-
-		
 		<script src="{{STATIC_URL}}ged/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular/angular.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular-cookies/angular-cookies.min.js"></script>
@@ -239,6 +233,7 @@
 		<script src="{{STATIC_URL}}ged/js/app/login/sign.ctrl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/users.svc.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/login.svc.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/login/directives/hidewhenconnected.dir.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/home/home.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/home/home.ctrl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/archives/archives.mdl.js"></script>
@@ -249,7 +244,6 @@
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.ctrl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.svc.js"></script>
-		
 		
 		<script type="text/javascript" src="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

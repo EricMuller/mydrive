@@ -49,7 +49,6 @@ class Tree:
 
     def remove(self, id):
 
-       
         folder = Folder.objects.get(pk=id)
 
         decalage = folder.node_r - folder.node_l + 1
@@ -67,11 +66,11 @@ class Tree:
             node_l=F('node_l') - decalage)
 
         pass
-    #def removeElement(self, id):
+    # def removeElement(self, id):
 
         # folder = Folder.objects.get(pk=id)
 
-        #Folder.objects.filter(node_l__gte=folder.node_l).update(
+        # Folder.objects.filter(node_l__gte=folder.node_l).update(
         #    node_l=F('node_l') - 2)
 
         # Folder.objects.filter(node_r__gte=folder.node_l).update(
@@ -82,9 +81,9 @@ class Tree:
     def buildTree(self):
 
         folders = Folder.objects.all().prefetch_related(
-             'parent').order_by('node_l')
+            'parent').order_by('node_l')
 
-        #folders = Folder.objects.all().order_by('node_l')
+        # folders = Folder.objects.all().order_by('node_l')
 
         parents = {}
         tree = []
