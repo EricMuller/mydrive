@@ -1,8 +1,8 @@
 	
 angular.module('my-ged.home')
-.controller('homeCtrl',['$scope','$rootScope','$timeout','$mdSidenav','$log','loginSvc',
+.controller('homeCtrl',['$scope','$rootScope','$timeout','$mdSidenav','$log','loginSvc','alertSvc','errInterceptorConfig',
 
-	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc) {
+	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc, alertSvc, errInterceptorConfig) {
 		
 		$rootScope.selectedMenuName= function(title){
 			$rootScope.selectedMenu=title;
@@ -15,6 +15,20 @@ angular.module('my-ged.home')
 		$scope.$on('connectionStateChanged', function (event, data) {
   				console.log(data); 
 		});
+
+		//
+		
+		$rootScope.$on(errInterceptorConfig.ERR_500_EVENT, interceptError);
+    	$rootScope.$on(errInterceptorConfig.ERR_408_EVENT, interceptError);
+    	$rootScope.$on(errInterceptorConfig.ERR_403_EVENT, interceptError);
+    	$rootScope.$on(errInterceptorConfig.ERR_401_EVENT, interceptError);
+    	$rootScope.$on(errInterceptorConfig.ERR_400_EVENT, interceptError);
+    	$rootScope.$on(errInterceptorConfig.ERR_EVENT, interceptError);
+
+
+   		function interceptError(event, message) {
+        	alertSvc.error('', message || '');
+    	}
 
 		// bar 
 		$scope.toggleLeft = buildDelayedToggler('left');

@@ -1,4 +1,4 @@
-angular.module('my-ged.login', [ 'ngRoute','ngCookies']).config(
+angular.module('my-ged.login', [ 'ngRoute','ngCookies' ]).config(
 		function($routeProvider) {
 			 $routeProvider
                 .when('/login', {
