@@ -1,8 +1,8 @@
 	
 angular.module('my-ged.home')
-.controller('homeCtrl',['$scope','$rootScope','$timeout','$mdSidenav','$log','loginSvc','alertSvc','errInterceptorConfig',
+.controller('homeCtrl',['$scope','$rootScope','$timeout','$mdSidenav','$log','loginSvc','alertSvc','errInterceptorConfig','$location','planSvc',
 
-	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc, alertSvc, errInterceptorConfig) {
+	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc, alertSvc, errInterceptorConfig, $location, planSvc) {
 		
 		$rootScope.selectedMenuName= function(title){
 			$rootScope.selectedMenu=title;
@@ -16,6 +16,7 @@ angular.module('my-ged.home')
   				console.log(data); 
 		});
 
+		$scope.plan = '';
 		//
 		
 		$rootScope.$on(errInterceptorConfig.ERR_500_EVENT, interceptError);
@@ -24,10 +25,20 @@ angular.module('my-ged.home')
     	$rootScope.$on(errInterceptorConfig.ERR_401_EVENT, interceptError);
     	$rootScope.$on(errInterceptorConfig.ERR_400_EVENT, interceptError);
     	$rootScope.$on(errInterceptorConfig.ERR_EVENT, interceptError);
+	
 
+		// var signIn = function() {
+		// 	var loggedIn = $rootScope.globals.authtoken;
+		// 	if (loggedIn){	
+  //              $scope.plan = planSvc.getPlan(); 
+  //      		}	
+  //       };
+
+    	// $scope.$on("loginStateChanged", signIn);
 
    		function interceptError(event, message) {
         	alertSvc.error('', message || '');
+        	//$scope.signOut();
     	}
 
 		// bar 
@@ -35,9 +46,18 @@ angular.module('my-ged.home')
 	    $scope.toggleRight = buildToggler('right');
 	    
 
+
 	    $scope.signOut = function(){
-	    	loginSvc.signOut();
-	    }
+	    	 loginSvc.signOut().then(function(result) {
+	    		$location.path('home');
+                $rootScope.$broadcast("loginStateChanged", {
+                              someProp: 'signOut OK'     
+                      });
+                }
+              );
+            };
+	    
+
 	    $scope.isOpenRight = function(){
 	      return $mdSidenav('right').isOpen();
 	    };
@@ -91,36 +111,37 @@ angular.module('my-ged.home')
 
 		//
 		var imagePath = 'img/list/60.jpeg';
-    $scope.messages = [{
-      face : imagePath,
-      what: 'Brunch this weekend?',
-      who: 'Min Li Chan',
-      when: '3:08PM',
-      notes: " I'll be in your neighborhood doing errands"
-    }, {
-      face : imagePath,
-      what: 'Brunch this weekend?',
-      who: 'Min Li Chan',
-      when: '3:08PM',
-      notes: " I'll be in your neighborhood doing errands"
-    }, {
-      face : imagePath,
-      what: 'Brunch this weekend?',
-      who: 'Min Li Chan',
-      when: '3:08PM',
-      notes: " I'll be in your neighborhood doing errands"
-    }, {
-      face : imagePath,
-      what: 'Brunch this weekend?',
-      who: 'Min Li Chan',
-      when: '3:08PM',
-      notes: " I'll be in your neighborhood doing errands"
-    }, {
-      face : imagePath,
-      what: 'Brunch this weekend?',
-      who: 'Min Li Chan',
-      when: '3:08PM',
-      notes: " I'll be in your neighborhood doing errands"
-    }];
+	    $scope.messages = [{
+	      face : imagePath,
+	      what: 'Brunch this weekend?',
+	      who: 'Min Li Chan',
+	      when: '3:08PM',
+	      notes: " I'll be in your neighborhood doing errands"
+	    }, {
+	      face : imagePath,
+	      what: 'Brunch this weekend?',
+	      who: 'Min Li Chan',
+	      when: '3:08PM',
+	      notes: " I'll be in your neighborhood doing errands"
+	    }, {
+	      face : imagePath,
+	      what: 'Brunch this weekend?',
+	      who: 'Min Li Chan',
+	      when: '3:08PM',
+	      notes: " I'll be in your neighborhood doing errands"
+	    }, {
+	      face : imagePath,
+	      what: 'Brunch this weekend?',
+	      who: 'Min Li Chan',
+	      when: '3:08PM',
+	      notes: " I'll be in your neighborhood doing errands"
+	    }, {
+	      face : imagePath,
+	      what: 'Brunch this weekend?',
+	      who: 'Min Li Chan',
+	      when: '3:08PM',
+	      notes: " I'll be in your neighborhood doing errands"
+	    }];
     	
+  //$scope.loaded=true;
 }]);

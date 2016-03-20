@@ -81,6 +81,9 @@
 				})
 				.on('load', function() {
 					$window.trigger('resize');
+					root =angular.element('body').scope()
+					root.loaded=true;
+
 				})
 				.trigger('resize');
 

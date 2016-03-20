@@ -6,7 +6,7 @@ angular.module( "my-ged.common")
         restrict: 'A',
         link: function (scope, element, attrs) {
             var hideIfConnected = function() {
-                if($rootScope.globals.authtoken) {
+                if($rootScope.globals.user.authtoken) {
                     $(element).hide();
                 } else {
                     $(element).show();

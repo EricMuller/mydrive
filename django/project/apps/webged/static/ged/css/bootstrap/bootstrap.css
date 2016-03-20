@@ -1,0 +1,27 @@
+
+.full-height
+{
+    height: 100%;
+}
+
+.bordered
+{
+    border: 1px;
+    box-shadow: 0 0 0.25em 0em rgba(0,0,0,0.25);
+    margin: 5px;
+}
+
+
+#container
+	{
+		margin-top: 44px;
+	}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+.treeview .glyphicon {
+    font-size: 24px;
+}

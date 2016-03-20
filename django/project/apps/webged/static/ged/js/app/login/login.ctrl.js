@@ -11,19 +11,38 @@ angular.module('my-ged.login')
 
 			  $scope.signIn = function(username,password) {
           			
-	          	  loginSvc.signIn(username,password).then(function(result) {
+	          	loginSvc.signIn(username,password).then(function(result) {
 
                     if(result == false){
                       alertSvc.error('Erreur de connection');
-                    }
+                    }else {
 
-                     $location.path('home');
+                      $rootScope.globals.user =loginSvc.getCurrentUser();
+
+                      $location.path('home');
+                      $rootScope.$broadcast("loginStateChanged", {
+                              someProp: 'signIn OK'     
+                      });
+
+                   }
                 }
 
-              );;
+              );
           			
-          	}
+          	};
 
-        }
+        
+
+        /*$scope.signOut = function(username,password) {
+              loginSvc.signOut(username,password).then(function(result) {
+                $rootScope.globals.user.authtoken
+                $rootScope.$broadcast("loginStateChanged", {
+                              someProp: 'signOut OK'     
+                      });
+                }
+              );
+            };*/
+
+      }
 
 ]);

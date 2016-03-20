@@ -6,7 +6,7 @@ angular.module( "my-ged.login")
         restrict: 'A',
         link: function (scope, element, attrs) {
             var hideIfConnected = function() {
-                if($rootScope.globals.authtoken) {
+                if($rootScope.globals.user.authtoken) {
                     $(element).hide();
                 } else {
                     $(element).show();
@@ -24,7 +24,7 @@ angular.module( "my-ged.login")
         restrict: 'A',
         link: function (scope, element, attrs) {
             var showIfConnected = function() {
-                if($rootScope.globals.authtoken) {
+                if($rootScope.globals.user.authtoken) {
                     $(element).show();
                 } else {
                     $(element).hide();

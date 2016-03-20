@@ -13,13 +13,13 @@
 
 		<!--<mdr-file url="/test/upload.php" model="file">-->
 		<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" style="width:500px" >
-			{% verbatim %}
+{% verbatim %}					
 		<!-- model="model" 
 		data="{hola:'mundo'}" headers="{token:'shhh'}" 
 		size="5" limit="10" formats="'jpg,png,gif,pdf'" disabled="false" multiple="true" 
 		text="drag here">-->
 		</mdr-file>
-		
+
 		<div class="mdr-file-dad" style="margin-top:18pt">
 
 		<div class="row mdr-file-dad-content">

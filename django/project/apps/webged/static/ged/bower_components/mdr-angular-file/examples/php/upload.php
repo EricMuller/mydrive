@@ -8,13 +8,11 @@ if(!is_dir($folder)) {
   mkdir($folder);
 }
 
-echo json_encode([$_FILES['file'],$_POST]);
-
 // If does not exist error
-//if ($_FILES["file"]["error"] == UPLOAD_ERR_OK) {
+if ($_FILES["file"]["error"] == UPLOAD_ERR_OK) {
   // Move file into folder
-//  move_uploaded_file( $_FILES["file"]["tmp_name"], $folder . $_FILES['file']['name']);
-//}
+  move_uploaded_file( $_FILES["file"]["tmp_name"], $folder . $_FILES['file']['name']);
+}
 
 // Response with object file
-//echo json_encode([$_FILES['file'],$_POST]);
+echo json_encode([$_FILES['file'],$_POST]);

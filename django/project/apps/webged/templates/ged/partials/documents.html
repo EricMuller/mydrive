@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Multiple Download Example</title>
+
+    <!--<link href="{{STATIC_URL}}webged/bower_components/mdr-angular-file/dist/mdr-file.min.css">-->
+
+    </head>
+
+    <body> 
+    
+    {% verbatim %}
+
+	<!-- <div class="row" style="margin-top:5px;" >
+		<div class="jumbotron col-xs-5">
+					  <div class="container" style="border:1px;" >
+					            <div 
+									      data-angular-treeview="true"
+									      data-tree-id="abc"
+									      data-tree-model="plan"
+									      data-node-id="id"
+									      data-node-label="libelle"
+									      data-node-children="items" >
+								</div>
+								
+					  </div>
+		</div>
+		<div  class="col-xs-7">&nbsp;</div>
+		
+	</div> -->
+  <!-- style="margin-top:5px;" -->
+	<div class="full-height treeview" >
+
+        <!-- <div class="form-group upload-multiple-files"> -->
+            <!--<label class="col-sm-12" style="margin-bottom:8px;">Selectionner le fichier</label>-->
+			<div class="col-sm-11">
+                <ol class="breadcrumb">
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">Library</a></li>
+                  <li class="active">Data</li>
+                </ol>
+            </div>
+
+            <div class="full-height bordered col-sm-4" 
+				      data-angular-treeview="true"
+				      data-tree-id="abc"
+				      data-tree-model="plan"
+				      data-node-id="id"
+				      data-node-label="libelle"
+				      data-node-children="items" >
+			</div>
+            
+            <div class="full-height  col-sm-7 " >
+                <ul class="nav nav-tabs">
+                  <li role="presentation" class="active" ><a ui-sref="documents.documents">Documents</a></li>
+                  <li role="presentation" ><a ui-sref="documents.upload">Upload</a></li>
+                  <li role="presentation" ><a ui-sref="documents.history">History</a></li>
+                </ul>
+
+                <ol class="breadcrumb">
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">Library</a></li>
+                  <li class="active">Data</li>
+
+                </ol>
+                
+                <div ui-view ></div>
+
+            </div>
+            
+	</div>
+<!-- style="margin-top:5px;" -->
+	<!-- <div class="row"  >
+            <div class="col-xs-4">
+                <div class="drag-zone text-center" nv-file-over="" nv-file-drop="" uploader="document.uploader">
+                    <i class="fa fa-cloud-upload fa-2x" style="position: relative;top: 6px;"></i>
+                    <span>Glissez les fichiers ici</span>
+                </div>
+            </div> -->
+            <!-- <div class="col-xs-1" style="padding-top:15px;">ou</div>
+            <div class="col-xs-2 input-zone">
+                <input type="file" nv-file-select="" uploader="document.uploader" multiple style="display: inline-block!important;" />
+            </div>
+            <div class="col-xs-12 list-files" ng-show="document.uploader.queue.length > 0">
+                <ul class="list-group col-xs-12">
+                    <li ng-repeat="item in document.uploader.queue" class="list-group-item item-to-upload col-xs-12">
+                        <div class="filename col-xs-11 no-padding" ng-class="{error: item.isError, success: item.isSuccess}">
+                            <strong ng-bind="item.file.name" title="{{item.file.name}}"></strong>
+                            <span ng-show="document.uploader.isHTML5" nowrap ng-bind="'('+(item.file.size/1024/1024|number:2)+' MB)'"></span>
+                        </div>
+                        <div class="list-buttons col-xs-1 no-padding text-right">
+                            <button type="button" class="fa fa-times" ng-click="item.remove()"></button>
+                        </div>
+                    </li>
+                </ul>
+            </div> -->
+        <!-- </div> -->
+    <!-- </div> -->
+
+{% endverbatim %}
+
+    </body>
+
+</html>

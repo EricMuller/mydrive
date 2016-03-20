@@ -18,6 +18,14 @@ angular.module('my-ged.errInterceptor')
 angular.module('my-ged.errInterceptor')
 .factory('httpErrorHandler', function ($rootScope, errInterceptorConfig, $q, alertSvc) {
   return {
+    'request': function( config )
+     {
+        //debugger
+        var user    = $rootScope.globals.user;
+
+        config.headers['Authorization'] = 'Token ' + user.authtoken;
+        return config;
+     },
     'responseError': function (rejection) {
       if (rejection.status === 400) {
          //$log.log(rejection.status + ' responded');

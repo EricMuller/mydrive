@@ -38,6 +38,8 @@
 		
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/tree/tree.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/login/login.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/angular.treeview/treeview.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/bootstrap/bootstrap.css" />
 		<!--<link rel="stylesheet" href="{{STATIC_URL}}ged/css/fab/fab.css" />-->
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/mdr-file/mdr-file.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/filetypes/filetypes.css" />
@@ -45,38 +47,37 @@
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.min.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/bower_components/angular-postman/css/postman.css" />
-
-		
 		<!--[if lte IE 8]><link rel="stylesheet" href="{{STATIC_URL}}ged/css/ie/v8.css" /><![endif]-->
 	</head>
 	<!--
 		Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
 		Set it to "right-sidebar" to, you guessed it, position it on the right.
 	-->
-	<body  ng-app="my-ged" class="left-sidebar" ng-controller="homeCtrl" > 
+	<body  ng-app="my-ged"  ng-show="loaded" class="left-sidebar" ng-controller="homeCtrl" ng-cloak > 
 
-		<!-- Wrapper ng-show1="isAuthenticated">-->
-			<div id="wrapper" >
+		<!-- Wrapper ng-show1="isLoaded">-->
+			<div id="wrapper" 
 					
 					<!-- Content -->
-					<div id="content">
-					 	<ng-view></ng-view>
+					<div id="content" ui-view>
+					 
 					</div>
 					<!-- Sidebar -->
 					<div id="sidebar" >
 						<!-- Logo -->
 						{% verbatim %}
-							<h1 id="logo" ng-cloak><a href="#" ng-model="selectedMenu">{{ selectedMenu }}</a></h1>
+							<h1 id="logo" ><a href="#" ng-model="selectedMenu">{{ selectedMenu }}</a></h1>
 						{% endverbatim %}
 						<!-- Nav -->
 							<nav id="nav"  >
 								<ul>
 									<!--<li class="current"><a href="#">Latest Post</a></li>-->
-									<li data-hide-when-connected ><a href="#/login">login</a></li>
-									<li data-show-when-connected ><a href="#/logout" ng-click="signOut()">logout</a></li>
-									<li data-show-when-connected ><a href="#/upload">Upload</a></li>
-									<li data-show-when-connected ><a href="#/archives">Archives</a></li>
-									<li data-show-when-connected ><a href="#/plan">File Plan</a></li>
+									<li data-hide-when-connected ><a ui-sref="login">login</a></li>
+									<li data-show-when-connected ng-click="signOut()"><a href="#/logout">logout</a></li>
+									<!--<li data-show-when-connected ><a ui-sref="upload">Upload</a></li>-->
+									<li data-show-when-connected ><a ui-sref="documents.documents">Documents</a></li>
+									<li data-show-when-connected ><a ui-sref="archives">Archives</a></li>
+									<li data-show-when-connected ><a ui-sref="plan">File Plan</a></li>
 									<!--<li><a href="#/about">About Me</a></li>
 									<li><a href="#/contact">Contact Me</a></li>-->
 								</ul>
@@ -88,114 +89,13 @@
 									<input type="text" class="text" name="search" placeholder="Search" />
 								</form>
 							</section>
-					
 
-						<!-- Text 
-							<section class="box text-style1">
-								<div class="inner">
-									<p>
-										<strong>notes:</strong> A free and fully responsive HTML5 site
-										template designed by <a href="http://n33.co/">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a>
-									</p>
-								</div>
-							</section>
-					    
-					    -->
-						<!-- Recent Posts 
-							<section class="box recent-posts">
-								<header>
-									<h2>Recent Posts</h2>
-								</header>
-								<ul>
-									<li><a href="#">Lorem ipsum dolor</a></li>
-									<li><a href="#">Feugiat nisl aliquam</a></li>
-									<li><a href="#">Sed dolore magna</a></li>
-									<li><a href="#">Malesuada commodo</a></li>
-									<li><a href="#">Ipsum metus nullam</a></li>
-								</ul>
-							</section>
-					   -->
-						<!-- Recent Comments 
-							<section class="box recent-comments">
-								<header>
-									<h2>Recent Comments</h2>
-								</header>
-								<ul>
-									<li>case on <a href="#">Lorem ipsum dolor</a></li>
-									<li>molly on <a href="#">Sed dolore magna</a></li>
-									<li>case on <a href="#">Sed dolore magna</a></li>
-								</ul>
-							</section>
-					    -->
- 						<!-- Calendar 
-							<section class="box calendar">
-								<div class="inner">
-									<table>
-										<caption>July 2014</caption>
-										<thead>
-											<tr>
-												<th scope="col" title="Monday">M</th>
-												<th scope="col" title="Tuesday">T</th>
-												<th scope="col" title="Wednesday">W</th>
-												<th scope="col" title="Thursday">T</th>
-												<th scope="col" title="Friday">F</th>
-												<th scope="col" title="Saturday">S</th>
-												<th scope="col" title="Sunday">S</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td colspan="4" class="pad"><span>&nbsp;</span></td>
-												<td><span>1</span></td>
-												<td><span>2</span></td>
-												<td><span>3</span></td>
-											</tr>
-											<tr>
-												<td><span>4</span></td>
-												<td><span>5</span></td>
-												<td><a href="#">6</a></td>
-												<td><span>7</span></td>
-												<td><span>8</span></td>
-												<td><span>9</span></td>
-												<td><a href="#">10</a></td>
-											</tr>
-											<tr>
-												<td><span>11</span></td>
-												<td><span>12</span></td>
-												<td><span>13</span></td>
-												<td class="today"><a href="#">14</a></td>
-												<td><span>15</span></td>
-												<td><span>16</span></td>
-												<td><span>17</span></td>
-											</tr>
-											<tr>
-												<td><span>18</span></td>
-												<td><span>19</span></td>
-												<td><span>20</span></td>
-												<td><span>21</span></td>
-												<td><span>22</span></td>
-												<td><a href="#">23</a></td>
-												<td><span>24</span></td>
-											</tr>
-											<tr>
-												<td><a href="#">25</a></td>
-												<td><span>26</span></td>
-												<td><span>27</span></td>
-												<td><span>28</span></td>
-												<td class="pad" colspan="3"><span>&nbsp;</span></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</section>-->
-						
 						<!-- Copyright -->
 						{% verbatim %}
 							<ul id="copyright">
 								<li>&copy;{{globals.username}}.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						{% endverbatim %}
-						
 
 					</div>
 
@@ -207,50 +107,58 @@
 		<!--<script src="{{STATIC_URL}}ged/js/jquery.min.js"></script> -->
 		<script src="{{STATIC_URL}}ged/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular/angular.min.js"></script>
-		<script src="{{STATIC_URL}}ged/bower_components/angular-cookies/angular-cookies.min.js"></script>
-		<script src="{{STATIC_URL}}ged/bower_components/angular-route/angular-route.min.js"></script>
-		<script src="{{STATIC_URL}}ged/bower_components/underscore/underscore-min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/restangular/dist/restangular.min.js"></script>
-
+		
+		<script src="{{STATIC_URL}}ged/bower_components/angular-cookies/angular-cookies.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular-animate/angular-animate.min.js"></script>
+		<script src="{{STATIC_URL}}ged/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  		
   		<script src="{{STATIC_URL}}ged/bower_components/angular-aria/angular-aria.min.js"></script>
   		<script src="{{STATIC_URL}}ged/bower_components/angular-messages/angular-messages.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular-material/angular-material.min.js"></script>
 		<script src="{{STATIC_URL}}ged/bower_components/angular-postman/js/postman.min.js"></script>
+		<script src="{{STATIC_URL}}ged/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+		<script src="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
 
+		<script src="{{STATIC_URL}}ged/bower_components/underscore/underscore-min.js"></script>
+		<script src="{{STATIC_URL}}ged/bower_components/moment/min/moment.min.js"></script>
 		<!--<script src="{{STATIC_URL}}ged/bower_components/mdr-angular-file/dist/mdr-file.js"></script>-->
 		<script src="{{STATIC_URL}}ged/js/mdr-file/mdr-file.js" ></script>
 
+
 		<script src="{{STATIC_URL}}ged/js/app/app.js"></script>
-		<script src="{{STATIC_URL}}ged/js/app/common/common.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/home/home.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/home/home.ctrl.js"></script>
+
+-		<script src="{{STATIC_URL}}ged/js/app/common/common.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/interceptors/interceptors_err.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/directives/mydirective.dir.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/common/directives/treeview.dir.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/alert/alert.svc.js"></script>
-		<!--<script src="{{STATIC_URL}}ged/js/app/common/directives/ngautocomplete.dir.js"></script>-->
-
-		<!-- material service -->
+		<script src="{{STATIC_URL}}ged/js/app/common/fileupload/fileupload.svc.js"></script>
+		
     	<script src="{{STATIC_URL}}ged/js/app/common/material/material.mdl.js"></script>
     	<script src="{{STATIC_URL}}ged/js/app/common/material/toast.svc.js"></script>
 
-
 		<script src="{{STATIC_URL}}ged/js/app/login/login.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/login.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/login/logout.ctrl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/sign.ctrl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/users.svc.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/login.svc.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/login/directives/hidewhenconnected.dir.js"></script>
-		<script src="{{STATIC_URL}}ged/js/app/home/home.mdl.js"></script>
-		<script src="{{STATIC_URL}}ged/js/app/home/home.ctrl.js"></script>
+
 		<script src="{{STATIC_URL}}ged/js/app/archives/archives.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/archives/archives.ctrl.js"></script>
-		<script src="{{STATIC_URL}}ged/js/app/upload/upload.mdl.js"></script>
-		<script src="{{STATIC_URL}}ged/js/app/upload/upload.ctrl.js"></script>
-		<script src="{{STATIC_URL}}ged/js/app/upload/filters/bytestosize.ftr.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/documents/documents.mdl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/documents/documents.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/documents/plan-documents.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/documents/upload.ctrl.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/documents/filters/bytestosize.ftr.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.ctrl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/plan/plan.svc.js"></script>
 		
-		<script type="text/javascript" src="{{STATIC_URL}}ged/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 		<!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
 		<!--<script src="/javascripts/offcanvas.js"></script>-->
@@ -258,9 +166,7 @@
 		<!--<script src="{{STATIC_URL}}ged/js/controllers.js"></script>-->
 		<script>
 		// Add the CSRF Token
-		var app = angular.module('my-ged'); 
-		// Not including a list of dependent modules 	(2nd parameter to `module`) "re-opens" the module for additional configuration
-		app.config(['$httpProvider', function($httpProvider) {
+		angular.module('my-ged').config(['$httpProvider', function($httpProvider, $rootScope) {
     		$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
 		}]);
 

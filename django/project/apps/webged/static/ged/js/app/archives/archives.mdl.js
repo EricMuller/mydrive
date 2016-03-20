@@ -1,9 +1,10 @@
 
-	angular.module('my-ged.archives', [ 'ngRoute' ])
+	angular.module('my-ged.archives', [ 'ui.router' ])
 	.config(
-		function($routeProvider) {
-			 $routeProvider
-        		.when('/archives', {
+		function($stateProvider) {
+			 $stateProvider
+        		.state('archives', {
+                    url: '/archives',
             		templateUrl: 'partials/archives.html',
             		controller: 'archivesCtrl',
             		resolve: {

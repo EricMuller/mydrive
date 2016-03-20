@@ -10,7 +10,7 @@
                         <div class="col-sm-4 col-sm-offset-2 form-box">
                         	<div class="form-top">
                         		<div class="form-top-left">
-                        			<h3>Login to my GED</h3>
+                        			<h3 class="glyphicon glyphicon-lock"> StrongBox Login</h3>
                             		<p>Enter your username and password to log on:</p>
                         		</div>
                         		<div class="form-top-right">
@@ -40,7 +40,8 @@
 			                        	<label class="sr-only" for="form-password">Password</label>
 			                        	<input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password" ng-model="password">
 			                        </div>
-			                        <button type="submit" class="btn"  value="Submit">Sign in!</button>
+			                        <button type="button" class="btn"  value="Submit" 
+                                            ng-click="signIn(username,password)">Sign in!</button>
                                     <!--<i class="fa fa-spinner fa-spin"></i>-->
 			                    </form>
                                 <div>{{username}}</div>

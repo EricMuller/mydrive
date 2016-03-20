@@ -24,14 +24,15 @@
 
 <script type="text/ng-template" id="nodes_renderer.html">
   <div ui-tree-handle class="tree-node tree-node-content">
-    <a class="btn btn-success btn-xs"    data-nodrag ng-click="toggle(this)">
-    <span
+    <a class="btn btn-success btn-xs"   data-nodrag ng-click="toggle(this)">
+    <span ng-show="node.items.length1 != 0"
         class="glyphicon"
         ng-class="{
-          'glyphicon-chevron-right': collapsed,
-          'glyphicon-chevron-down': !collapsed
+          'glyphicon glyphicon-folder-close': collapsed,
+          'glyphicon glyphicon-folder-open': !collapsed
         }">
      </span>
+    
     </a>
     {{node.libelle}}
      <!--<input type="text" ng-model="node.libelle">-->
@@ -66,6 +67,15 @@
     <pre class="code" ng-model="plan" >{{ plan | json }}</pre>
   </div>
 <div class="col-sm-6">
+
+  <div
+      data-angular-treeview="true"
+      data-tree-id="abc"
+      data-tree-model="plan"
+      data-node-id="id"
+      data-node-label="libelle"
+      data-node-children="items" >
+  </div>
 </div>  
 <!--<div class="col-sm-6">
   <div ui-tree id="tree-root2">
@@ -79,7 +89,12 @@
     <pre class="code">{{ folders | json }}</pre>
   </div>
   -->
+   <div class="col-sm-6">
+    
+  </div>
+
 </div>
+
 
 
 {% endverbatim %}

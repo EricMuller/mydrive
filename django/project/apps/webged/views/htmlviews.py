@@ -40,10 +40,21 @@ def partials(request, name):
                               RequestContext(request, {}))
 
 
+def partials2(request, name, name2):
+    return render_to_response("ged/partials/" + name + "/" + name2 + ".html",
+                              RequestContext(request, {}))
+
+
+def partials3(request, name, name2, name3):
+    return render_to_response("ged/partials/" + name + "/" +
+                              name2 + "/" + name3 + ".html",
+                              RequestContext(request, {}))
+
+
 def login(request):
     return dispatch(request, 'login')
 
 
-#@login_required( login_url='/ged/#/login')
+# @login_required( login_url='/ged/#/login')
 def index(request):
     return dispatch(request, 'index')

@@ -10,6 +10,9 @@
 		box-sizing: border-box;
 	}
 
+	.is-loading {
+		display: none;
+	}
 /* Container */
 
 	body {

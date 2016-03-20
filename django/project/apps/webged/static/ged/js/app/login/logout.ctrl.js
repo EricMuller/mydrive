@@ -1,5 +1,5 @@
 angular.module('my-ged.login')
-  .controller('loginCtrl',['$scope','$rootScope', '$location', 'users','loginSvc','$cookies',
+  .controller('logoutCtrl',['$scope','$rootScope', '$location', 'users','loginSvc','$cookies',
 
       function  ($scope, $rootScope, $location, users, loginSvc,$cookies) {
       			
@@ -9,16 +9,13 @@ angular.module('my-ged.login')
 
 			  $scope.options=null;      	
 
-			  $scope.signIn = function(username,password) {
-          			
-	          	  loginSvc.signIn(username,password).then(function(result) {
-                     $location.path('home');
-                }
+        loginSvc.signOut().then(function(result) {
+              $rootScope.$broadcast("loginStateChanged", {
+                              someProp: 'signOut OK'     
+                    });
+              });
 
-              );;
-          			
-          	}
-
+			  
         }
 
 ]);

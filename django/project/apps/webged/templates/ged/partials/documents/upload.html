@@ -1,0 +1,19 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" style="width:100px" >
+	                {% verbatim %}
+	                    <!-- model="model" 
+	                    data="{hola:'mundo'}" headers="{token:'shhh'}" 
+	                    size="5" limit="10" formats="'jpg,png,gif,pdf'" disabled="false" multiple="true" 
+	                    text="drag here">-->
+	                </mdr-file>
+	 {% endverbatim %}
+</body>
+</html>
+ 

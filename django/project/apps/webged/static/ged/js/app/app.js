@@ -2,15 +2,16 @@
 (function () {
     'use strict';
 
-var app = angular.module('my-ged', ['ngRoute', 'ngCookies', 'mdr.file', 'ui.tree', 'ngMaterial', 'material'
-  , 'my-ged.home', 'my-ged.archives', 'my-ged.upload', 'my-ged.plan', 'my-ged.login', 'my-ged.common', 'restangular', 'my-ged.errInterceptor']);
+var app = angular.module('my-ged', ['ui.router', 'ngCookies', 'mdr.file', 'ui.tree', 'ngMaterial', 'material','angularTreeview'
+  , 'my-ged.home', 'my-ged.archives', 'my-ged.documents', 'my-ged.plan', 'my-ged.login', 'my-ged.common', 'restangular', 'my-ged.errInterceptor']);
 
-app.config(['$routeProvider',
-    function($routeProvider) { 
+app.config(['$stateProvider','$urlRouterProvider',
+    function($stateProvider, $urlRouterProvider) { 
         // Système de routage
-        $routeProvider.otherwise({
-            redirectTo: '/home'
-        });
+        $urlRouterProvider.otherwise('/home');
+        // $routeProvider.otherwise({
+        //     redirectTo: '/home'
+        // });
         //$locationProvider.html5Mode(true);
     }
 ]);
@@ -115,7 +116,8 @@ run.$inject = ['$rootScope', '$location', 'loginSvc', '$http'];
 function run($rootScope, $location, loginSvc, $http) {
         // keep user logged in after page refresh
         $rootScope.globals={};
-        loginSvc.restoreglobals();
+        $rootScope.globals.user=loginSvc.getCurrentUser();
+        //loginSvc.restoreglobals();
         /*if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }*/
@@ -123,7 +125,7 @@ function run($rootScope, $location, loginSvc, $http) {
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in and trying to access a restricted page
             var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1;
-            var loggedIn = $rootScope.globals.authtoken;
+            var loggedIn = $rootScope.globals.user.authtoken;
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
             }
