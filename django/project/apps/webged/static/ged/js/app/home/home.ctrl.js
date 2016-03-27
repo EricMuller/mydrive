@@ -1,8 +1,9 @@
 	
 angular.module('my-ged.home')
-.controller('homeCtrl',['$scope','$rootScope','$timeout','$mdSidenav','$log','loginSvc','alertSvc','errInterceptorConfig','$location','planSvc',
+.controller('homeCtrl',['$scope', '$rootScope', '$timeout', '$mdSidenav', '$log', 'loginSvc', 'alertSvc'
+							, 'errInterceptorConfig', '$location', 'planSvc', '$state',
 
-	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc, alertSvc, errInterceptorConfig, $location, planSvc) {
+	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc, alertSvc, errInterceptorConfig, $location, planSvc, $state) {
 		
 		$rootScope.selectedMenuName= function(title){
 			$rootScope.selectedMenu=title;
@@ -15,8 +16,41 @@ angular.module('my-ged.home')
 		$scope.$on('connectionStateChanged', function (event, data) {
   				console.log(data); 
 		});
+		
+
+		$rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+
+			 $scope.currentState ={
+			 	to : to,
+			 	params : toParams,
+			 };
+			 var link = $scope.getLinkUrl();
+			 if(link){
+				$scope.documentState= link;
+			 }
+			 
+		});
 
 		$scope.plan = '';
+		$scope.currentState = {};
+		$scope.documentState = $state.href('documents.documents', {id: 0 });
+		
+		$scope.getDocumentState = function() {		
+			return $scope.documentState ;
+		}
+
+		$scope.getLinkUrl = function() {
+			
+			
+			if ($scope.currentState.to){
+				if ($scope.currentState.to.name.indexOf('documents') === 0 ){
+					return $state.href($scope.currentState.to.name, {id: $scope.currentState.params.id });
+				}
+
+			}	
+  			return '';
+		};
+
 		//
 		
 		$rootScope.$on(errInterceptorConfig.ERR_500_EVENT, interceptError);
@@ -45,7 +79,7 @@ angular.module('my-ged.home')
 		$scope.toggleLeft = buildDelayedToggler('left');
 	    $scope.toggleRight = buildToggler('right');
 	    
-
+		
 
 	    $scope.signOut = function(){
 	    	 loginSvc.signOut().then(function(result) {

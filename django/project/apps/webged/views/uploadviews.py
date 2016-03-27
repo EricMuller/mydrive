@@ -9,10 +9,12 @@ from mysite import settings
 from random import randint
 from webged.forms import UploadFileForm
 from rest_framework.views import APIView
-from rest_framework import generics, permissions
+from rest_framework import generics
+from rest_framework import permissions
+
 
 from ged.models import Document
-from ged.models import Basket
+from ged.models import Folder
 
 logger = logging.getLogger(__name__)
 
@@ -34,8 +36,9 @@ def getNewFileName(full_name):
 
 def post(request):
 
-        # for key, value in request.FILES.items():
-            # print(key )
+    for key, value in request.POST.items():
+        print(key)
+    # print(request.FILES)
 
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -59,20 +62,21 @@ def post(request):
             response_data['size'] = str(up_file.size)
             response_data['content_type'] = up_file.content_type
 
-            basket = Basket.objects.get(code="SCAN")
+            print(request.POST['id'])
+            folder = Folder.objects.get(id=int(request.POST['id']))
 
-            if basket is None:
+            if folder is None:
 
                 response_data['status'] = "error"
                 response_data[
-                    'description'] = """We're sorry, no default
-                     basket SCAN defined"""
+                    'description'] = ("We re sorry, no folder " +
+                                      request.POST['id'] + " found")
 
             else:
 
                 document = Document.create(
                     up_file.name, new_file_name,
-                    up_file.content_type, 1, basket)
+                    up_file.content_type, 1, folder)
                 document.save()
 
             return JsonResponse(response_data)

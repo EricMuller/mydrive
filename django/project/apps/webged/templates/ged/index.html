@@ -38,7 +38,7 @@
 		
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/tree/tree.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/login/login.css" />
-		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/angular.treeview/treeview.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/angular-treeview/treeview.css" />
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/bootstrap/bootstrap.css" />
 		<!--<link rel="stylesheet" href="{{STATIC_URL}}ged/css/fab/fab.css" />-->
 		<link rel="stylesheet" href="{{STATIC_URL}}ged/css/mdr-file/mdr-file.css" />
@@ -67,7 +67,7 @@
 						<!-- Logo -->
 						{% verbatim %}
 							<h1 id="logo" ><a href="#" ng-model="selectedMenu">{{ selectedMenu }}</a></h1>
-						{% endverbatim %}
+						
 						<!-- Nav -->
 							<nav id="nav"  >
 								<ul>
@@ -75,7 +75,7 @@
 									<li data-hide-when-connected ><a ui-sref="login">login</a></li>
 									<li data-show-when-connected ng-click="signOut()"><a href="#/logout">logout</a></li>
 									<!--<li data-show-when-connected ><a ui-sref="upload">Upload</a></li>-->
-									<li data-show-when-connected ><a ui-sref="documents.documents">Documents</a></li>
+									<li data-show-when-connected ><a ng-href="{{getDocumentState()}}">Documents</a></li>
 									<li data-show-when-connected ><a ui-sref="archives">Archives</a></li>
 									<li data-show-when-connected ><a ui-sref="plan">File Plan</a></li>
 									<!--<li><a href="#/about">About Me</a></li>
@@ -91,7 +91,7 @@
 							</section>
 
 						<!-- Copyright -->
-						{% verbatim %}
+						
 							<ul id="copyright">
 								<li>&copy;{{globals.username}}.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
@@ -133,7 +133,7 @@
 -		<script src="{{STATIC_URL}}ged/js/app/common/common.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/interceptors/interceptors_err.mdl.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/directives/mydirective.dir.js"></script>
-		<script src="{{STATIC_URL}}ged/js/app/common/directives/treeview.dir.js"></script>
+		<script src="{{STATIC_URL}}ged/js/app/common/directives/angular-treeview.dir.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/alert/alert.svc.js"></script>
 		<script src="{{STATIC_URL}}ged/js/app/common/fileupload/fileupload.svc.js"></script>
 		

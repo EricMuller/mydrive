@@ -138,9 +138,15 @@
       // SE INSTANCIA EL FORM DATA
       var formData = new FormData();
 
+    //  debugger
       if ($scope.data !== undefined) {
         for (var ke in $scope.data) {
           formData.append(ke, $scope.data[ke]);
+        }
+      }
+      if ($scope.model !== undefined) {
+        for (var ke in $scope.model) {
+          formData.append(ke, $scope.model[ke]);
         }
       }
       // Si es multiple

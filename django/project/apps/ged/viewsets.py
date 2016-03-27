@@ -193,3 +193,42 @@ class DocumentViewSet(viewsets.ModelViewSet):
     """
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+
+    def get_queryset(self):
+        queryset = Document.objects.all()
+        folderId = self.request.query_params.get('id', None)
+
+        if folderId is not None:
+            queryset = queryset.filter(folder_id=folderId)
+
+        return queryset
+
+
+class FolderDocumentViewSet(DefaultsAuthentificationMixin, viewsets.ViewSet):
+
+    http_method_names = ['get', 'post', 'head', 'delete']
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer
+
+    def list(self, request):
+
+        folderId = request['id']
+        if folderId is not None:
+            queryset = queryset.filter(folder_id=folderId)
+
+        # return Response(serializer.data)
+
+    def create(self, request):
+        pass
+
+    def destroy(self, request, pk=None):
+        pass
+
+    def retrieve(self, request, pk=None):
+        pass
+
+    def update(self, request, pk=None):
+        pass
+
+    def partial_update(self, request, pk=None):
+        pass

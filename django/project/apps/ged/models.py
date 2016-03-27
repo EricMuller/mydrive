@@ -43,23 +43,6 @@ class Basket(DateModel):
         return self.libelle
 
 
-class Document(DateModel):
-
-    """docstring for ClassName"""
-    name = models.CharField(max_length=256)
-    path = models.CharField(max_length=512)
-    contentType = models.CharField(max_length=30)
-    version = models.IntegerField(default=0)
-    basket = models.ForeignKey(Basket, verbose_name='Basket', default=None)
-
-    @classmethod
-    def create(cls, name, path, contentType, version, basket):
-        document = cls(
-            name=name, path=path, contentType=contentType,
-            version=version, basket=basket)
-        return document
-
-
 class UploadFile(DateModel):
 
     name = models.CharField(max_length=256, default=None)
@@ -90,3 +73,21 @@ class Folder(Node):
             parent=parent)
 
         return folder
+
+
+class Document(DateModel):
+
+    """docstring for ClassName"""
+    name = models.CharField(max_length=256)
+    path = models.CharField(max_length=512)
+    contentType = models.CharField(max_length=30)
+    version = models.IntegerField(default=0)
+    folder = models.ForeignKey(
+        Folder, verbose_name='Folder', null=True, default=None, blank=True)
+
+    @classmethod
+    def create(cls, name, path, contentType, version, folder):
+        document = cls(
+            name=name, path=path, contentType=contentType,
+            version=version, folder=folder)
+        return document

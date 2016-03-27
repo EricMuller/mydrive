@@ -10,7 +10,6 @@ from ged.models import Folder
 from rest_framework import serializers
 
 
-
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -37,7 +36,7 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = ('id', 'name', 'path', 'contentType', 'created_at',
-                  'updated_at', 'version', 'basket')
+                  'updated_at', 'version', 'folder')
 
 
 class UploadFileSerializer(serializers.HyperlinkedModelSerializer):

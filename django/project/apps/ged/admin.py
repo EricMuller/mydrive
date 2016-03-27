@@ -9,7 +9,7 @@ class DocumentAdmin(admin.ModelAdmin):
 
     list_display = [
         'name', 'path', 'contentType', 'created_at', 'updated_at',
-        'version', 'basket']
+        'version', 'folder']
     search_fields = ['name']
 
 

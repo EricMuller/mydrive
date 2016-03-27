@@ -6,14 +6,22 @@
 	<title></title>
 </head>
 <body>
-	<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" style="width:100px" >
-	                {% verbatim %}
-	                    <!-- model="model" 
+{% verbatim %}
+{{folder.id}}
+{% endverbatim %}
+
+	<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" style="width:100px" 
+						model="folder" >
+{% verbatim %}
+
+
+	                    <!-- 
 	                    data="{hola:'mundo'}" headers="{token:'shhh'}" 
 	                    size="5" limit="10" formats="'jpg,png,gif,pdf'" disabled="false" multiple="true" 
 	                    text="drag here">-->
-	                </mdr-file>
+	               </mdr-file>
 	 {% endverbatim %}
+
 </body>
 </html>
  

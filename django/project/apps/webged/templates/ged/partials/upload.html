@@ -2,18 +2,14 @@
 <html>
   <head>
     <title>Download Example</title>
-
     <!--<link href="{{STATIC_URL}}webged/bower_components/mdr-angular-file/dist/mdr-file.min.css">-->
-    
-    
-
     </head>
 
     <body> 
-
-		<!--<mdr-file url="/test/upload.php" model="file">-->
-		<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" style="width:500px" >
-{% verbatim %}					
+	<!--<mdr-file url="/test/upload.php" model="file">-->
+		<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" style="width:500px" 
+			data="{id:'mundo'}">
+		{% verbatim %}					
 		<!-- model="model" 
 		data="{hola:'mundo'}" headers="{token:'shhh'}" 
 		size="5" limit="10" formats="'jpg,png,gif,pdf'" disabled="false" multiple="true" 
@@ -40,15 +36,11 @@
 	      				</div>
 	    			</div>
 	  			</div>
-	  		
 		</div>
 		</div>
 		<div style="display :none;">
-		text={{ uploadFiles }}
+			text={{ uploadFiles }}
 		</div>
-
-{% endverbatim %}
-
+		{% endverbatim %}
     </body>
-
 </html>

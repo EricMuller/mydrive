@@ -110,6 +110,7 @@ class TreeFolder():
         self.libelle = folder.libelle
         self.updated_at = folder.updated_at
         self.items = []
+        self.parent_id = folder.parent_id
 
 
 class Items(object):
@@ -143,10 +144,11 @@ class ItemField(serializers.Field):
 
 class TreeSerializer(serializers.Serializer):
     id = serializers.IntegerField()
+    parent_id = serializers.IntegerField()
     libelle = serializers.CharField(max_length=30)
     items = ItemField()
 
     class Meta:
         model = TreeFolder
         fields = (
-            'id', 'libelle', 'items')
+            'id', 'parent_id', 'libelle', 'items')

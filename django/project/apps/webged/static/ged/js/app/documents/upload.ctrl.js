@@ -1,11 +1,17 @@
 angular.module('my-ged.documents')
-    .controller('uploadCtrl',['$scope','$rootScope','$window','uploaderSvc', 
+    .controller('uploadCtrl',['$scope','$rootScope','$window','uploaderSvc', 'alertSvc', '$stateParams', '$state',
 
-	function  ($scope, $rootScope, $window, uploaderSvc) {
+	function  ($scope, $rootScope, $window, uploaderSvc, alertSvc , $stateParams, $state ) {
             
     $rootScope.selectedMenuName('Upload');
     $scope.text ='eee';
     
+    alertSvc.info($stateParams.id);
+
+    $scope.folder = {
+          id : $state.params.id
+    };
+
     $scope.$on('transferComplete', function(event,data) { 
     
         console.log(data);
