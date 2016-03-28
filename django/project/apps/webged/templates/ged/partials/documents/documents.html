@@ -5,8 +5,8 @@
 </head>
 <body>
 {% verbatim %}
-			<div ng-if="true"> 
-				<table class="default">
+			<div ng-show="documents.length"> 
+				<table class="default table-hover">
 					<thead>
 						<tr>
 							<th scope="col" title="Id">Id</th>
@@ -14,7 +14,7 @@
 							<th scope="col" title="contentType">content-type</th>
 							<th scope="col" title="created_at">created_at</th>
 							<th scope="col" title="updated_at">updated_at</th>
-							<th scope="col" title="basket">basket</th>
+							<th scope="col" title="folder">basket</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -24,11 +24,18 @@
 					    <td>{{ x.contentType }}</td>
 					    <td>{{ x.created_at | date: 'yyyy-MM-dd hh:m' }}</td>
 					    <td>{{ x.updated_at | date: 'yyyy-MM-dd hh:m' }}</td>
-					    <td>{{ x.basket }}</td>
+					    <td>{{ x.folder }}</td>
 					  </tr>
 				  </tbody>
 				</table>
 			 </div> 
-{% endverbatim %}		
+{% endverbatim %}				 
+			
+			<div class="full-height" ng-hide="documents.length"> 
+					<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" 
+					 	model="folder" >
+					</mdr-file>
+			</div>
+
 </body>
 </html>

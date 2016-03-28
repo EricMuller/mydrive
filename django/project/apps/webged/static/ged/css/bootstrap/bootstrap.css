@@ -22,6 +22,21 @@
 .gi-4x{font-size: 4em;}
 .gi-5x{font-size: 5em;}
 
-.treeview .glyphicon {
-    font-size: 24px;
+
+
+
+
+.gi-16px {
+    font-size: 16px !important;
 }
+
+.gi-24px {
+    font-size: 24px !important;
+}
+
+.gi-20px {
+    font-size: 20px !important;
+}
+/*.treeview .glyphicon {
+    font-size: 24px;
+}*/

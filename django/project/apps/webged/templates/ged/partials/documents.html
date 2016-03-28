@@ -31,14 +31,13 @@
   <!-- style="margin-top:5px;" -->
 	<div class="full-height treeview" >
 
-        <!-- <div class="form-group upload-multiple-files"> -->
+        <!-- <div class="form-group upload-multiple-files"> data-ng-click="selectNode(mytree)"-->
             <!--<label class="col-sm-12" style="margin-bottom:8px;">Selectionner le fichier</label>-->
 			<div class="col-sm-11">
-                <ol class="breadcrumb">
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">Library</a></li>
-                  <li class="active">Data</li>
+              <ol class="breadcrumb" >
+                  <li ng-repeat="item in breadcrumb"><a data-ng-click="navigate(item.id) ">{{item.libelle}}</a></li>
                 </ol>
+                
             </div>
 
             <div class="full-height bordered col-sm-4" 
@@ -48,7 +47,7 @@
 				      data-node-id="id"
 				      data-node-label="libelle"
 				      data-node-children="items" 
-                      data-ng-click="selectNode(mytree)" >
+                      data-node-selected="nodeSelected(arg1)" >
 			</div>
             
             <div class="full-height  col-sm-7 ">
@@ -57,12 +56,7 @@
                   <li role="presentation" class="{{getClass('documents.upload')}}"><a ui-sref="documents.upload({id: folder.id})">Upload</a></li>
                   <li role="presentation" class="{{getClass('documents.history')}}"><a ui-sref="documents.history({id: folder.id})">History</a></li>
                 </ul>
-
-                <ol class="breadcrumb" >
-                  <li ng-repeat="item in breadcrumb"><a data-ng-click="navigate(item.id) ">{{item.libelle}}</a></li>
-                </ol>
-                
-                <div ui-view ></div>
+                <div ui-view class="full-height" ></div>
             </div>
             
 	</div>

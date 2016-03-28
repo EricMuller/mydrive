@@ -63,6 +63,7 @@ def post(request):
             response_data['content_type'] = up_file.content_type
 
             print(request.POST['id'])
+
             folder = Folder.objects.get(id=int(request.POST['id']))
 
             if folder is None:

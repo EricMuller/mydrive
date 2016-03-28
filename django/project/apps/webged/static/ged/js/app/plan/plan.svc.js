@@ -84,7 +84,7 @@
         function breadcrumb(id){
 
           var paths= [];
-           debugger
+          
            var currentNode = this.folders[id];
            if(currentNode){
               breadcrumbNode(this.folders,currentNode,paths);

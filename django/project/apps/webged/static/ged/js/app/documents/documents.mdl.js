@@ -33,10 +33,10 @@ angular.module('my-ged.documents', [ 'ui.router' ]).config(
                     templateUrl: 'partials/documents/documents.html',
                     controller: 'documentsCtrl',
                     resolve:{
-                        documents : ['TokenRestangular','$stateParams', function(TokenRestangular,$stateParams) {
-                            return TokenRestangular.one("documents").get({id: $stateParams.id})  ;
+                        documents :  function(documentSvc, $stateParams) {
+                                return documentSvc.getDocumentsByFolder($stateParams.id)  ;
                         }
-                        ]
+                        
                     }
                 })
                 .state('documents.history', {
@@ -44,8 +44,8 @@ angular.module('my-ged.documents', [ 'ui.router' ]).config(
                     templateUrl: 'partials/documents/history.html',
                     controller: 'documentsCtrl',
                     resolve:{
-                        documents : function(TokenRestangular) {
-                            return TokenRestangular.one("documents").get()  ;
+                        documents : function(documentSvc) {
+                            return documentSvc.getDocuments()  ;
                         }
                     }
                 })

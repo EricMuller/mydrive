@@ -25,9 +25,10 @@
 (function ( angular ) {
 	'use strict';
 
-	angular.module( 'angularTreeview', [] ).directive( 'treeModel', ['$compile', function( $compile ) {
+	angular.module( 'angularTreeview', [] ).directive( 'treeModel', ['$compile','$parse', function( $compile , $parse) {
 		return {
 			restrict: 'A',
+			//scope: { nodeSelected: '&' },
 			link: function ( scope, element, attrs ) {
 				//tree id
 				var treeId = attrs.treeId;
@@ -44,13 +45,16 @@
 				//children
 				var nodeChildren = attrs.nodeChildren || 'children';
 
+
 				//tree template
 				var template =
 					'<ul>' +
 						'<li data-ng-repeat="node in ' + treeModel + '">' +
-							'<i class="glyphicon glyphicon-folder-close" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="glyphicon glyphicon-folder-open" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="glyphicon glyphicon-file" data-ng-hide="node.' + nodeChildren + '.length"></i> ' +
+						'<i class="gi-16px glyphicon glyphicon-menu-right" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i class="gi-20px glyphicon glyphicon-folder-close" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i class="gi-16px glyphicon glyphicon-menu-down" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i class="gi-20px glyphicon glyphicon-folder-open" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeLabel(node)"></i>' +
+							'<i class="gi-20px glyphicon glyphicon-folder-close" data-ng-hide="node.' + nodeChildren + '.length" data-ng-click="' + treeId + '.selectNodeLabel(node)"></i> ' +
 							'<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>' +
 							'<div data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId + ' data-node-label=' + nodeLabel + ' data-node-children=' + nodeChildren + '></div>' +
 						'</li>' +
@@ -77,6 +81,7 @@
 						scope[treeId].selectNodeLabel = scope[treeId].selectNodeLabel || function( selectedNode ){
 
 							//remove highlight from previous node
+							
 							if( scope[treeId].currentNode && scope[treeId].currentNode.selected ) {
 								scope[treeId].currentNode.selected = undefined;
 							}
@@ -86,6 +91,10 @@
 
 							//set currentNode
 							scope[treeId].currentNode = selectedNode;
+							//callback
+							//scope.nodeSelected(selectedNode);
+							var invoker = $parse(attrs.nodeSelected);
+       						invoker(scope, {arg1: selectedNode} );
 						};
 					}
 

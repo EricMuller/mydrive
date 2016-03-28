@@ -27,7 +27,7 @@
        return service;
 
         function sanitizePosition() {
-          debugger
+          
             var current = self.toastPosition;
             if ( current.bottom && last.top ) current.top = false;
             if ( current.top && last.bottom ) current.bottom = false;

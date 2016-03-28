@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^ged/', include('webged.urls')),
     url(r'^$', views.site),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^docs/', include('rest_framework_swagger.urls')),
 ]
