@@ -40,3 +40,15 @@
 /*.treeview .glyphicon {
     font-size: 24px;
 }*/
+
+/*** Loading Bar ***/
+#loading-bar .bar{
+    height: 3px;
+    background-color: #cc0000 !important;
+}
+#loading-bar-spinner .spinner-icon {
+    border-top-color:  #6A6158 !important;
+    border-left-color: #6A6158 !important;
+    width: 24px;
+    height: 24px;
+}

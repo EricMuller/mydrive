@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-  angular.module('my-ged.common', ['restangular','ngCookies' ,'Postman' ,'angularFileUpload']	)
+  angular.module('my-ged.common', ['restangular', 'ngCookies', 'Postman', 'angularFileUpload', 'angular-loading-bar']	)
   .config(['RestangularProvider', function(RestangularProvider) {
            // RestangularProvider.setBaseUrl('apis/');
            // RestangularProvider.setMethodOverriders(["put", "delete"]);
@@ -16,6 +16,11 @@
      // AuthRestangular.setDefaultHeaders({'Authorization': 'Token ' + $rootScope.globals.token });
       
 	});
+
+ angular.module('my-ged.common')
+ .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.spinnerTemplate = '<div><span class="fa fa-spinner">Loading...</div>';
+  }]);
 
   angular.module('my-ged.common')
   .factory("TokenRestangular", function (Restangular, $rootScope, $cookies, alertSvc) {
