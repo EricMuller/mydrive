@@ -1,18 +1,17 @@
 
 #####################################################
-#My personnal GED 
+#My Drive
 #####################################################
-Application ged 	:  back rest
-Application webged  :  front angular
+Application backdrive 	:  back  django_rest 
+Application webdrive  	:  front angularjs
 #####################################################
 
 
 #pip3 install -r requirement.txt
 
+
 #run
 python3 manage.py runserver
-
-
 
 #####################################################
 
