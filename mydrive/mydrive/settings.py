@@ -28,8 +28,9 @@ SECRET_KEY = 'za2^mas^l+p%62a2av6lcd&8k9-8e5hj=idl!z6@qpsmok4eq3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CLOUD9=True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.100']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.100','0.0.0.0']
 
 # logging
 
@@ -95,9 +96,6 @@ INSTALLED_APPS = (
     'rest_framework.authtoken',
     'backdrive',
     'webdrive',
-    # 'mysite.apps.web.photofolio',
-    # 'mysite.apps.web.prologue',
-    # 'mysite.mytemplates',
     'rest_framework_swagger',
     # 'haystack',
     # 'debug_toolbar',
@@ -105,7 +103,6 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -143,16 +140,33 @@ WSGI_APPLICATION = 'mydrive.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    'default': {
+if CLOUD9 == True:
+    STATIC_ROOT = 'static'
+    MEDIA_ROOT = '/home/ubuntu/tmp/'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'c9',
+            'USER': 'eric_muller',
+            'PASSWORD': '',
+            'HOST': '0.0.0.0',  # Or an IP DB Address
+            'PORT': '3306'
+        }
+    
+    }
+else:
+    STATIC_ROOT =  '/var/www/html/static'
+    MEDIA_ROOT = '/home/webdev/tmp/'
+    DATABASES = {
+       'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mydrive',
         'USER': 'webdev',
         'PASSWORD': 'webdev',
         'HOST': '192.168.100',  # Or an IP DB Address
         'PORT': '3306'
+        }
     }
-}
 
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
@@ -171,16 +185,16 @@ USE_TZ = True
 # upload files
 MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_ROOT = '/home/webdev/tmp/'
+
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 # for collectstatic
-STATIC_ROOT = '/var/www/html/static'
 
 STATIC_URL = '/static/'
+
 
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

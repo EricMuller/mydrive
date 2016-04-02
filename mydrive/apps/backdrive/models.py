@@ -17,10 +17,10 @@ class DateModel(models.Model):
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
         if self.user_created_id is None:
-            self.user_created = User.objects.get(username='webdev')
-            self.user_updated = User.objects.get(username='webdev')
+            self.user_created = User.objects.get(username='eric_muller')
+            self.user_updated = User.objects.get(username='eric_muller')
         else:
-            self.user_updated = User.objects.get(username='webdev')
+            self.user_updated = User.objects.get(username='eric_muller')
 
         super(DateModel, self).save(
             force_insert, force_update, using, update_fields)
