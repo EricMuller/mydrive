@@ -4,20 +4,15 @@ angular.module('my-ged.documents', [ 'ui.router' ]).config(
         		.state('upload', {
                     url:'/upload',
             		templateUrl: 'partials/upload.html',
-            		controller: 'uploadCtrl',
-                    resolve:{
-                     plan : function(planSvc){
-                                return planSvc.getPlan();
-                            }
-                    }
+            		controller: 'uploadCtrl'
         		})
 				.state('documents', {
                     url: '/documents',
             		templateUrl: 'partials/documents.html',
             		controller: 'plandocumentCtrl',
                     resolve:{
-                        tree : function(planSvc){
-                                return planSvc.getTree();
+                        tree : function(planSvc,$rootScope){
+                                return planSvc.getTree($rootScope.globals.user);
                             }
                     }
             		

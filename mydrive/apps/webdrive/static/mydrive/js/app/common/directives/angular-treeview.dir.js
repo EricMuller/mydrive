@@ -47,18 +47,35 @@
 
 
 				//tree template
-				var template =
+				var template1 =
 					'<ul>' +
 						'<li data-ng-repeat="node in ' + treeModel + '">' +
 						'<i class="gi-16px glyphicon glyphicon-menu-right" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="gi-20px glyphicon glyphicon-folder-close" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="gi-16px glyphicon glyphicon-menu-down" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
-							'<i class="gi-20px glyphicon glyphicon-folder-open" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeLabel(node)"></i>' +
-							'<i class="gi-20px glyphicon glyphicon-folder-close" data-ng-hide="node.' + nodeChildren + '.length" data-ng-click="' + treeId + '.selectNodeLabel(node)"></i> ' +
+						'<i class="gi-20px glyphicon glyphicon-folder-close" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+						'<i class="gi-16px glyphicon glyphicon-menu-down" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+						'<i class="gi-20px glyphicon glyphicon-folder-open" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeLabel(node)"></i>' +
+						'<i class="gi-20px glyphicon glyphicon-folder-close" data-ng-hide="node.' + nodeChildren + '.length" data-ng-click="' + treeId + '.selectNodeLabel(node)"></i> ' +
 							'<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>' +
 							'<div data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId + ' data-node-label=' + nodeLabel + ' data-node-children=' + nodeChildren + '></div>' +
 						'</li>' +
 					'</ul>';
+
+				var template =
+
+					'<div><ul>' +
+						'<li data-ng-repeat="node in ' + treeModel + '">' +
+							'<i class="gi-20px glyphicon glyphicon-menu-right" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i class="gi-20px glyphicon glyphicon-folder-close" data-ng-show="node.' + nodeChildren + '.length && node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							
+							'<i class="gi-20px glyphicon glyphicon-menu-down" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeHead(node)"></i>' +
+							'<i class="gi-20px glyphicon glyphicon-folder-open" data-ng-show="node.' + nodeChildren + '.length && !node.collapsed" data-ng-click="' + treeId + '.selectNodeLabel(node)"></i>' +
+							
+							'<i class="gi-20px glyphicon glyphicon-folder-close single" data-ng-hide="node.' + nodeChildren + '.length" data-ng-click="' + treeId + '.selectNodeLabel(node)"></i> ' +
+							'<span data-ng-class="node.selected" data-ng-click="' + treeId + '.selectNodeLabel(node)">{{node.' + nodeLabel + '}}</span>' +
+							'<div data-ng-hide="node.collapsed" data-tree-id="' + treeId + '" data-tree-model="node.' + nodeChildren + '" data-node-id=' + nodeId + ' data-node-label=' + nodeLabel + ' data-node-children=' + nodeChildren + '></div>' +
+						'</li>' +
+					'</ul></div>';
+
 
 
 				//check tree id, tree model

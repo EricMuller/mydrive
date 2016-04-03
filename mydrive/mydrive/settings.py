@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import socket
 import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -28,9 +29,13 @@ SECRET_KEY = 'za2^mas^l+p%62a2av6lcd&8k9-8e5hj=idl!z6@qpsmok4eq3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-CLOUD9=True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.100','0.0.0.0']
+if socket.gethostname().find('.') >= 0:
+    HOSTNAME = socket.gethostname()
+else:
+    HOSTNAME = socket.gethostbyaddr(socket.gethostname())[0]
+
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.100', '0.0.0.0']
 
 # logging
 
@@ -134,13 +139,25 @@ REST_FRAMEWORK = {
 ROOT_URLCONF = 'mydrive.urls'
 
 # 'mysite.apps.notes.urls'
-
 WSGI_APPLICATION = 'mydrive.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-if CLOUD9 == True:
+if HOSTNAME == 'localhost':
+    STATIC_ROOT = '/var/www/html/static'
+    MEDIA_ROOT = '/home/webdev/tmp/'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'mydrive',
+            'USER': 'webdev',
+            'PASSWORD': 'webdev',
+            'HOST': '192.168.100',  # Or an IP DB Address
+            'PORT': '3306'
+        }
+    }
+else:
+    # could9
     STATIC_ROOT = 'static'
     MEDIA_ROOT = '/home/ubuntu/tmp/'
     DATABASES = {
@@ -152,22 +169,9 @@ if CLOUD9 == True:
             'HOST': '0.0.0.0',  # Or an IP DB Address
             'PORT': '3306'
         }
-    
-    }
-else:
-    STATIC_ROOT =  '/var/www/html/static'
-    MEDIA_ROOT = '/home/webdev/tmp/'
-    DATABASES = {
-       'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydrive',
-        'USER': 'webdev',
-        'PASSWORD': 'webdev',
-        'HOST': '192.168.100',  # Or an IP DB Address
-        'PORT': '3306'
-        }
     }
 
+print(DATABASES)
 # Internationalization
 # https://docs.djangoproject.com/en/dev/topics/i18n/
 

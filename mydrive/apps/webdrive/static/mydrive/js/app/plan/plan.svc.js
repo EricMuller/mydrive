@@ -13,6 +13,7 @@
 
         var service = {
             getPlan: getPlan,
+            createPlan: createPlan,
             getTree: getTree,
             getFolders: getFolders,
             addChild: addChild,
@@ -27,23 +28,30 @@
            return TokenRestangular.one("folders").get()  ;      
         }
         
-        function getPlan() {
+        function createPlan(user) {
+          var deferred = $q.defer();
+           TokenRestangular.all("plan").post({username: user.username}).then(
+            function (plan){
+                var data = new function (){
+                  this.plan = plan;
+                  this.folders= asMap(plan[0],{});
+                  this.breadcrumb = breadcrumb;
+                }
 
-          /* var data = ;
-            
-           var deferred = $q.defer();
-
-           deferred.resolve(data);
-
-            //return $q.when(data);
-           return deferred.promise;
-*/
-           return TokenRestangular.one("plan").get();
+                deferred.resolve(data);
+            }
+          );
+          return deferred.promise;
         }
 
-        function getTree() {
+        function getPlan() {
+          return TokenRestangular.one("plan").get();
+        }
+
+        function getTree(user) {
           var deferred = $q.defer();
-          TokenRestangular.one("plan").get().then(
+          TokenRestangular.one("plan").one(user.username).one("plan")
+          .get().then(
             function (plan){
                 var data = new function (){
                   this.plan = plan;
@@ -59,11 +67,11 @@
 
 
         function removeChild(node){
-           return TokenRestangular.one("plan",node.id).customDELETE()  ;      
+           return TokenRestangular.all("plan").one("folders",node.id).customDELETE()  ;      
         }
 
         function addChild(node){
-           return TokenRestangular.all("plan").post(node)  ;      
+           return TokenRestangular.all("plan").all("folders").post(node)  ;      
         }
 
         function updateChild(parentId,libelle){

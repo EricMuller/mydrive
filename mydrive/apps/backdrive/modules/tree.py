@@ -5,30 +5,35 @@ from backdrive.models import Folder
 
 from rest_framework import serializers
 
+# Arbre intervallaire
+
 
 class Tree:
 
+    def __init__(self, rootName):
+        self._rootName = rootName
+
     def find(self, id):
-
         f = Folder.objects.get(pk=id)
-
         return f
 
-    # def create(self, right, left, libelle):
-        # folder = Folder.create(right, left, libelle)
-        # folder.save()
-        # return folder
+    def getRoot(self):
+        try:
+            folder = Folder.objects.get(node_l=1)
+        except Folder.DoesNotExist:
+            folder = self._createRoot()
 
-    def findRoot(self):
-
-        folder = Folder.objects.get(node_l=1)
         return folder
 
-    def createRoot(self, libelle):
+    def _createRoot(self):
 
-        folder = Folder.create(1, 2, libelle)
+        folder = Folder.create(1, 2, self._rootName)
         folder.save()
         return folder
+
+    def createUserRoot(self, libelle):
+
+        root = getRoot()
 
     def createChild(self, id, libelle):
 
@@ -55,17 +60,70 @@ class Tree:
 
         node_r = folder.node_r
         node_l = folder.node_l
-        print("get")
+
         Folder.objects.filter(
             node_l__gte=folder.node_l, node_r__lte=folder.node_r).delete()
-        print("get1")
+
         Folder.objects.filter(node_r__gte=node_r).update(
             node_r=F('node_r') - decalage)
-        print("get2")
+
         Folder.objects.filter(node_l__gt=node_l).update(
             node_l=F('node_l') - decalage)
 
         pass
+
+    def buildUserTree(self, username):
+        tree = []
+        try:
+            root = Folder.objects.get(node_l=1)
+
+            user = Folder.objects.filter(
+                libelle=username, parent_id=root.id).first()
+
+            if user is not None:
+                print('user=' + str(user.id))
+
+                folders = Folder.objects.filter(
+                    node_l__gte=user.node_l, node_r__lte=user.node_r).all(
+                ).prefetch_related('parent').order_by('node_l')
+                tree = self._build(folders, user.id)
+
+        except Folder.DoesNotExist:
+            pass
+
+        return tree
+
+    def buildTree(self):
+        tree = []
+        try:
+            root = Folder.objects.get(node_l=1)
+            folders = Folder.objects.all().prefetch_related(
+                'parent').order_by('node_l')
+            tree = self._build(folders, root.id)
+        except:
+            pass
+        return tree
+
+    def _build(self, folders, root_id):
+
+        # folders = Folder.objects.all().order_by('node_l')
+
+        parentsDic = {}
+        tree = []
+        for folder in folders:
+            print(folder.id, root_id)
+            if folder.id == root_id:
+                root = TreeFolder(folder)
+                parentsDic[folder.id] = root
+                tree.append(root)
+            else:
+                node = TreeFolder(folder)
+                parent = parentsDic[folder.parent_id]
+                print(parent.id)
+                parent.items.append(node)
+                parentsDic[folder.id] = node
+
+        return tree
     # def removeElement(self, id):
 
         # folder = Folder.objects.get(pk=id)
@@ -77,28 +135,6 @@ class Tree:
         #     node_r=F('node_r') - 2)
 
         # folder.delete()
-
-    def buildTree(self):
-
-        folders = Folder.objects.all().prefetch_related(
-            'parent').order_by('node_l')
-
-        # folders = Folder.objects.all().order_by('node_l')
-
-        parents = {}
-        tree = []
-        for folder in folders:
-            if folder.parent_id is None:
-                root = TreeFolder(folder)
-                parents[folder.id] = root
-                tree.append(root)
-            else:
-                node = TreeFolder(folder)
-                parent = parents[folder.parent_id]
-                parent.items.append(node)
-                parents[folder.id] = node
-
-        return tree
 
 
 class TreeFolder():

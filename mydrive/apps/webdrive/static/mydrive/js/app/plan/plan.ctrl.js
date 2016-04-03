@@ -2,7 +2,7 @@ angular.module('my-ged.plan')
   .controller('planCtrl',['$scope','$rootScope','plan','folders','planSvc', 'toast',
       function  ($scope, $rootScope, plan, folders,  planSvc , toast) {
                   
-        $rootScope.selectedMenuName('File Plan');
+        //$rootScope.selectedMenuName('File Plan');
 
         $scope.removeItem = function (scope) {
          

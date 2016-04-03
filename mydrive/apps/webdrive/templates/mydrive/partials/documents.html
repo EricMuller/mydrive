@@ -29,15 +29,37 @@
 		
 	</div> -->
   <!-- style="margin-top:5px;" -->
+  <div class="col-sm-12 full-height" >
 	<div class="full-height treeview" >
 
         <!-- <div class="form-group upload-multiple-files"> data-ng-click="selectNode(mytree)"-->
             <!--<label class="col-sm-12" style="margin-bottom:8px;">Selectionner le fichier</label>-->
-			<div class="col-sm-11">
-              <ol class="breadcrumb" >
-                  <li ng-repeat="item in breadcrumb"><a data-ng-click="navigate(item.id) ">{{item.libelle}}</a></li>
+            
+			
+
+             <div ng-show="emptyTree" ng-click="createPlan()"> <span class="gi-60px glyphicon glyphicon-cloud-download"/> Create</div>
+              
+            <div class="col-sm-11">
+                <ol class="breadcrumb" ng-hide="emptyTree">
+
+            
+                  <li ng-repeat="item in breadcrumb">
+                      <a data-ng-click="navigate(item.id) ">{{item.libelle}}</a> 
+                        <!--<button class="btn btn-default dropdown-toggle" type="button" 
+                        data-ng-click="navigate(item.id)">{{item.libelle}}</button>    -->
+                       
+                        <div class="dropdown" style="display:inline" >    
+                        <span class="caret" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">Add Folder</a></li>
+                                <li><a href="#">Rename</a></li>
+                                <li><a href="#">Upload File</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Delete</a></li>
+                            </ul>
+                        </div>
+                  </li>
                 </ol>
-                
             </div>
 
             <div class="full-height bordered col-sm-4" 
@@ -47,10 +69,11 @@
 				      data-node-id="id"
 				      data-node-label="libelle"
 				      data-node-children="items" 
-                      data-node-selected="nodeSelected(arg1)" >
+                      data-node-selected="nodeSelected(arg1)" 
+                      ng-hide="emptyTree" >
 			</div>
             
-            <div class="full-height  col-sm-7 ">
+            <div class="full-height  col-sm-7 " ng-hide="emptyTree">
                 <ul class="nav nav-tabs">
                   <li role="presentation" class="{{getClass('documents.documents')}}" ><a ui-sref="documents.documents({id: folder.id})">Documents</a></li>
                   <li role="presentation" class="{{getClass('documents.upload')}}"><a ui-sref="documents.upload({id: folder.id})">Upload</a></li>
@@ -60,6 +83,7 @@
             </div>
             
 	</div>
+    </div>
 <!-- style="margin-top:5px;" -->
 	<!-- <div class="row"  >
             <div class="col-xs-4">

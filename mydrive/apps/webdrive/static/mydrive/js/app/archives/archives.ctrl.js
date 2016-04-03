@@ -7,7 +7,7 @@
   	
   	$scope.showIt=true;
 
-		$rootScope.selectedMenuName('Archives');
+		//$rootScope.selectedMenuName('Archives');
 
     $scope.names=names;
 		/*var d = new Date();

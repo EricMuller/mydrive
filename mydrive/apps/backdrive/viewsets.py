@@ -1,15 +1,15 @@
 
 import sys
-
+import traceback
 
 # from django.contrib.auth import login
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 
+from backdrive import settings
 from backdrive.models import Basket
 from backdrive.models import Document
 from backdrive.models import Folder
-
 
 from backdrive.modules.tree import TreeSerializer
 from backdrive.modules.tree import Tree
@@ -20,7 +20,6 @@ from backdrive.serializers import BasketSerializer
 from backdrive.serializers import DocumentSerializer
 
 from backdrive.serializers import FolderSerializer
-
 
 from backdrive.views import DefaultsAuthentificationMixin
 
@@ -70,50 +69,59 @@ class FolderViewSet(viewsets.ModelViewSet):
     serializer_class = FolderSerializer
 
 
-class TreeViewSetDetail(viewsets.ViewSet):
+class TreeViewSet(viewsets.ViewSet):
 
-    def list(self, request):
+    _tree = Tree(settings.TREE_ROOT_NAME)
 
-        pass
+    def list(self, request, pk=None):
+        queryset = self._tree.buildTree()
+        serializer = TreeSerializer(queryset, many=True)
+        return Response(serializer.data)
 
-    def destroy(self, request, pk=None):
+    # @list_route()
+    @detail_route(methods=['get'])
+    def plan(self, request, pk=None):
+        try:
+            User.objects.get(username=pk)
+        except User.DoesNotExist:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            # raise ValidationError('detail', 'invalid request data')
+            return Response({"status": "user does not exists : " + pk},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        pass
-
-    def create(self, request):
-
-        pass
-
-    def retrieve(self, request, pk=None):
-        pass
-
-    def update(self, request, pk=None):
-        pass
-
-    def partial_update(self, request, pk=None):
-        pass
-
-        # return Response({}, status=status.HTTP_400_BAD_REQUEST)
-
-
-class TreeViewSet(DefaultsAuthentificationMixin, viewsets.ViewSet):
-
-    http_method_names = ['get', 'post', 'head', 'delete']
-
-    def list(self, request):
-        queryset = Tree().buildTree()
+        queryset = self._tree.buildUserTree(pk)
         serializer = TreeSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request):
 
-        print(request.data)
+        root = self._tree.getRoot()
+        pk = request.data['username']
+        self._tree.createChild(root.id, pk)
 
+        queryset = self._tree.buildUserTree(pk)
+        serializer = TreeSerializer(queryset, many=True)
+
+        return Response(serializer.data)
+
+
+class TreeFolderViewSet(viewsets.ViewSet):
+
+    http_method_names = ['get', 'post', 'head', 'delete']
+
+    _tree = Tree(settings.TREE_ROOT_NAME)
+
+    def create(self, request):
+
+        print(request.data)
         serializer = FolderSerializer(data=request.data)
         if serializer.is_valid():
-            root = Folder.objects.get(pk=request.data['id'])
-            tree = Tree()
-            folder = tree.createChild(root.id, serializer.data['libelle'])
+
+            parent = Folder.objects.get(pk=request.data['id'])
+
+            folder = self._tree.createChild(
+                parent.id, serializer.data['libelle'])
+
             return Response(FolderSerializer(folder).data,
                             status=status.HTTP_201_CREATED)
         raise ValidationError('detail', 'invalid request data')
@@ -121,16 +129,12 @@ class TreeViewSet(DefaultsAuthentificationMixin, viewsets.ViewSet):
     def destroy(self, request, pk=None):
 
         try:
-            tree = Tree()
-            tree.remove(pk)
+            self._tree.remove(pk)
             return Response({"status": "succces"},
                             status=status.HTTP_201_CREATED)
         except:
-
             print(sys.exc_info())
             raise ValidationError('detail', 'invalid request data')
-            return Response({"status": "error"},
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def retrieve(self, request, pk=None):
         pass

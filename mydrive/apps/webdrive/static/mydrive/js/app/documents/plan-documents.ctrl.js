@@ -3,15 +3,16 @@ angular.module('my-ged.documents')
 
 	function  ($scope, $rootScope, $window, tree, alertSvc, $state, planSvc) {
     
+    
         $scope.tree = tree;
-        $scope.breadcrumb = tree.breadcrumb($state.params.id);
+    
 		$scope.folder = {
         	id : $state.params.id
         };
 
         $scope.navigate = function(id) { 
 			$scope.folder.id = id;
-			$scope.breadcrumb = tree.breadcrumb(id);
+			$scope.fbreadcrumb(id);
 			$state.go($state.current.name, {id: id});
         }
 
@@ -19,10 +20,16 @@ angular.module('my-ged.documents')
 
 			var id = node.id;
 			$scope.folder.id = id;
-			$scope.breadcrumb = tree.breadcrumb(id);
+			$scope.fbreadcrumb(id);
 			$state.go($state.current.name, {id: id});
 			
 		};
+
+		$scope.fbreadcrumb = function (id) {
+			debugger
+			$scope.breadcrumb = $scope.tree.breadcrumb(id);
+			$scope.emptyTree =  $.isEmptyObject($scope.tree.folders);
+		}
 
 		$scope.getClass = function (strValue) {
             if (strValue == $state.current.name){
@@ -30,8 +37,17 @@ angular.module('my-ged.documents')
             }
         };
 
+		$scope.createPlan = function() { 
+		
+			var user = $rootScope.globals.user;
+			planSvc.createPlan(user).then(function(tree){
+				$scope.tree = tree;
+				$scope.navigate(0);
+			});
+			
+		};
         
-
+		$scope.fbreadcrumb($state.params.id);
 
 }
 

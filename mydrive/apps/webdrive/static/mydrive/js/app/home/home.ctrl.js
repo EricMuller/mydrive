@@ -10,7 +10,7 @@ angular.module('my-ged.home')
 		//	$('#title').text(title);
 		};
 		
-		$rootScope.selectedMenuName('Welcome');
+		$rootScope.selectedMenuName('Mon drive');
 		$scope.uploadFiles = [];
 
 		$scope.$on('connectionStateChanged', function (event, data) {
@@ -43,7 +43,7 @@ angular.module('my-ged.home')
 			
 			
 			if ($scope.currentState.to){
-				if ($scope.currentState.to.name.indexOf('documents') === 0 ){
+				if ($scope.currentState.to.name.indexOf('documentState') === 0 ){
 					return $state.href($scope.currentState.to.name, {id: $scope.currentState.params.id });
 				}
 
