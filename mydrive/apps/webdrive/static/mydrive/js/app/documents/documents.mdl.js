@@ -40,7 +40,7 @@ angular.module('my-ged.documents', [ 'ui.router' ]).config(
                     controller: 'documentsCtrl',
                     resolve:{
                         documents : function(documentSvc) {
-                            return documentSvc.getDocuments()  ;
+                            return documentSvc.getDocuments() ;
                         }
                     }
                 })

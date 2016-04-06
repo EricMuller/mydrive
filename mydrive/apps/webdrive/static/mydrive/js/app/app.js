@@ -2,8 +2,11 @@
 (function () {
     'use strict';
 
-var app = angular.module('my-ged', ['ui.router', 'ngCookies', 'mdr.file', 'ui.tree', 'ngMaterial', 'material','angularTreeview'
-  , 'my-ged.home', 'my-ged.archives', 'my-ged.documents', 'my-ged.plan', 'my-ged.login', 'my-ged.common', 'restangular', 'my-ged.errInterceptor']);
+var app = angular.module('my-ged', ['ui.router', 'ngCookies', 'mdr.file', 'ui.tree'
+  ,'ngAnimate', 'ui.bootstrap'
+  , 'ngMaterial', 'material','angularTreeview'
+  , 'my-ged.home', 'my-ged.archives', 'my-ged.documents', 'my-ged.plan', 'my-ged.login', 'my-ged.common'
+  , 'restangular', 'my-ged.errInterceptor']);
 
 app.config(['$stateProvider','$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) { 

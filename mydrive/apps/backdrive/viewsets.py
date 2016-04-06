@@ -39,6 +39,8 @@ from rest_framework.decorators import detail_route
 
 from rest_framework.response import Response
 
+from backdrive.paginators import StandardResultsSetPagination
+
 
 class UserViewSet(viewsets.ModelViewSet):
 
@@ -197,6 +199,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
     """
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+    pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
         queryset = Document.objects.all()

@@ -21,8 +21,14 @@
            return TokenRestangular.one("documents").get({id: id});
         }
 
-        function getDocuments() {
-           return TokenRestangular.one("documents").get();
+        function getDocuments(page) {
+            
+            if (page != undefined) {
+                return TokenRestangular.one("documents").get({page: page});
+            }else{
+                return TokenRestangular.one("documents").get();     
+            }
+           
         }        
         
     }

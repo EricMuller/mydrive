@@ -9,7 +9,9 @@
             		controller: 'archivesCtrl',
             		resolve: {
             			names : function(documentSvc) {
-                        	return documentSvc.getDocuments()  ;
+                        	
+                            return documentSvc.getDocuments()  ;
+                                    
                     	}
 
             		}
