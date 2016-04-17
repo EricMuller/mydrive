@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Multiple Download Example</title>
+
+    <!--<link href="{{STATIC_URL}}webged/bower_components/mdr-angular-file/dist/mdr-file.min.css">-->
+
+    </head>
+
+    <body> 
+    
+    {% verbatim %}
+
+	<!-- <div class="row" style="margin-top:5px;" >
+		<div class="jumbotron col-xs-5">
+					  <div class="container" style="border:1px;" >
+					            <div 
+									      data-angular-treeview="true"
+									      data-tree-id="abc"
+									      data-tree-model="plan"
+									      data-node-id="id"
+									      data-node-label="libelle"
+									      data-node-children="items" >
+								</div>
+								
+					  </div>
+		</div>
+		<div  class="col-xs-7">&nbsp;</div>
+		
+	</div> -->
+  <!-- style="margin-top:5px;" -->
+  <div class="col-sm-12 full-height" >
+	<div class="full-height treeview" >
+
+        <!-- <div class="form-group upload-multiple-files"> data-ng-click="selectNode(mytree)"-->
+            <!--<label class="col-sm-12" style="margin-bottom:8px;">Selectionner le fichier</label>-->
+            
+			
+
+             <div ng-show="emptyTree" ng-click="createPlan()"> <span class="gi-60px glyphicon glyphicon-cloud-download"/> Create</div>
+              
+            <div class="col-sm-11">
+                <ol class="breadcrumb" ng-hide="emptyTree">
+                  <li ng-repeat="item in breadcrumb">
+                      <a data-ng-click="navigate(item.id) ">{{item.libelle}}</a> 
+                        <!--<button class="btn btn-default dropdown-toggle" type="button" 
+                        data-ng-click="navigate(item.id)">{{item.libelle}}</button>    -->
+                       
+                        <div class="dropdown" style="display:inline" >    
+                        <span class="caret" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a href="#">Add Folder</a></li>
+                                <li><a href="#">Rename</a></li>
+                                <li><a href="#">Upload File</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Delete</a></li>
+                            </ul>
+                        </div>
+                  </li>
+                </ol>
+            </div>
+
+            <div class="full-height bordered col-sm-4" 
+				      data-angular-treeview="true"
+				      data-tree-id="mytree"
+				      data-tree-model="tree.plan"
+				      data-node-id="id"
+				      data-node-label="libelle"
+				      data-node-children="items" 
+                      data-node-selected="nodeSelected(arg1)" 
+                      ng-hide="emptyTree" >
+			</div>
+            
+            <div class="full-height  col-sm-7 " ng-hide="emptyTree">
+                <ul class="nav nav-tabs">
+                  <li role="presentation" class="{{getClass('documents.documents')}}" ><a ui-sref="documents.documents({id: folder.id})">Documents</a></li>
+                  <li role="presentation" class="{{getClass('documents.upload')}}"><a ui-sref="documents.upload({id: folder.id})">Upload</a></li>
+                  <li role="presentation" class="{{getClass('documents.history')}}"><a ui-sref="documents.history({id: folder.id})">History</a></li>
+                </ul>
+                <div ui-view class="full-height" ></div>
+            </div>
+            
+	</div>
+    </div>
+<!-- style="margin-top:5px;" -->
+	<!-- <div class="row"  >
+            <div class="col-xs-4">
+                <div class="drag-zone text-center" nv-file-over="" nv-file-drop="" uploader="document.uploader">
+                    <i class="fa fa-cloud-upload fa-2x" style="position: relative;top: 6px;"></i>
+                    <span>Glissez les fichiers ici</span>
+                </div>
+            </div> -->
+            <!-- <div class="col-xs-1" style="padding-top:15px;">ou</div>
+            <div class="col-xs-2 input-zone">
+                <input type="file" nv-file-select="" uploader="document.uploader" multiple style="display: inline-block!important;" />
+            </div>
+            <div class="col-xs-12 list-files" ng-show="document.uploader.queue.length > 0">
+                <ul class="list-group col-xs-12">
+                    <li ng-repeat="item in document.uploader.queue" class="list-group-item item-to-upload col-xs-12">
+                        <div class="filename col-xs-11 no-padding" ng-class="{error: item.isError, success: item.isSuccess}">
+                            <strong ng-bind="item.file.name" title="{{item.file.name}}"></strong>
+                            <span ng-show="document.uploader.isHTML5" nowrap ng-bind="'('+(item.file.size/1024/1024|number:2)+' MB)'"></span>
+                        </div>
+                        <div class="list-buttons col-xs-1 no-padding text-right">
+                            <button type="button" class="fa fa-times" ng-click="item.remove()"></button>
+                        </div>
+                    </li>
+                </ul>
+            </div> -->
+        <!-- </div> -->
+    <!-- </div> -->
+
+{% endverbatim %}
+
+    </body>
+
+</html>

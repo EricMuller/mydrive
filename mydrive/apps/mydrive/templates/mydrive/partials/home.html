@@ -1,0 +1,24 @@
+{% load staticfiles %}
+<html>
+  <head>
+    <title>Home</title>
+    </head>
+
+    <body>
+    	{% verbatim %}
+			<h2><a href="#">Welcome to My Drive {{globals.user.civilite}} {{globals.user.username}} </a></h2>
+		{% endverbatim %}	
+
+		 
+		 <img  src="{% static 'mydrive/images/django.png' %}" title="Django framework">
+
+		 <img  src="{% static 'mydrive/images/angular.jpg' %}" title="Django rest framwork and angulars">
+
+		 <img src="{% static 'mydrive/images/swagger.jpg' %}" title="django swagger">
+
+		 <img src="{% static 'mydrive/images/maria.jpg' %}" title="MYSQL">
+     
+     </body>
+
+
+</html>

@@ -1,0 +1,192 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<!--
+	ged by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html >
+	<head>
+		<title>ged</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+		<!--<script src="{% static "/js/jquery.min.js" %}"></script>-->
+
+		<script src="{{STATIC_URL}}mydrive/bower_components/jquery/dist/jquery.min.js"></script>
+		<script language="javascript">var STATIC_URL = "{{STATIC_URL|escapejs }}";</script>
+	<!--	<script language="javascript">var X_CSRFToken = "{{ csrf_token|escapejs }}";</script>-->
+		
+		<script src="{{STATIC_URL}}mydrive/js/skel/skel.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/skel/skel-layers.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/skel/init.js"></script>
+		 <!-- Compiled and minified CSS -->
+   
+	<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">-->
+  <!-- Compiled and minified JavaScript -->
+  <!--	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>-->
+
+		<noscript>
+			<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/skel.css" />
+			<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/style.css" />
+			<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/style-desktop.css" />
+			<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/style-wide.css" />
+			<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/font-awesome.min.css" />
+
+		</noscript>
+		
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/tree/tree.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/login/login.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/angular-treeview/treeview.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/bootstrap/bootstrap.css" />
+		<!--<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/fab/fab.css" />-->
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/mdr-file/mdr-file.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/filetypes/filetypes.css" />
+		<link  rel="stylesheet" href="{{STATIC_URL}}mydrive/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/bower_components/mdr-angular-file/dist/mdr-file.min.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/bower_components/angular-postman/css/postman.css" />
+		<link rel="stylesheet" href="{{STATIC_URL}}mydrive/bower_components/angular-loading-bar/build/loading-bar.min.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="{{STATIC_URL}}mydrive/css/ie/v8.css" /><![endif]-->
+	</head>
+	<!--
+		Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
+		Set it to "right-sidebar" to, you guessed it, position it on the right.
+	-->
+	<body  ng-app="my-ged"  ng-show="loaded" class="left-sidebar" ng-controller="homeCtrl" ng-cloak > 
+
+		<!-- Wrapper ng-show1="isLoaded">-->
+			<div id="wrapper" 
+					
+					<!-- Content -->
+					<div id="content" ui-view>
+					 
+					</div>
+					<!-- Sidebar -->
+					<div id="sidebar" >
+						<!-- Logo -->
+						{% verbatim %}
+							<h1 id="logo" ><a href="#" ng-model="selectedMenu">{{ selectedMenu }}</a></h1>
+						
+						<!-- Nav -->
+							<nav id="nav"  >
+								<ul>
+									<!--<li class="current"><a href="#">Latest Post</a></li>-->
+									<li data-hide-when-connected ><a ui-sref="login">login</a></li>
+									<li data-show-when-connected ng-click="signOut()"><a href="#/logout">logout</a></li>
+									<!--<li data-show-when-connected ><a ui-sref="upload">Upload</a></li>-->
+									<li data-show-when-connected ><a ng-href="{{getDocumentState()}}">Mon Drive</a></li>
+									<li data-show-when-connected ><a ui-sref="archives">Archives</a></li>
+									<li data-show-when-connected ><a ui-sref="plan">File Plan</a></li>
+									<!--<li><a href="#/about">About Me</a></li>
+									<li><a href="#/contact">Contact Me</a></li>-->
+								</ul>
+							</nav>
+
+						<!-- Search -->
+							<section class="box search">
+								<form method="post" action="#">
+									<input type="text" class="text" name="search" placeholder="Search" />
+								</form>
+							</section>
+
+						<!-- Copyright -->
+						
+							<ul id="copyright">
+								<li>&copy;{{globals.username}}.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+							</ul>
+						{% endverbatim %}
+
+					</div>
+
+			</div>
+<!--
+			root =angular.element('body').scope()
+			root..globals.currentUser=true
+-->
+		<!--<script src="{{STATIC_URL}}mydrive/js/jquery.min.js"></script> -->
+		<script src="{{STATIC_URL}}mydrive/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular/angular.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/restangular/dist/restangular.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+		
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-cookies/angular-cookies.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-animate/angular-animate.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  		
+  		<script src="{{STATIC_URL}}mydrive/bower_components/angular-aria/angular-aria.min.js"></script>
+  		<script src="{{STATIC_URL}}mydrive/bower_components/angular-messages/angular-messages.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-material/angular-material.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-postman/js/postman.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+
+		<script src="{{STATIC_URL}}mydrive/bower_components/underscore/underscore-min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/moment/min/moment.min.js"></script>
+		<!--<script src="{{STATIC_URL}}mydrive/bower_components/mdr-angular-file/dist/mdr-file.js"></script>-->
+		<script src="{{STATIC_URL}}mydrive/js/mdr-file/mdr-file.js" ></script>
+
+
+		<script src="{{STATIC_URL}}mydrive/js/app/app.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/home/home.mdl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/home/home.ctrl.js"></script>
+
+-		<script src="{{STATIC_URL}}mydrive/js/app/common/common.mdl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/common/interceptors/interceptors_err.mdl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/common/directives/mydirective.dir.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/common/directives/angular-treeview.dir.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/common/alert/alert.svc.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/common/fileupload/fileupload.svc.js"></script>
+		
+    	<script src="{{STATIC_URL}}mydrive/js/app/common/material/material.mdl.js"></script>
+    	<script src="{{STATIC_URL}}mydrive/js/app/common/material/toast.svc.js"></script>
+
+		<script src="{{STATIC_URL}}mydrive/js/app/login/login.mdl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/login/login.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/login/logout.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/login/sign.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/login/users.svc.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/login/login.svc.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/login/directives/hidewhenconnected.dir.js"></script>
+
+		<script src="{{STATIC_URL}}mydrive/js/app/archives/archives.mdl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/archives/archives.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/documents/documents.mdl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/documents/documents.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/documents/documents.svc.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/documents/plan-documents.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/documents/upload.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/documents/filters/bytestosize.ftr.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/drive/drive.mdl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/drive/drive.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/drive/drive.svc.js"></script>
+		
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
+		<!--<script src="/javascripts/offcanvas.js"></script>-->
+		<!--<script src="/javascripts/posts/ctrl.js"></script>-->
+		<!--<script src="{{STATIC_URL}}mydrive/js/controllers.js"></script>-->
+		<script>
+		// Add the CSRF Token
+		angular.module('my-ged').config(['$httpProvider', function($httpProvider, $rootScope) {
+    		$httpProvider.defaults.headers.common['X-CSRFToken'] = '{{ csrf_token|escapejs }}';
+		}]);
+
+</script>
+<!--
+<main>
+	<nav class="floating-menu">
+		<h3>Floating Menu</h3>
+
+		<a href="http://www.quackit.com/css/">CSS</a>
+		<a href="http://www.quackit.com/html/">HTML</a>
+		<a href="http://www.quackit.com/coldfusion/">ColdFusion</a>
+		<a href="http://www.quackit.com/database/">Database</a>
+	</nav>
+</main>	
+-->
+  
+	</body>
+</html>

@@ -1,0 +1,166 @@
+<div >
+					
+							<!-- Post -->
+								<article class="box post post-excerpt">
+									<header>
+										<!--
+											Note: Titles and subtitles will wrap automatically when necessary, so don't worry
+											if they get too long. You can also remove the <p> entirely if you don't
+											need a subtitle.
+										
+										<h2><a href="#">Welcome to notes</a></h2>
+										-->										
+									</header>
+									
+									<!--<div class="info">
+										
+										<span class="date"><span class="month">Jul<span>y</span></span> <span class="day">14</span><span class="year">, 2014</span></span>
+										
+										<ul class="stats">
+											<li><a href="#" class="icon fa-comment">16</a></li>
+											<li><a href="#" class="icon fa-heart">32</a></li>
+											<li><a href="#" class="icon fa-twitter">64</a></li>
+											<li><a href="#" class="icon fa-facebook">128</a></li>
+										</ul>
+									</div>
+									-->
+
+									<!--
+									<a href="#" class="image featured"><img src="{{STATIC_URL}}notes/images/pic01.jpg" alt="" /></a>
+									name = models.CharField(max_length=256)
+    path = models.CharField(max_length=512)
+    contentType = models.CharField(max_length=30)
+    version = models.IntegerField(default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    basket = models.ForeignKey(Basket, verbose_name='Basket', default=None)
+									-->
+
+									{% verbatim %}
+									
+						            <div class="col-sm-12">
+						                <ol class="breadcrumb" ng-hide="false">
+						                  <li ng-repeat="item in breadcrumb">
+						                      <a data-ng-click="navigate(item.id) ">{{item.libelle}}</a> 
+						                        <div class="dropdown" style="display:inline" >    
+						                        <span class="caret" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+						                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						                                <li><a href="#">Add Folder</a></li>
+						                                <li><a href="#">Rename</a></li>
+						                                <li><a href="#">Upload File</a></li>
+						                                <li role="separator" class="divider"></li>
+						                                <li><a href="#">Delete</a></li>
+						                            </ul>
+						                        </div>
+						                  </li>
+						                </ol>
+						            </div>
+
+									<div> 
+
+									 <div class="col-sm-12"> 
+
+										<uib-pagination 
+											total-items="names.count" 
+											ng-model="names.current" 
+											items-per-page="names.page_size"
+											max-size="maxSize" 
+											num-pages="names.num_pages"
+											class="pagination-sm" 
+											boundary-link-numbers="true" 
+											rotate="true" 
+											ng-change="pageChanged()">
+										</uib-pagination>
+
+										<table class="default">
+											<thead>
+												<tr>
+													<th scope="col" title="Id">Id</th>
+													<th scope="col" title="name">name</th>
+													<th scope="col" title="contentType">content-type</th>
+													<th scope="col" title="folder">folder</th>
+													<th scope="col" title="created_at">created_at</th>
+													<th scope="col" title="updated_at">updated_at</th>
+												</tr>
+											</thead>
+											<tbody>
+											  <tr ng-repeat="x in names.results">
+											    <td>{{ x.id }}</td>
+											    <td>{{ x.name }}</td>
+											    <td>{{ x.contentType }}</td>
+											    <td>{{ x.folder }}</td>
+											    <td>{{ x.created_at | date: 'yyyy-MM-dd hh:m' }}</td>
+											    <td>{{ x.updated_at | date: 'yyyy-MM-dd hh:m' }}</td>
+											  </tr>
+										  </tbody>
+										</table>
+
+										Found {{names.count}} files
+
+										
+
+										<!--<nav>
+  											<ul class="pager">
+    											<li><a href="" ng-click="previous(names.previous)">Previous</a></li>
+    											<li><a href="" ng-click="next(names.next)">Next</a></li>
+  											</ul>
+										</nav>
+
+    									<pre>Page: {{bigCurrentPage}} / {{names.count}}</pre>
+    									-->
+									 </div> 
+									</div>
+									
+
+									<!--<input type="checkbox" ng-model="showIt">
+									<div ng-controller="textCtrl"> 
+										<input type="text" ng-model="text">
+										text={{ text }}
+									</div>
+									-->
+									{% endverbatim %}
+
+							</article>
+
+							
+							
+						
+							<!-- Post 
+								<article class="box post post-excerpt">
+									<header>
+										<h2><a href="#">Lorem ipsum dolor sit amet</a></h2>
+										<p>Feugiat interdum sed commodo ipsum consequat dolor nullam metus</p>
+									</header>
+									<div class="info">
+										<span class="date"><span class="month">Jul<span>y</span></span> <span class="day">8</span><span class="year">, 2014</span></span>
+										<ul class="stats">
+											<li><a href="#" class="icon fa-comment">16</a></li>
+											<li><a href="#" class="icon fa-heart">32</a></li>
+											<li><a href="#" class="icon fa-twitter">64</a></li>
+											<li><a href="#" class="icon fa-facebook">128</a></li>
+										</ul>
+									</div>
+									<a href="#" class="image featured"><img src="{{STATIC_URL}}notes/images/pic02.jpg" alt="" /></a>
+									<p>
+										Quisque vel sapien sit amet tellus elementum ultricies. Nunc vel orci turpis. Donec id malesuada metus. 
+										Nunc nulla velit, fermentum quis interdum quis, tate etiam commodo lorem ipsum dolor sit amet dolore. 
+										Quisque vel sapien sit amet tellus elementum ultricies. Nunc vel orci turpis. Donec id malesuada metus. 
+										Nunc nulla velit, fermentum quis interdum quis, convallis eu sapien. Integer sed ipsum ante.
+									</p>
+								</article>
+-->
+							<!-- Pagination -->
+							<!--	<div class="pagination">-->
+									<!--<a href="#" class="button previous">Previous Page</a>-->
+							<!--		<div class="pages">
+										<a href="#" class="active">1</a>
+										<a href="#">2</a>
+										<a href="#">3</a>
+										<a href="#">4</a>
+										<span>&hellip;</span>
+										<a href="#">20</a>
+									</div>
+									<a href="#" class="button next">Next Page</a>
+								</div>
+							-->
+						</div>

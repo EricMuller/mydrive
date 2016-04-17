@@ -1,0 +1,65 @@
+
+.full-height
+{
+    height: 100%;
+}
+
+.bordered
+{
+    border: 1px;
+    box-shadow: 0 0 0.25em 0em rgba(0,0,0,0.25);
+    margin: 5px;
+}
+
+
+#container
+	{
+		margin-top: 44px;
+	}
+
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+
+
+
+
+.gi-16px {
+    font-size: 16px !important;
+}
+
+.gi-24px {
+    font-size: 24px !important;
+}
+
+.gi-20px {
+    font-size: 20px !important;
+}
+
+.gi-60px {
+    font-size: 60px !important;
+}
+/*.treeview .glyphicon {
+    font-size: 24px;
+}*/
+
+/*** Loading Bar ***/
+#loading-bar .bar{
+    height: 3px;
+    background-color: #cc0000 !important;
+}
+#loading-bar-spinner .spinner-icon {
+    border-top-color:  #6A6158 !important;
+    border-left-color: #6A6158 !important;
+    width: 24px;
+    height: 24px;
+}
+
+
+.pagination{
+
+    margin-top: 5px !important;
+    padding-top: 5px !important;
+}
