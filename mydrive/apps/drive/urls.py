@@ -11,20 +11,26 @@ import rest_framework_swagger.urls
 router = routers.DefaultRouter()
 router.register(r'users', viewsets.UserViewSet)
 router.register(r'groups', viewsets.GroupViewSet)
-router.register(r'documents', viewsets.DocumentViewSet)
+router.register(r'files', viewsets.FileViewSet)
 router.register(r'baskets', viewsets.BasketViewSet)
-router.register(r'nodes', viewsets.DriveNodeViewSet)
+router.register(r'nodes', viewsets.RepositoryViewSet)
 
 apiRouter = routers.DefaultRouter()
 apiRouter.register(
-    r'(?P<username>[-_\w]+)/folders', viewsets.DriveFolderViewSet,
-    base_name='v1-folder')
+    r'(?P<username>[-_\w]+)/repositories', viewsets.DriveRepositoryViewSet,
+    base_name='v1-repositories')
 apiRouter.register(
-    r'(?P<username>[-_\w]+)/tree', viewsets.DriveTreeFolderViewSet,
+    r'(?P<username>[-_\w]+)/tree', viewsets.DriveRepositoryAsTreeViewSet,
     base_name='v1-tree')
 apiRouter.register(
     r'(?P<username>[-_\w]+)', viewsets.DriveViewSet,
     base_name='v1')
+
+
+batchRouter = routers.DefaultRouter()
+batchRouter.register(
+    viewsets.BatchViewSet.url, viewsets.BatchViewSet,
+    base_name='batch')
 
 # import pdb   pdb.set_trace()
 
@@ -42,6 +48,7 @@ if settings.DEBUG:
 urlpatterns = [
     url(r'^', include(router.urls, namespace='internal_apis')),
     url(r'^v1/', include(apiRouter.urls, namespace='external_apis')),
+    url(r'^batchs/', include(batchRouter.urls, namespace='external_apis')),
     url(r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework')),
     url(r'^authentification/', views.obtain_auth_token),

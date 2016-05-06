@@ -4,12 +4,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 
 from drive.models import Basket
-from drive.models import Document
+from drive.models import File
 
 from drive.serializers import UserSerializer
 from drive.serializers import GroupSerializer
 from drive.serializers import BasketSerializer
-from drive.serializers import DocumentSerializer
+from drive.serializers import FileSerializer
 
 from rest_framework import viewsets
 # from rest_framework import renderers
@@ -22,6 +22,7 @@ from rest_framework.decorators import detail_route
 from rest_framework.response import Response
 
 from drive.paginators import StandardResultsSetPagination
+from drive.paginators import LargeResultsSetPagination
 
 
 from django.contrib.auth import authenticate
@@ -33,12 +34,12 @@ from rest_framework.exceptions import ValidationError
 import sys
 from drive import settings
 
-from drive.mptt import TreeSerializer
-from drive.mptt import Tree
+from drive.drive import DriveSerializer
+from drive.drive import Drive
 # from drive.views import DefaultsAuthentificationMixin
 
-from drive.models import DriveNode
-from drive.serializers import DriveNodeSerializer
+from drive.models import Repository
+from drive.serializers import RepositorySerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -105,21 +106,21 @@ class BasketViewByCodeViewSet(viewsets.ModelViewSet):
         return queryset
 
 
-class DocumentViewSet(viewsets.ModelViewSet):
+class FileViewSet(viewsets.ModelViewSet):
 
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = Document.objects.all()
-    serializer_class = DocumentSerializer
+    queryset = File.objects.all()
+    serializer_class = FileSerializer
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
-        queryset = Document.objects.all()
-        folderId = self.request.query_params.get('id', None)
+        queryset = File.objects.all()
+        repositoryId = self.request.query_params.get('id', None)
 
-        if folderId is not None:
-            queryset = queryset.filter(folder_id=folderId)
+        if repositoryId is not None:
+            queryset = queryset.filter(repository_id=repositoryId)
 
         return queryset
 
@@ -193,43 +194,52 @@ class AuthentificationViewSet(viewsets.ViewSet):
 #     def partial_update(self, request, pk=None):
 #         pass
 
-class DriveNodeViewSet(viewsets.ModelViewSet):
+class RepositoryViewSet(viewsets.ModelViewSet):
 
     """
     API endpoint that allows groups to be viewed or edited.
     """
-    queryset = DriveNode.objects.all()
-    serializer_class = DriveNodeSerializer
+    queryset = Repository.objects.all()
+    serializer_class = RepositorySerializer
+
+
+class BatchViewSet(viewsets.ViewSet):
+    url = r'Batchs'
+
+    def list(self, request, username=None):
+        pass
 
 
 class DriveViewSet(viewsets.ViewSet):
 
-    _tree = Tree(settings.TREE_ROOT_NAME)
+    url = r'(?P<username>[-_\w]+)'
 
-    def list(self, request, username=None):
-        """
-        API endpoint that allows to get the user folders as Tree .
-        """
+    _drive = Drive(settings.TREE_ROOT_NAME)
 
-        if username:
+    # def list(self, request, username=None):
+    #     """
+    #     API endpoint that allows to get the user folders as Tree .
+    #     """
 
-            if username == 'root':
-                queryset = self._tree.buildTree()
-            else:
+    #     if username:
 
-                try:
-                    User.objects.get(username=username)
-                except User.DoesNotExist:
-                    exc_type, exc_value, exc_traceback = sys.exc_info()
-                    # raise ValidationError('detail', 'invalid request data')
-                    return Response(
-                        {"status": "user does not exists : " + username},
-                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    #         if username == 'root':
+    #             queryset = self._tree.buildTree()
+    #         else:
 
-                queryset = self._tree.buildUserTree(username)
+    #             try:
+    #                 User.objects.get(username=username)
+    #             except User.DoesNotExist:
+    #                 exc_type, exc_value, exc_traceback = sys.exc_info()
+    # raise ValidationError('detail', 'invalid request data')
+    #                 return Response(
+    #                     {"status": "user does not exists : " + username},
+    #                     status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        serializer = TreeSerializer(queryset, many=True)
-        return Response(serializer.data)
+    #             queryset = self._tree.buildUserTree(username)
+
+    #     serializer = TreeSerializer(queryset, many=True)
+    #     return Response(serializer.data)
 
     # @list_route()
     # @detail_route(methods=['get'])
@@ -242,83 +252,97 @@ class DriveViewSet(viewsets.ViewSet):
             return Response({"status": "user does not exists : " + pk},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        queryset = self._tree.buildUserTree(pk)
-        serializer = TreeSerializer(queryset, many=True)
+        queryset = self._drive.buildUserTree(pk)
+        serializer = DriveSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request, username):
         """
         API Create user root node.
         """
-        root = self._tree.getRoot()
+        root = self._drive.getRoot()
         pk = request.data['username']
-        self._tree.createChild(root.id, pk)
+        self._drive.createChild(root.id, pk)
 
-        queryset = self._tree.buildUserTree(pk)
-        serializer = TreeSerializer(queryset, many=True)
+        queryset = self._drive.buildUserTree(pk)
+        serializer = DriveSerializer(queryset, many=True)
 
         return Response(serializer.data)
 
 
-class DriveFolderViewSet(viewsets.ViewSet):
+class DriveRepositoryViewSet(viewsets.ViewSet):
+
+    url = r'(?P<username>[-_\w]+)/repositories'
 
     http_method_names = ['get', 'post', 'head', 'delete']
 
-    _tree = Tree(settings.TREE_ROOT_NAME)
+    _drive = Drive(settings.TREE_ROOT_NAME)
 
     def list(self, request, username):
-
+        """
+        API Get the Worspace the user .
+        """
         # queryset = self._tree.buildUserTree(username, True)
         # serializer = TreeSerializer(queryset, many=True)
         # return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        root = self._tree.getUserRoot(username)
-        return Response(DriveNodeSerializer(root).data,
+        root = self._drive.getUserRoot(username)
+        return Response(RepositorySerializer(root).data,
                         status=status.HTTP_201_CREATED)
 
     @detail_route(methods=['get'])
     def children(self, request, username, pk):
-
-        queryset = self._tree.getChildren(pk)
-        serializer = DriveNodeSerializer(queryset, many=True)
+        """
+        API Get all sub-repo of the repo.
+        """
+        queryset = self._drive.getChildren(pk)
+        serializer = RepositorySerializer(queryset, many=True)
         return Response(serializer.data,
                         status=status.HTTP_201_CREATED)
 
     @detail_route(methods=['get'])
-    def documents(self, request, username=None, pk=None):
-
-        queryset = Document.objects.all()
+    def files(self, request, username=None, pk=None):
+        """
+        API Get all documents of the repository.
+        """
+        queryset = File.objects.all()
         # folderId = self.request.query_params.get('id', None)
         if pk is not None:
-            queryset = queryset.filter(folder_id=pk)
+            queryset = queryset.filter(repository_id=pk)
 
-        serializer = DocumentSerializer(queryset, many=True)
-        return Response(serializer.data)
+        paginator = LargeResultsSetPagination()
+        result_page = paginator.paginate_queryset(queryset, request)
+        serializer = FileSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
 
     def create(self, request, username):
-
-        serializer = DriveNodeSerializer(data=request.data)
+        """
+        API Create sub-repo of the repository.
+        """
+        serializer = RepositorySerializer(data=request.data)
         if serializer.is_valid():
 
-            parent = DriveNode.objects.get(pk=request.data['id'])
+            parent = Repository.objects.get(pk=request.data['id'])
 
             if parent is None:
                 raise ValidationError(
                     'invalid request data parent is none')
 
             else:
-                folder = self._tree.createChild(
+                folder = self._drive.createChild(
                     parent.id, serializer.data['libelle'])
 
-            return Response(DriveNodeSerializer(folder).data,
+            return Response(RepositorySerializer(folder).data,
                             status=status.HTTP_201_CREATED)
 
         raise ValidationError('invalid request data')
 
     def destroy(self, request, username, pk=None):
-
+        """
+        API delete repository .
+        """
         try:
-            self._tree.remove(pk)
+            self._drive.remove(pk)
             return Response({"status": "succces"},
                             status=status.HTTP_201_CREATED)
         except:
@@ -335,18 +359,21 @@ class DriveFolderViewSet(viewsets.ViewSet):
     #     pass
 
 
-class DriveTreeFolderViewSet(viewsets.ViewSet):
+class DriveRepositoryAsTreeViewSet(viewsets.ViewSet):
 
-    _tree = Tree(settings.TREE_ROOT_NAME)
+    url = r'(?P<username>[-_\w]+)/tree'
+
+    _drive = Drive(settings.TREE_ROOT_NAME)
 
     def list(self, request, username=None):
-
+        """
+        API Get all repositories of the user .
+        """
         if username:
 
             if username == 'root':
-                queryset = self._tree.buildTree()
+                queryset = self._drive.buildTree()
             else:
-
                 try:
                     User.objects.get(username=username)
                 except User.DoesNotExist:
@@ -356,7 +383,7 @@ class DriveTreeFolderViewSet(viewsets.ViewSet):
                         {"status": "user does not exists : " + username},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-                queryset = self._tree.buildUserTree(username)
+                queryset = self._drive.buildUserTree(username)
 
-        serializer = TreeSerializer(queryset, many=True)
+        serializer = DriveSerializer(queryset, many=True)
         return Response(serializer.data)

@@ -3,7 +3,7 @@
 
     angular
         .module('my-ged.plan')
-        .service('planSvc', PlanSvc);
+        .service('driveSvc', PlanSvc);
 
     PlanSvc.$inject = ['$rootScope', '$q', 'TokenRestangular'];
 
@@ -20,17 +20,24 @@
             updateChild: updateChild,
             removeChild: removeChild,
             breadcrumb: breadcrumb,
+            getDocumentsByFolder: getDocumentsByFolder,
         };
 
         return service;
 
         /*root fct*/
         function getFolders() {
-           return TokenRestangular.one("v1").one("root").one("folders").get()  ;      
+           return TokenRestangular.one("v1").one("root").one("repositories").get()  ;      
         }
         
         function getPlan() {
-          return TokenRestangular.one("v1").one("root").get();
+          return TokenRestangular.one("v1").one("root").one("tree").get();
+        }
+
+        function getDocumentsByFolder(user, id) {
+          
+            return TokenRestangular.one("v1").one(user.username).one("repositories",id).one("files").get();
+           
         }
 
         /* user fct*/
@@ -89,11 +96,11 @@
 
 
         function removeChild(node){
-           return TokenRestangular.all("v1").one("root").one("folders",node.id).customDELETE()  ;      
+           return TokenRestangular.all("v1").one("root").one("repositories",node.id).customDELETE()  ;      
         }
 
         function addChild(node){
-           return TokenRestangular.all("v1").one("root").all("folders").post(node)  ;      
+           return TokenRestangular.all("v1").one("root").all("repositories").post(node)  ;      
         }
 
         function updateChild(parentId,libelle){

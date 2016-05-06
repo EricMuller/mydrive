@@ -11,22 +11,23 @@
         var self = this;
 
         var service = {
-            getDocumentsByFolder: getDocumentsByFolder,
-            getDocuments: getDocuments
+            getDocuments: getDocuments,
         };
 
         return service;
 
-        function getDocumentsByFolder(id) {
-           return TokenRestangular.one("documents").get({id: id});
-        }
+        /*function getDocumentsByFolder(user, id) {
+        
+
+           return TokenRestangular.one("v1").one().get({id: id});
+        }*/
 
         function getDocuments(page) {
             
             if (page != undefined) {
-                return TokenRestangular.one("documents").get({page: page});
+                return TokenRestangular.one("files").get({page: page});
             }else{
-                return TokenRestangular.one("documents").get();     
+                return TokenRestangular.one("files").get();     
             }
            
         }        

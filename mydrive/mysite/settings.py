@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import djcelery
 import os
 import socket
 import sys
@@ -20,11 +21,6 @@ ROOT_DIR = os.path.dirname(PROJECT_DIR)
 APPS_DIR = os.path.realpath(os.path.join(ROOT_DIR, 'apps'))
 sys.path.append(APPS_DIR)
 
-print('------------------------------------------------')
-print('PATH:')
-for p in sys.path:
-    print(p)
-print('------------------------------------------------')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
@@ -86,7 +82,6 @@ LOGGING = {
 
 # Application definition
 
-
 HAYSTACK_CONNECTIONS = {
     'default': {
         'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
@@ -105,10 +100,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    #'swampdragon',
+    # 'swampdragon',
     'drive',
     'mydrive',
     'rest_framework_swagger',
+    'djcelery',
+    # 'kombu.transport.django',  # django dtatbase
     # 'haystack',
     # 'debug_toolbar',
 )
@@ -268,7 +265,7 @@ SWAGGER_SETTINGS = {
         'get',
         'post',
         'put',
-        #'patch',
+        # 'patch',
         'delete'
     ],
     'api_key': '',
@@ -277,7 +274,7 @@ SWAGGER_SETTINGS = {
     'unauthenticated_user': 'django.contrib.auth.models.AnonymousUser',
     'permission_denied_handler': None,
     'resource_access_handler': None,
-    #'base_path': 'helloreverb.com/docs',
+    # 'base_path': 'helloreverb.com/docs',
     'info': {
         'contact': 'e.mul@free.fr',
         'description': 'This is my drive REST API. ',
@@ -288,3 +285,12 @@ SWAGGER_SETTINGS = {
     },
     'doc_expansion': 'none',
 }
+
+# Celery
+# https://www.caktusgroup.com/blog/2014/06/23/scheduling-tasks-celery/
+# http://docs.celeryproject.org/en/latest/configuration.html#conf-broker-settings
+djcelery.setup_loader()
+# BROKER_URL = 'django://'
+#BROKER_URL = 'amqp://guest:guest@centos:5672//'
+
+BROKER_URL = 'amqp://mydrive:mydrive@centos:5672/centos'

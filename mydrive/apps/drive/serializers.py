@@ -2,9 +2,9 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Group
 from drive.models import Basket
-from drive.models import Document
+from drive.models import File
 from drive.models import UploadFile
-from drive.models import DriveNode
+from drive.models import Repository
 
 
 # from drive.models import Foo
@@ -37,12 +37,12 @@ class BasketSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('code', 'libelle', 'description')
 
 
-class DocumentSerializer(serializers.ModelSerializer):
+class FileSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Document
+        model = File
         fields = ('id', 'name', 'path', 'contentType', 'created_at',
-                  'updated_at', 'version', 'folder')
+                  'updated_at', 'version', 'repository')
 
 
 class UploadFileSerializer(serializers.HyperlinkedModelSerializer):
@@ -52,10 +52,10 @@ class UploadFileSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('name', 'created_at', 'updated_at')
 
 
-class DriveNodeSerializer(serializers.HyperlinkedModelSerializer):
+class RepositorySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
-        model = DriveNode
+        model = Repository
         fields = (
             'id', 'libelle', 'node_l', 'node_r', 'created_at', 'updated_at')
 

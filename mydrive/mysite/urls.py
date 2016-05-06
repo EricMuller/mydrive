@@ -4,7 +4,9 @@ from django.conf.urls import url
 import django.views.defaults
 # from mysite.apps.notes import urls
 from mysite import views
-
+from mysite import settings
+import os
+import sys
 
 urlpatterns = [
     url(r'^drive/', include('drive.urls')),
@@ -21,3 +23,11 @@ urlpatterns = [
 #handler404 = 'mydrive.views.page_not_found'
 # Overrides the default 500 handler django.views.defaults.server_error
 #handler500 = 'mydrive.views.server_error'
+
+if settings.DEBUG:
+    print('------------------------------------------------')
+    print('PID:' + str(os.getpid()))
+    print('PYTHON PATH:')
+    for p in sys.path:
+        print(p)
+    print('------------------------------------------------')

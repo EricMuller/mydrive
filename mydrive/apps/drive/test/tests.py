@@ -1,7 +1,7 @@
 from django.test import TestCase
 # import datetime
 from ged.models import Basket
-from ged.models import Document
+from ged.models import File
 from ged.models import Folder
 from ged.modules.tree import Tree
 #from mysite import settings
@@ -31,7 +31,7 @@ class BasketMethodTests(TestCase):
 
         basket = Basket.objects.get(libelle="download")
 
-        document = Document.create('test', 'path', 'contentType', 1, basket)
+        document = File.create('test', 'path', 'contentType', 1, basket)
 
         self.assertIsNotNone(document)
 

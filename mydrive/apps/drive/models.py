@@ -29,32 +29,6 @@ class DateModel(models.Model):
         abstract = True
 
 
-class Node(DateModel):
-
-    node_l = models.IntegerField(default=0)
-    node_r = models.IntegerField(default=0)
-    libelle = models.CharField(max_length=256)
-    parent = models.ForeignKey("self", null=True, default=None, blank=True)
-
-    class Meta:
-        abstract = True
-
-
-class DriveNode(Node):
-    # groups = models.ManyToManyField(Group)
-    # download = models.BooleanField(default=True)
-    def __str__(self):
-        return self.libelle
-
-    @classmethod
-    def create(cls, node_l, node_r, libelle, parent=None):
-        folder = cls(
-            node_l=node_l, node_r=node_r, libelle=libelle,
-            parent=parent)
-
-        return folder
-
-
 class Basket(DateModel):
     code = models.CharField(primary_key=True, max_length=30)
     libelle = models.CharField(max_length=30)
@@ -74,25 +48,58 @@ class UploadFile(DateModel):
     name = models.CharField(max_length=256, default=None)
     docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
+# class Node(DateModel):
+#     class Meta:
+#         abstract = True
 
-class Document(DateModel):
+
+class TypeRepository(DateModel):
+    code = models.CharField(max_length=30)
+    libelle = models.CharField(max_length=256)
+
+
+class Repository(DateModel):
+    name = models.CharField(max_length=30)
+    node_l = models.IntegerField(default=0)
+    node_r = models.IntegerField(default=0)
+    libelle = models.CharField(max_length=256)
+    parent = models.ForeignKey("self", null=True, default=None, blank=True)
+    type = models.ForeignKey(
+        TypeRepository, verbose_name='type', null=True,
+        default=None, blank=True)
+
+    def __str__(self):
+        return self.libelle
+
+    @classmethod
+    def create(cls, node_l, node_r, libelle, parent=None):
+        node = cls(
+            node_l=node_l, node_r=node_r, libelle=libelle,
+            parent=parent)
+        return node
+
+    class Meta:
+        verbose_name = 'Repository'
+        verbose_name_plural = 'Repositories'
+
+
+class File(DateModel):
 
     """docstring for ClassName"""
     name = models.CharField(max_length=256)
     path = models.CharField(max_length=512)
     contentType = models.CharField(max_length=30)
     version = models.IntegerField(default=0)
-    folder = models.ForeignKey(
-        DriveNode, verbose_name='DriveNode', null=True,
+    repository = models.ForeignKey(
+        Repository, verbose_name='Repository', null=True,
         default=None, blank=True)
 
     @classmethod
-    def create(cls, name, path, contentType, version, folder):
-        document = cls(
+    def create(cls, name, path, contentType, version, repository):
+        file = cls(
             name=name, path=path, contentType=contentType,
-            version=version, folder=folder)
-        return document
-
+            version=version, repository=repository)
+        return file
 
 # class Foo(SelfPublishModel, models.Model):
 #     serializer_class = 'drive.serializers.FooSerializer'

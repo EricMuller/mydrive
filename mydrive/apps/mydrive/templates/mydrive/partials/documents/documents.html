@@ -5,7 +5,7 @@
 </head>
 <body>
 {% verbatim %}
-			<div ng-show="documents.count"> 
+			<div ng-show="documents.results.length"> 
 				<table class="default table-hover">
 					<thead>
 						<tr>
@@ -29,13 +29,15 @@
 				  </tbody>
 				</table>
 			 </div> 
+			 
 {% endverbatim %}				 
 			
-			<div class="full-height" ng-hide="documents.count"> 
+			<div class="full-height" ng-hide="documents.results.length"> 
 					<mdr-file url="upload/" headers ="{'X-CSRFToken': '{{ csrf_token|escapejs }}'}"} size="100" 
 					 	model="folder" >
 					</mdr-file>
 			</div>
+
 
 </body>
 </html>

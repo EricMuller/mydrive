@@ -11,8 +11,8 @@ angular.module('my-ged.documents', [ 'ui.router' ]).config(
             		templateUrl: 'partials/documents.html',
             		controller: 'plandocumentCtrl',
                     resolve:{
-                        tree : function(planSvc,$rootScope){
-                                return planSvc.getTree($rootScope.globals.user);
+                        tree : function(driveSvc, $rootScope){
+                                return driveSvc.getTree($rootScope.globals.user);
                             }
                     }
             		
@@ -28,8 +28,9 @@ angular.module('my-ged.documents', [ 'ui.router' ]).config(
                     templateUrl: 'partials/documents/documents.html',
                     controller: 'documentsCtrl',
                     resolve:{
-                        documents :  function(documentSvc, $stateParams) {
-                                return documentSvc.getDocumentsByFolder($stateParams.id)  ;
+                        documents :  function(driveSvc, $stateParams, $rootScope) {
+                       
+                                return driveSvc.getDocumentsByFolder($rootScope.globals.user, $stateParams.id)  ;
                         }
                         
                     }

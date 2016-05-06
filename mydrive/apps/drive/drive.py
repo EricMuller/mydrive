@@ -4,7 +4,8 @@ from django.db.models import F
 from django.db.models import Q
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
-from drive.models import DriveNode
+from drive.models import Repository
+from django.db import transaction
 # Arbre intervallaire
 
 
@@ -14,14 +15,14 @@ class Mptt:
         self._rootName = rootName
 
     def find(self, id):
-        f = DriveNode.objects.get(pk=id)
+        f = Repository.objects.get(pk=id)
         return f
 
     def getUserRoot(self, username):
 
         try:
-            root = DriveNode.objects.get(node_l=1)
-            user = DriveNode.objects.filter(
+            root = Repository.objects.get(node_l=1)
+            user = Repository.objects.filter(
                 libelle=username, parent_id=root.id).first()
             return user
         except:
@@ -29,15 +30,15 @@ class Mptt:
 
     def getRoot(self):
         try:
-            folder = DriveNode.objects.get(node_l=1)
-        except DriveNode.DoesNotExist:
+            folder = Repository.objects.get(node_l=1)
+        except Repository.DoesNotExist:
             folder = self._createRoot()
 
         return folder
 
     def _createRoot(self):
 
-        folder = DriveNode.create(1, 2, self._rootName)
+        folder = Repository.create(1, 2, self._rootName)
         folder.save()
         return folder
 
@@ -47,25 +48,26 @@ class Mptt:
 
     def getChildren(self, id):
 
-        parent = DriveNode.objects.get(pk=id)
+        parent = Repository.objects.get(pk=id)
 
-        folders = DriveNode.objects.filter(
+        folders = Repository.objects.filter(
             parent_id=parent.id).all(
         ).prefetch_related('parent').order_by('node_l')
 
         return folders
 
+    @transaction.non_atomic_requests
     def createChild(self, id, libelle):
 
-        parent = DriveNode.objects.get(pk=id)
+        parent = Repository.objects.get(pk=id)
 
-        DriveNode.objects.filter(node_r__gte=parent.node_r).update(
+        Repository.objects.filter(node_r__gte=parent.node_r).update(
             node_r=F('node_r') + 2)
 
-        DriveNode.objects.filter(node_l__gte=parent.node_r).update(
+        Repository.objects.filter(node_l__gte=parent.node_r).update(
             node_l=F('node_l') + 2)
 
-        folder = DriveNode.create(
+        folder = Repository.create(
             parent.node_r, parent.node_r + 1, libelle, parent)
 
         folder.save()
@@ -74,26 +76,36 @@ class Mptt:
 
     def remove(self, id):
 
-        folder = DriveNode.objects.get(pk=id)
+        folder = Repository.objects.get(pk=id)
 
         decalage = folder.node_r - folder.node_l + 1
 
         node_r = folder.node_r
         node_l = folder.node_l
 
-        DriveNode.objects.filter(
+        Repository.objects.filter(
             node_l__gte=folder.node_l, node_r__lte=folder.node_r).delete()
 
-        DriveNode.objects.filter(node_r__gte=node_r).update(
+        Repository.objects.filter(node_r__gte=node_r).update(
             node_r=F('node_r') - decalage)
 
-        DriveNode.objects.filter(node_l__gt=node_l).update(
+        Repository.objects.filter(node_l__gt=node_l).update(
             node_l=F('node_l') - decalage)
 
         pass
 
 
-class Tree(Mptt):
+class Storage:
+
+    def buildPathforNode(self, repository):
+
+        pass
+        # SELECT *   FROM MATABLE
+        #         WHERE BG <= :BG_Feuille AND BD >= DB_Feuille
+        #             ORDER BY BG
+
+
+class Drive(Mptt):
 
     def __init__(self, rootName):
         super().__init__(rootName)
@@ -104,18 +116,18 @@ class Tree(Mptt):
             root = self.getUserRoot(username)
             if root is not None:
                 if not lazy:
-                    folders = DriveNode.objects.filter(
+                    folders = Repository.objects.filter(
                         node_l__gte=root.node_l, node_r__lte=root.node_r).all(
                     ).prefetch_related('parent').order_by('node_l')
 
                 else:
-                    folders = DriveNode.objects.filter(
+                    folders = Repository.objects.filter(
                         Q(parent_id=root.id) | Q(id=root.id)).all(
                     ).prefetch_related('parent').order_by('node_l')
 
                 tree = self._build(folders, root.id)
 
-        except DriveNode.DoesNotExist:
+        except Repository.DoesNotExist:
             pass
 
         return tree
@@ -123,33 +135,33 @@ class Tree(Mptt):
     def buildTree(self):
         tree = []
         try:
-            root = DriveNode.objects.get(node_l=1)
-            folders = DriveNode.objects.all().prefetch_related(
+            root = Repository.objects.get(node_l=1)
+            repositories = Repository.objects.all().prefetch_related(
                 'parent').order_by('node_l')
-            tree = self._build(folders, root.id)
+            tree = self._build(repositories, root.id)
         except:
             pass
         return tree
 
-    def _build(self, folders, root_id):
+    def _build(self, repositories, root_id):
 
         # folders = Folder.objects.all().order_by('node_l')
         parentsDic = {}
-        tree = []
-        for folder in folders:
-            print(folder.id, root_id)
-            if folder.id == root_id:
-                root = FolderNode(folder)
-                parentsDic[folder.id] = root
-                tree.append(root)
+        drive = []
+        for repository in repositories:
+            print(repository.id, root_id)
+            if repository.id == root_id:
+                root = RepositoryNode(repository)
+                parentsDic[repository.id] = root
+                drive.append(root)
             else:
-                node = FolderNode(folder)
-                parent = parentsDic[folder.parent_id]
+                node = RepositoryNode(repository)
+                parent = parentsDic[repository.parent_id]
                 print(parent.id)
                 parent.items.append(node)
-                parentsDic[folder.id] = node
+                parentsDic[repository.id] = node
 
-        return tree
+        return drive
     # def removeElement(self, id):
 
         # folder = Folder.objects.get(pk=id)
@@ -163,16 +175,16 @@ class Tree(Mptt):
         # folder.delete()
 
 
-class FolderNode():
+class RepositoryNode():
 
-    def __init__(self, folder):
-        self.id = folder.id
-        self.node_l = folder.node_l
-        self.node_r = folder.node_r
-        self.libelle = folder.libelle
-        self.updated_at = folder.updated_at
+    def __init__(self, repo):
+        self.id = repo.id
+        self.node_l = repo.node_l
+        self.node_r = repo.node_r
+        self.libelle = repo.libelle
+        self.updated_at = repo.updated_at
         self.items = []
-        self.parent_id = folder.parent_id
+        self.parent_id = repo.parent_id
 
 
 class Items(object):
@@ -197,20 +209,20 @@ class ItemField(serializers.Field):
         # value = json.dumps(value)
         values = []
         for tree in value:
-            serializer = TreeSerializer(tree)
+            serializer = DriveSerializer(tree)
             values.append(serializer.data)
             pass
 
         return values
 
 
-class TreeSerializer(serializers.Serializer):
+class DriveSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     parent_id = serializers.IntegerField()
     libelle = serializers.CharField(max_length=30)
     items = ItemField()
 
     class Meta:
-        model = FolderNode
+        model = RepositoryNode
         fields = (
             'id', 'parent_id', 'libelle', 'items')

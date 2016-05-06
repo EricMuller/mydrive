@@ -1,9 +1,9 @@
 	
 angular.module('my-ged.home')
 .controller('homeCtrl',['$scope', '$rootScope', '$timeout', '$mdSidenav', '$log', 'loginSvc', 'alertSvc'
-							, 'errInterceptorConfig', '$location', 'planSvc', '$state',
+							, 'errInterceptorConfig', '$location', 'driveSvc', '$state',
 
-	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc, alertSvc, errInterceptorConfig, $location, planSvc, $state) {
+	function($scope, $rootScope, $timeout, $mdSidenav, $log, loginSvc, alertSvc, errInterceptorConfig, $location, driveSvc, $state) {
 		
 		$rootScope.selectedMenuName= function(title){
 			$rootScope.selectedMenu=title;

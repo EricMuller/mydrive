@@ -1,15 +1,15 @@
 from django.contrib import admin
-from drive.models import Document
+from drive.models import File
 from drive.models import Basket
 from drive.models import UploadFile
-from drive.models import DriveNode
+from drive.models import Repository
 
 
-class DocumentAdmin(admin.ModelAdmin):
+class FileAdmin(admin.ModelAdmin):
 
     list_display = [
         'name', 'path', 'contentType', 'created_at', 'updated_at',
-        'version', 'folder']
+        'version', 'repository']
     search_fields = ['name']
 
 
@@ -26,7 +26,7 @@ class UploadFileAdmin(admin.ModelAdmin):
     search_fields = ['libelle', 'created_at', 'updated_at']
 
 
-class DriveNodeAdmin(admin.ModelAdmin):
+class RepositoryAdmin(admin.ModelAdmin):
 
     list_display = [
         'id', 'parent', 'parent', 'libelle', 'node_l', 'node_r',
@@ -34,7 +34,9 @@ class DriveNodeAdmin(admin.ModelAdmin):
     search_fields = ['libelle']
     ordering = ('node_l',)
 
-admin.site.register(DriveNode, DriveNodeAdmin)
-admin.site.register(Document, DocumentAdmin)
+   
+
+admin.site.register(Repository, RepositoryAdmin)
+admin.site.register(File, FileAdmin)
 admin.site.register(Basket, BasketAdmin)
 admin.site.register(UploadFile, UploadFileAdmin)

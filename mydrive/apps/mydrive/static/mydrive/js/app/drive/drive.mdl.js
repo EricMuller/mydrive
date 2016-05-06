@@ -6,11 +6,11 @@ angular.module('my-ged.plan', [ 'ui.router' ]).config(
             		templateUrl: 'partials/plan.html',
             		controller: 'planCtrl',
             		resolve: {
-         				   plan : function(planSvc){
-                				return planSvc.getPlan();
+         				   plan : function(driveSvc){
+                				return driveSvc.getPlan();
                 			},
-                            folders: function(planSvc){
-                                return planSvc.getFolders();
+                            folders: function(driveSvc){
+                                return driveSvc.getFolders();
                             }
 
         			}

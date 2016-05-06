@@ -1,7 +1,7 @@
 angular.module('my-ged.documents')
-    .controller('plandocumentCtrl',['$scope', '$rootScope', '$window', 'tree', 'alertSvc', '$state', 'planSvc',
+    .controller('plandocumentCtrl',['$scope', '$rootScope', '$window', 'tree', 'alertSvc', '$state', 'driveSvc',
 
-	function  ($scope, $rootScope, $window, tree, alertSvc, $state, planSvc) {
+	function  ($scope, $rootScope, $window, tree, alertSvc, $state, driveSvc) {
     
     
         $scope.tree = tree;
@@ -39,7 +39,7 @@ angular.module('my-ged.documents')
 		$scope.createPlan = function() { 
 		
 			var user = $rootScope.globals.user;
-			planSvc.createPlan(user).then(function(tree){
+			driveSvc.createPlan(user).then(function(tree){
 				$scope.tree = tree;
 				$scope.navigate(0);
 			});

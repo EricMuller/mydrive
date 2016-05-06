@@ -12,8 +12,8 @@ from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework import permissions
 
-from drive.models import Document
-from drive.models import DriveNode
+from drive.models import File
+from drive.models import Repository
 
 logger = logging.getLogger(__name__)
 
@@ -61,22 +61,25 @@ def post(request):
             response_data['content_type'] = up_file.content_type
 
             print(request.POST['id'])
+            repository = None
+            try:
+                repository = Repository.objects.get(id=int(request.POST['id']))
+            except Repository.DoesNotExist:
+                pass
 
-            folder = DriveNode.objects.get(id=int(request.POST['id']))
-
-            if folder is None:
+            if repository is None:
 
                 response_data['status'] = "error"
                 response_data[
-                    'description'] = ("We re sorry, no folder " +
+                    'description'] = ("We re sorry, no repository " +
                                       request.POST['id'] + " found")
 
             else:
 
-                document = Document.create(
+                file = File.create(
                     up_file.name, new_file_name,
-                    up_file.content_type, 1, folder)
-                document.save()
+                    up_file.content_type, 1, repository)
+                file.save()
 
             return JsonResponse(response_data)
 
