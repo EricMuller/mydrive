@@ -141,11 +141,12 @@ class Drive(Mptt):
 
     def buildUserTree(self, username, lazy=False):
 
+        tree = []
         workspace = self.getworkspace(username)
-
-        repositories = self.getUserRepositories(workspace, lazy)
-
-        tree = self._build(repositories, workspace.id)
+        if workspace is not None:
+            repositories = self.getUserRepositories(workspace, lazy)
+            if repositories is not None:
+                tree = self._build(repositories, workspace.id)
 
         return tree
 
@@ -154,7 +155,8 @@ class Drive(Mptt):
         try:
             root = self.getRoot()
             repositories = self.getRepositories()
-            tree = self._build(repositories, root.id)
+            if repositories is not None:
+                tree = self._build(repositories, root.id)
         except:
             pass
         return tree
