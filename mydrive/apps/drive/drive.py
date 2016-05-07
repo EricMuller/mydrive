@@ -14,11 +14,7 @@ class Mptt:
     def __init__(self, rootName):
         self._rootName = rootName
 
-    def find(self, id):
-        f = Repository.objects.get(pk=id)
-        return f
-
-    def getUserRoot(self, username):
+    def getworkspace(self, username):
 
         try:
             root = Repository.objects.get(node_l=1)
@@ -30,17 +26,17 @@ class Mptt:
 
     def getRoot(self):
         try:
-            folder = Repository.objects.get(node_l=1)
+            repository = Repository.objects.get(node_l=1)
         except Repository.DoesNotExist:
-            folder = self._createRoot()
+            repository = self._createRoot()
 
-        return folder
+        return repository
 
     def _createRoot(self):
 
-        folder = Repository.create(1, 2, self._rootName)
-        folder.save()
-        return folder
+        repository = Repository.create(1, 2, self._rootName)
+        repository.save()
+        return repository
 
     def createUserRoot(self, libelle):
 
@@ -50,11 +46,11 @@ class Mptt:
 
         parent = Repository.objects.get(pk=id)
 
-        folders = Repository.objects.filter(
+        repositories = Repository.objects.filter(
             parent_id=parent.id).all(
         ).prefetch_related('parent').order_by('node_l')
 
-        return folders
+        return repositories
 
     @transaction.non_atomic_requests
     def createChild(self, id, libelle):
@@ -67,24 +63,25 @@ class Mptt:
         Repository.objects.filter(node_l__gte=parent.node_r).update(
             node_l=F('node_l') + 2)
 
-        folder = Repository.create(
+        repository = Repository.create(
             parent.node_r, parent.node_r + 1, libelle, parent)
 
-        folder.save()
+        repository.save()
 
-        return folder
+        return repository
 
     def remove(self, id):
 
-        folder = Repository.objects.get(pk=id)
+        repository = Repository.objects.get(pk=id)
 
-        decalage = folder.node_r - folder.node_l + 1
+        decalage = repository.node_r - repository.node_l + 1
 
-        node_r = folder.node_r
-        node_l = folder.node_l
+        node_r = repository.node_r
+        node_l = repository.node_l
 
         Repository.objects.filter(
-            node_l__gte=folder.node_l, node_r__lte=folder.node_r).delete()
+            node_l__gte=repository.node_l,
+            node_r__lte=repository.node_r).delete()
 
         Repository.objects.filter(node_r__gte=node_r).update(
             node_r=F('node_r') - decalage)
@@ -93,6 +90,38 @@ class Mptt:
             node_l=F('node_l') - decalage)
 
         pass
+
+    def getRepository(self, id):
+        repository = Repository.objects.get(pk=id)
+        return repository
+
+    def getRepositories(self):
+        repositories = Repository.objects.all().prefetch_related(
+            'parent').order_by('node_l')
+        return repositories
+
+    def getUserRepositories(self, workspace, lazy=False):
+
+        repositories = []
+
+        try:
+
+            if workspace is not None:
+                if not lazy:
+                    repositories = Repository.objects.filter(
+                        node_l__gte=workspace.node_l,
+                        node_r__lte=workspace.node_r).all(
+                    ).prefetch_related('parent').order_by('node_l')
+
+                else:
+                    repositories = Repository.objects.filter(
+                        Q(parent_id=workspace.id) | Q(id=workspace.id)).all(
+                    ).prefetch_related('parent').order_by('node_l')
+
+        except Repository.DoesNotExist:
+            pass
+
+        return repositories
 
 
 class Storage:
@@ -111,33 +140,20 @@ class Drive(Mptt):
         super().__init__(rootName)
 
     def buildUserTree(self, username, lazy=False):
-        tree = []
-        try:
-            root = self.getUserRoot(username)
-            if root is not None:
-                if not lazy:
-                    folders = Repository.objects.filter(
-                        node_l__gte=root.node_l, node_r__lte=root.node_r).all(
-                    ).prefetch_related('parent').order_by('node_l')
 
-                else:
-                    folders = Repository.objects.filter(
-                        Q(parent_id=root.id) | Q(id=root.id)).all(
-                    ).prefetch_related('parent').order_by('node_l')
+        workspace = self.getworkspace(username)
 
-                tree = self._build(folders, root.id)
+        repositories = self.getUserRepositories(workspace, lazy)
 
-        except Repository.DoesNotExist:
-            pass
+        tree = self._build(repositories, workspace.id)
 
         return tree
 
     def buildTree(self):
         tree = []
         try:
-            root = Repository.objects.get(node_l=1)
-            repositories = Repository.objects.all().prefetch_related(
-                'parent').order_by('node_l')
+            root = self.getRoot()
+            repositories = self.getRepositories()
             tree = self._build(repositories, root.id)
         except:
             pass

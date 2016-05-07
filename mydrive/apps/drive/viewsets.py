@@ -286,7 +286,7 @@ class DriveRepositoryViewSet(viewsets.ViewSet):
         # serializer = TreeSerializer(queryset, many=True)
         # return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-        root = self._drive.getUserRoot(username)
+        root = self._drive.getworkspace(username)
         return Response(RepositorySerializer(root).data,
                         status=status.HTTP_201_CREATED)
 
