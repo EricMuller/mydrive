@@ -125,74 +125,48 @@ class FileViewSet(viewsets.ModelViewSet):
         return queryset
 
 
-class AuthentificationViewSet(viewsets.ViewSet):
+# class AuthentificationViewSet(viewsets.ViewSet):
 
-    """
-    API endpoint that allows Authnetification in the drive .
-    """
-
-    def list(self, request):
-
-        Session.objects.all().delete()
-        # raise ValidationError({'detail': 'not implemented yet'})
-
-        return Response({'detail': 'connected'},
-                        status=status.HTTP_201_CREATED)
-
-    def create(self, request):
-        """
-        API endpoint that allows Authnetification in the drive .
-        """
-        username = request.data['username']
-        password = request.data['password']
-
-        try:
-            # user = User.objects.get(username=username)
-            user = authenticate(username=username, password=password)
-        except user.DoesNotExist:
-            raise ValidationError('detail', 'unknown user')
-
-        if user is not None:
-            if user.is_active is False:
-                # login(request, user)
-                raise ValidationError('detail', 'Disabled account')
-            else:
-                token = Token.objects.get_or_create(user=user)
-                print(token.key)
-        else:
-            raise ValidationError('detail', 'unknown user')
-
-        return Response({'detail': token.__str__})
-
-
-# class FolderDocumentViewSet(DefaultsAuthentificationMixin, viewsets.ViewSet):
-
-#     http_method_names = ['get', 'post', 'head', 'delete']
-#     queryset = Document.objects.all()
-#     serializer_class = DocumentSerializer
+#     """
+#     API endpoint that allows Authnetification in the drive .
+#     """
 
 #     def list(self, request):
 
-#         folderId = request['id']
-#         if folderId is not None:
-#             queryset = queryset.filter(folder_id=folderId)
+#         Session.objects.all().delete()
+#         # raise ValidationError({'detail': 'not implemented yet'})
 
-# return Response(serializer.data)
+#         return Response({'detail': 'connected'},
+#                         status=status.HTTP_201_CREATED)
 
 #     def create(self, request):
-#         pass
+#         """
+#         API endpoint that allows Authnetification in the drive .
+#         """
+#         username = request.data['username']
+#         password = request.data['password']
 
-#     def destroy(self, request, pk=None):
-#         pass
+#         try:
+#             # user = User.objects.get(username=username)
+#             user = authenticate(username=username, password=password)
+#         except user.DoesNotExist:
+#             raise ValidationError('detail', 'unknown user')
 
-#     def retrieve(self, request, pk=None):
-#         pass
+#         if user is not None:
+#             if user.is_active is False:
+#                 # login(request, user)
+#                 raise ValidationError('detail', 'Disabled account')
+#             else:
+#                 token = Token.objects.get_or_create(user=user)
+#                 print(token.key)
+#         else:
+#             raise ValidationError('detail', 'unknown user')
 
-#     def update(self, request, pk=None):
-#         pass
+#         message = {'origin': 'Server', 'user': username, 'code': 'Login'}
 
-#     def partial_update(self, request, pk=None):
-#         pass
+#         WsPublisher().ws_send(message)
+
+#         return Response({'detail': token.__str__})
 
 class RepositoryViewSet(viewsets.ModelViewSet):
 
@@ -387,3 +361,34 @@ class DriveRepositoryAsTreeViewSet(viewsets.ViewSet):
 
         serializer = DriveSerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+
+# class FolderDocumentViewSet(DefaultsAuthentificationMixin, viewsets.ViewSet):
+
+#     http_method_names = ['get', 'post', 'head', 'delete']
+#     queryset = Document.objects.all()
+#     serializer_class = DocumentSerializer
+
+#     def list(self, request):
+
+#         folderId = request['id']
+#         if folderId is not None:
+#             queryset = queryset.filter(folder_id=folderId)
+
+# return Response(serializer.data)
+
+#     def create(self, request):
+#         pass
+
+#     def destroy(self, request, pk=None):
+#         pass
+
+#     def retrieve(self, request, pk=None):
+#         pass
+
+#     def update(self, request, pk=None):
+#         pass
+
+#     def partial_update(self, request, pk=None):
+#         pass

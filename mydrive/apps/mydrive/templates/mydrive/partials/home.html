@@ -7,6 +7,8 @@
     <body>
     	{% verbatim %}
 			<h2><a href="#">Welcome to My Drive {{globals.user.civilite}} {{globals.user.username}} </a></h2>
+
+
 		{% endverbatim %}	
 
 		 
@@ -20,6 +22,18 @@
 
 		 <img src="{% static 'mydrive/images/rabbitmq.png' %}" title="RabbitMQ">
      
+
+     	{% verbatim %}
+     		  <button type="button" class="btn btn-default" ng-click="pong()">websocket ping </button>
+     	
+     	<ul>
+     		<li ng-repeat="m in messages">{{m.origin}} &nbsp {{m.user}}&nbsp a emit &nbsp{{m.code}}&nbsp le &nbsp{{m.date}}</li>
+     	<ul>	  
+
+     	{% endverbatim %}	
+
+
+
      </body>
 
 

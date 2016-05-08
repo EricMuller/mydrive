@@ -3,14 +3,13 @@
     'use strict';
 
 var app = angular.module('my-ged', ['ui.router', 'ngCookies', 'mdr.file', 'ui.tree'
-  ,'ngAnimate', 'ui.bootstrap'
+  ,'ngAnimate', 'ngWebsocket' , 'ui.bootstrap'
   , 'ngMaterial', 'material','angularTreeview'
   , 'my-ged.home', 'my-ged.archives', 'my-ged.documents', 'my-ged.plan', 'my-ged.login', 'my-ged.common'
   , 'restangular', 'my-ged.errInterceptor']);
 
 app.config(['$stateProvider','$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) { 
-        // Système de routage
         $urlRouterProvider.otherwise('/home');
         // $routeProvider.otherwise({
         //     redirectTo: '/home'
@@ -68,7 +67,12 @@ angular.module('my-ged')
 });
 
 */
-
+/*
+app.constant("ngWebsocketConfig", {
+        "url": "http://localhost",
+        "port": "80"
+    })
+*/
 //
 app.filter('searchFor', function(){
 

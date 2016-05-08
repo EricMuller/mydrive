@@ -100,6 +100,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'channels',
     # 'swampdragon',
     'drive',
     'mydrive',
@@ -219,6 +220,13 @@ SWAMP_DRAGON_CONNECTION = (
     'swampdragon.connections.sockjs_connection.DjangoSubscriberConnection',
     '/data')
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "mysite.routing.channel_routing",
+    },
+}
+
 # STATICFILES_DIRS = [
 # os.path.join(BASE_DIR, "static"),
 # ]
@@ -294,3 +302,5 @@ djcelery.setup_loader()
 #BROKER_URL = 'amqp://guest:guest@centos:5672//'
 
 BROKER_URL = 'amqp://mydrive:mydrive@centos:5672/centos'
+
+

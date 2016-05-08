@@ -54,7 +54,7 @@
 		Note: Set the body element's class to "left-sidebar" to position the sidebar on the left.
 		Set it to "right-sidebar" to, you guessed it, position it on the right.
 	-->
-	<body  ng-app="my-ged"  ng-show="loaded" class="left-sidebar" ng-controller="homeCtrl" ng-cloak  > 
+	<body  ng-app="my-ged"  ng-show="loaded" class="left-sidebar" ng-controller="indexCtrl" ng-cloak  > 
 
 		<!-- Wrapper ng-show1="isLoaded">-->
 			<div id="wrapper" 
@@ -122,14 +122,18 @@
 		<script src="{{STATIC_URL}}mydrive/bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
 		<script src="{{STATIC_URL}}mydrive/bower_components/angular-ui-tree/dist/angular-ui-tree.js"></script>
 		<script src="{{STATIC_URL}}mydrive/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+		<script src="{{STATIC_URL}}mydrive/bower_components/ng-websocket/ng-websocket.js"></script>
 
 		<script src="{{STATIC_URL}}mydrive/bower_components/underscore/underscore-min.js"></script>
 		<script src="{{STATIC_URL}}mydrive/bower_components/moment/min/moment.min.js"></script>
+
+
 		<!--<script src="{{STATIC_URL}}mydrive/bower_components/mdr-angular-file/dist/mdr-file.js"></script>-->
 		<script src="{{STATIC_URL}}mydrive/js/mdr-file/mdr-file.js" ></script>
 
 
 		<script src="{{STATIC_URL}}mydrive/js/app/app.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/index.ctrl.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/home/home.mdl.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/home/home.ctrl.js"></script>
 

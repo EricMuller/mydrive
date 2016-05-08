@@ -4,7 +4,7 @@ angular.module('my-ged.documents')
 	function  ($scope, $rootScope, $window, uploaderSvc, documents, alertSvc, driveSvc, $state) {
     
         $scope.documents =documents;
-debugger
+
 		//after upload
         $scope.$on('transferComplete', function(event,data) { 
 		        if (data.status == '200' ) {

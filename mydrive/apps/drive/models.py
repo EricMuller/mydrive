@@ -48,10 +48,6 @@ class UploadFile(DateModel):
     name = models.CharField(max_length=256, default=None)
     docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
-# class Node(DateModel):
-#     class Meta:
-#         abstract = True
-
 
 class TypeRepository(DateModel):
     code = models.CharField(max_length=30)

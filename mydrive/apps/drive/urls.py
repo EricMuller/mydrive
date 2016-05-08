@@ -3,7 +3,7 @@ from django.conf.urls import include
 from drive import viewsets
 from drive import settings
 from rest_framework import routers
-from rest_framework.authtoken import views
+from drive import views
 from django.contrib import admin
 import rest_framework_swagger.urls
 
