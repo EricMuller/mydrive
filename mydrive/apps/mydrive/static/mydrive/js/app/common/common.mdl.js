@@ -10,7 +10,7 @@
 	angular.module('my-ged.common')
   .config(function(RestangularProvider) {
       RestangularProvider.setBaseUrl('/drive/');
-      //RestangularProvider.setMethodOverriders(["put", "delete"]);
+     // RestangularProvider.setMethodOverriders(["put", "delete"]);
       RestangularProvider.setRequestSuffix('/?format=json');
       RestangularProvider.setDefaultHeaders({'Content-Type': 'application/json'});
      // AuthRestangular.setDefaultHeaders({'Authorization': 'Token ' + $rootScope.globals.token });
@@ -30,6 +30,7 @@
        RestangularConfigurer.setBaseUrl('/drive/');
        RestangularConfigurer.setRequestSuffix('/?format=json');
        RestangularConfigurer.setDefaultHeaders({'Content-Type': 'application/json'});
+       // RestangularConfigurer.setMethodOverriders(["put", "delete"]);
        //RestangularConfigurer.setDefaultHeaders({'Authorization': 'Token ' + $rootScope.globals.authtoken });
        //RestangularConfigurer.setDefaultHeaders({'Authorization': 'Token ' + token });
        //$httpProvider.defaults.headers.common['X-CSRFToken'] = $rootScope.globals.csrftoken;
@@ -40,7 +41,6 @@
         return elem;
         })
         */
-        
 
     });
 })

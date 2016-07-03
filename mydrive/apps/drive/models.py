@@ -53,6 +53,13 @@ class TypeRepository(DateModel):
     code = models.CharField(max_length=30)
     libelle = models.CharField(max_length=256)
 
+    def __str__(self):
+        return self.libelle
+
+    class Meta:
+        verbose_name = 'TypeRepository'
+        verbose_name_plural = 'TypeRepositories'
+
 
 class Repository(DateModel):
     name = models.CharField(max_length=30)
@@ -62,16 +69,16 @@ class Repository(DateModel):
     parent = models.ForeignKey("self", null=True, default=None, blank=True)
     type = models.ForeignKey(
         TypeRepository, verbose_name='type', null=True,
-        default=None, blank=True)
+        default=None, blank=True, related_name='type')
 
     def __str__(self):
         return self.libelle
 
     @classmethod
-    def create(cls, node_l, node_r, libelle, parent=None):
+    def create(cls, node_l, node_r, libelle, type=None, parent=None):
         node = cls(
             node_l=node_l, node_r=node_r, libelle=libelle,
-            parent=parent)
+            parent=parent, type=type)
         return node
 
     class Meta:
@@ -96,6 +103,7 @@ class File(DateModel):
             name=name, path=path, contentType=contentType,
             version=version, repository=repository)
         return file
+
 
 # class Foo(SelfPublishModel, models.Model):
 #     serializer_class = 'drive.serializers.FooSerializer'

@@ -78,7 +78,7 @@
 									<!--<li data-show-when-connected ><a ui-sref="upload">Upload</a></li>-->
 									<li data-show-when-connected ><a ng-href="{{getDocumentState()}}">Mon Drive</a></li>
 									<li data-show-when-connected ><a ui-sref="archives">Archives</a></li>
-									<li data-show-when-connected ><a ui-sref="plan">File Plan</a></li>
+									<li data-show-when-connected ><a ui-sref="repositories">Repositories</a></li>
 									<!--<li><a href="#/about">About Me</a></li>
 									<li><a href="#/contact">Contact Me</a></li>-->
 								</ul>
@@ -141,6 +141,7 @@
 		<script src="{{STATIC_URL}}mydrive/js/app/common/interceptors/interceptors_err.mdl.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/common/directives/mydirective.dir.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/common/directives/angular-treeview.dir.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/common/directives/to-number.dir.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/common/alert/alert.svc.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/common/fileupload/fileupload.svc.js"></script>
 		
@@ -163,8 +164,8 @@
 		<script src="{{STATIC_URL}}mydrive/js/app/documents/plan-documents.ctrl.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/documents/upload.ctrl.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/documents/filters/bytestosize.ftr.js"></script>
-		<script src="{{STATIC_URL}}mydrive/js/app/drive/drive.mdl.js"></script>
-		<script src="{{STATIC_URL}}mydrive/js/app/drive/drive.ctrl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/drive/repositories/repositories.mdl.js"></script>
+		<script src="{{STATIC_URL}}mydrive/js/app/drive/repositories/repositories.ctrl.js"></script>
 		<script src="{{STATIC_URL}}mydrive/js/app/drive/drive.svc.js"></script>
 		
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->

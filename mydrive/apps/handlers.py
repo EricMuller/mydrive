@@ -11,6 +11,7 @@ def custom_exception_handler(exc, context):
     if response is not None:
         if response.data is None:
             response.data = []
+        print(response)    
         response.data['status_code'] = response.status_code
 
     return response

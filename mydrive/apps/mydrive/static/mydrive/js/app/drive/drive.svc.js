@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('my-ged.plan')
+        .module('my-ged.drive')
         .service('driveSvc', PlanSvc);
 
     PlanSvc.$inject = ['$rootScope', '$q', 'TokenRestangular'];
@@ -103,8 +103,19 @@
            return TokenRestangular.all("v1").one("root").all("repositories").post(node)  ;      
         }
 
-        function updateChild(parentId,libelle){
-
+        function updateChild(repository){
+        
+          var deferred = $q.defer();
+          TokenRestangular.all("v1").one("root").one("repositories",repository.id).all("update").customPUT(repository).then(
+                (function(repository) {
+                        if(repository){
+                            deferred.resolve(true);
+                        }else{
+                            deferred.resolve(false);
+                        }
+                    })
+                );
+          return deferred.promise;
         }
 
 

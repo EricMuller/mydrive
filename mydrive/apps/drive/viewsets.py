@@ -25,21 +25,28 @@ from drive.paginators import StandardResultsSetPagination
 from drive.paginators import LargeResultsSetPagination
 
 
-from django.contrib.auth import authenticate
-from django.contrib.sessions.models import Session
+# from django.contrib.auth import authenticate
+# from django.contrib.sessions.models import Session
 from rest_framework import status
-from rest_framework.authtoken.models import Token
+# from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
 
 import sys
 from drive import settings
 
-from drive.drive import DriveSerializer
+# from drive.drive import DriveSerializer
 from drive.drive import Drive
+from drive.drive import RepositoryNode
+from drive.drive import RepositoryNodeSerializer
+
 # from drive.views import DefaultsAuthentificationMixin
 
 from drive.models import Repository
 from drive.serializers import RepositorySerializer
+from drive.serializers import CreateRepositorySerializer
+
+from drive.constants import DriveConstants
+import json
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -227,7 +234,7 @@ class DriveViewSet(viewsets.ViewSet):
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         queryset = self._drive.buildUserTree(pk)
-        serializer = DriveSerializer(queryset, many=True)
+        serializer = RepositoryNodeSerializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request, username):
@@ -236,10 +243,11 @@ class DriveViewSet(viewsets.ViewSet):
         """
         root = self._drive.getRoot()
         pk = request.data['username']
-        self._drive.createChild(root.id, pk)
+
+        self._drive.createChild(root.id, pk, DriveConstants.get_default_type())
 
         queryset = self._drive.buildUserTree(pk)
-        serializer = DriveSerializer(queryset, many=True)
+        serializer = RepositoryNodeSerializer(queryset, many=True)
 
         return Response(serializer.data)
 
@@ -248,7 +256,7 @@ class DriveRepositoryViewSet(viewsets.ViewSet):
 
     url = r'(?P<username>[-_\w]+)/repositories'
 
-    http_method_names = ['get', 'post', 'head', 'delete']
+    http_method_names = ['get', 'post', 'head', 'delete', 'put']
 
     _drive = Drive(settings.TREE_ROOT_NAME)
 
@@ -289,11 +297,35 @@ class DriveRepositoryViewSet(viewsets.ViewSet):
         serializer = FileSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)
 
+    @detail_route(methods=['put'])
+    def update(self, request, username, pk):
+        """
+        API Update libelle repository.
+        """
+        print(request.data)
+
+        serializer = RepositorySerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            print('validated_data=' + json.dumps(serializer.validated_data))
+            repository = Repository.objects.get(pk=pk)
+
+            if repository is not None:
+
+                repository.libelle = serializer.data['libelle']
+                data_type = serializer.data['type']
+                repository.type_id = data_type['id']
+
+                repository.save()
+                return Response(RepositorySerializer(repository).data,
+                                status=status.HTTP_201_CREATED)
+        else:
+            raise ValidationError('invalid request data')
+
     def create(self, request, username):
         """
         API Create sub-repo of the repository.
         """
-        serializer = RepositorySerializer(data=request.data)
+        serializer = CreateRepositorySerializer(data=request.data)
         if serializer.is_valid():
 
             parent = Repository.objects.get(pk=request.data['id'])
@@ -303,16 +335,22 @@ class DriveRepositoryViewSet(viewsets.ViewSet):
                     'invalid request data parent is none')
 
             else:
-                folder = self._drive.createChild(
-                    parent.id, serializer.data['libelle'])
 
-            return Response(RepositorySerializer(folder).data,
-                            status=status.HTTP_201_CREATED)
+                folder = self._drive.createChild(
+                    parent.id, serializer.data['libelle'],
+                    DriveConstants.get_default_type())
+
+                node = RepositoryNode(folder)
+
+                return Response(RepositoryNodeSerializer(node).data,
+                                status=status.HTTP_201_CREATED)
+                # return Response(RepositorySerializer(folder).data,
+                #            status=status.HTTP_201_CREATED)
 
         raise ValidationError('invalid request data')
 
     def destroy(self, request, username, pk=None):
-        """
+        """ 
         API delete repository .
         """
         try:
@@ -359,9 +397,8 @@ class DriveRepositoryAsTreeViewSet(viewsets.ViewSet):
 
                 queryset = self._drive.buildUserTree(username)
 
-        serializer = DriveSerializer(queryset, many=True)
+        serializer = RepositoryNodeSerializer(queryset, many=True)
         return Response(serializer.data)
-
 
 
 # class FolderDocumentViewSet(DefaultsAuthentificationMixin, viewsets.ViewSet):

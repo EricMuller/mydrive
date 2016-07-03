@@ -3,6 +3,7 @@ from drive.models import File
 from drive.models import Basket
 from drive.models import UploadFile
 from drive.models import Repository
+from drive.models import TypeRepository
 
 
 class FileAdmin(admin.ModelAdmin):
@@ -34,9 +35,14 @@ class RepositoryAdmin(admin.ModelAdmin):
     search_fields = ['libelle']
     ordering = ('node_l',)
 
-   
+
+class TypeRepositoryAdmin(admin.ModelAdmin):
+
+    list_display = ['id', 'code', 'libelle']
+
 
 admin.site.register(Repository, RepositoryAdmin)
+admin.site.register(TypeRepository, TypeRepositoryAdmin)
 admin.site.register(File, FileAdmin)
 admin.site.register(Basket, BasketAdmin)
 admin.site.register(UploadFile, UploadFileAdmin)

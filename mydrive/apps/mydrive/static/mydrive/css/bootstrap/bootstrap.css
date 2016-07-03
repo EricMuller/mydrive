@@ -63,3 +63,20 @@
     margin-top: 5px !important;
     padding-top: 5px !important;
 }
+
+
+.has-error .form-control {
+    border-color: #c00;
+}
+
+.has-error .form-control {
+    border-color: #c00;
+}
+
+.read-mode .radio-group span{
+    opacity: 0.5;
+}
+
+.read-mode .radio-group span.checked{
+    opacity: 1;
+}

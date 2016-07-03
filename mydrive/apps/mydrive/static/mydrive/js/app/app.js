@@ -5,7 +5,7 @@
 var app = angular.module('my-ged', ['ui.router', 'ngCookies', 'mdr.file', 'ui.tree'
   ,'ngAnimate', 'ngWebsocket' , 'ui.bootstrap'
   , 'ngMaterial', 'material','angularTreeview'
-  , 'my-ged.home', 'my-ged.archives', 'my-ged.documents', 'my-ged.plan', 'my-ged.login', 'my-ged.common'
+  , 'my-ged.home', 'my-ged.archives', 'my-ged.documents', 'my-ged.drive', 'my-ged.login', 'my-ged.common'
   , 'restangular', 'my-ged.errInterceptor']);
 
 app.config(['$stateProvider','$urlRouterProvider',

@@ -42,7 +42,7 @@ batchRouter.register(
 # print(router.urls)
 
 if settings.DEBUG:
-    for u in router.urls:
+    for u in apiRouter.urls:
         print(u)
 
 urlpatterns = [

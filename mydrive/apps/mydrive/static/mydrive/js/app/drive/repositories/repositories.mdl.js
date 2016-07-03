@@ -1,12 +1,12 @@
-angular.module('my-ged.plan', [ 'ui.router' ]).config(
+angular.module('my-ged.drive', [ 'ui.router' ]).config(
 		function($stateProvider) {
 			 $stateProvider
-        		.state('plan', {
-                    url: '/plan',
-            		templateUrl: 'partials/plan.html',
-            		controller: 'planCtrl',
+        		.state('repositories', {
+                    url: '/repositories',
+            		templateUrl: 'partials/drive/repositories.html',
+            		controller: 'repositoryCtrl',
             		resolve: {
-         				   plan : function(driveSvc){
+         				   repositories: function(driveSvc){
                 				return driveSvc.getPlan();
                 			},
                             folders: function(driveSvc){

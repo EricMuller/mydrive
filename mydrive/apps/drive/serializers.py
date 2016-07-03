@@ -5,13 +5,15 @@ from drive.models import Basket
 from drive.models import File
 from drive.models import UploadFile
 from drive.models import Repository
-
+from drive.models import TypeRepository
+from rest_framework import serializers
 
 # from drive.models import Foo
-
-
-from rest_framework import serializers
 # from swampdragon.serializers.model_serializer import ModelSerializer
+
+
+class IdSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -52,12 +54,41 @@ class UploadFileSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('name', 'created_at', 'updated_at')
 
 
-class RepositorySerializer(serializers.HyperlinkedModelSerializer):
+class TypeRepositorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TypeRepository
+        fields = ('id', 'code', 'libelle')
+
+
+class CreateRepositorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Repository
+        fields = ('id', 'libelle')
+
+
+class RepositorySerializer(serializers.ModelSerializer):
+
+    type = IdSerializer()
 
     class Meta:
         model = Repository
         fields = (
-            'id', 'libelle', 'node_l', 'node_r', 'created_at', 'updated_at')
+            'id', 'libelle', 'node_l', 'node_r', 'created_at',
+            'updated_at', 'type')
+
+    def update(self, instance, validated_data):
+
+        instance.libelle = validated_data.pop('libelle')
+        data_type = validated_data.pop('type')
+
+    # def create(self, validated_data):
+    #    type_data = validated_data.pop('type')
+    #    print('create=' + type_data)
+    #    repository = Repository.objects.create(**validated_data)
+    #    # TypeRepository.objects.create(**type_data)
+    #    return repository
 
 # class FooSerializer(ModelSerializer):
 

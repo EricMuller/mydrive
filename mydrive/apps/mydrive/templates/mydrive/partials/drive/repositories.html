@@ -1,4 +1,4 @@
-<h1>Plan</h1>
+<h1>Repositories</h1>
 
 {% verbatim %}
 
@@ -23,7 +23,7 @@
 -->
 
 <script type="text/ng-template" id="nodes_renderer.html">
-  <div ui-tree-handle class="tree-node tree-node-content">
+  <div ui-tree-handle class="tree-node tree-node-content" data-nodrag ng-click="selected(this)">
     <a class="btn btn-success btn-xs"   data-nodrag ng-click="toggle(this)">
     <span ng-show="node.items.length1 != 0"
         class="glyphicon"
@@ -48,35 +48,73 @@
   </div>
 
   <ol ui-tree-nodes="" ng-model="node.items" data-nodrop-enabled ng-class="{hidden: collapsed}">
-    <li ng-repeat="node in node.items" ui-tree-node ng-include="'nodes_renderer.html'">
+    <li ng-repeat="node in node.items" ui-tree-node ng-include="'nodes_renderer.html'" >
     </li>
   </ol>
 
 </script>
 
 <div class="row">
+  
   <div class="col-sm-6">
     <div ui-tree id="tree-root" data-nodrop-enabled>
-      <ol ui-tree-nodes ng-model="plan" data-nodrop-enabled data-clone-enabled="false">
-        <li ng-repeat="node in plan" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+      <ol ui-tree-nodes ng-model="repositories" data-nodrop-enabled data-clone-enabled="false">
+        <li ng-repeat="node in repositories" ui-tree-node ng-include="'nodes_renderer.html'"></li>
       </ol>
     </div>
-      <div class="info">
+    <div class="info">
       {{info}}
     </div>
-    <pre class="code" ng-model="plan" >{{ plan | json }}</pre>
+    <!--<pre class="code" ng-model="repositories" >{{ repositories | json }}</pre>-->
   </div>
-<div class="col-sm-6">
 
-  <div
+  
+    <form name="repositoryForm" class="form-horizontal" ng-show="selectedNode.parent_id">
+    
+          
+        
+           <div class="row uniform flush form-group" ng-class="read-mode"   ng-show="false">
+              <label class="col-sm-2" for="parentId">Id</label>
+              <div class="col-sm-4">{{selectedNode.id}}</div>
+          </div>  
+
+
+          <div class="row uniform flush form-group">
+              <label class="col-sm-2" for="name">Name</label>
+
+              <div class="col-sm-6" ng-class="{'has-error': selectedNode.libelle.$invalid}">
+                  <input type="text" id="name"  ng-model="selectedNode.libelle"/>
+              </div>
+          </div>
+
+          <div class="row uniform flush form-group" ng-show="selectedNode.parent_id">
+                <label class="col-sm-2" for="type">Type</label>
+                <div class="col-sm-6">
+                   <!-- <select class="form-control" id="type" name="type" ng-model="selectedNode.type" 
+                          ng-options="fonction as fonction for type in types track by type"  ></select>-->
+                      <select name="type" id="type" ng-model="selectedNode.type.id" to-number>
+                        <option ng-repeat="option in data.availableTypes" value="{{option.id}}">{{option.name}}</option>
+                      </select>
+                </div>
+          </div>
+
+
+          <button type="submit" class="btn btn-bpi pull-right" ng-click="updateItem()">Update</button>
+
+     </form>
+
+  <!--<div
       data-angular-treeview="true"
       data-tree-id="abc"
       data-tree-model="plan"
       data-node-id="id"
       data-node-label="libelle"
       data-node-children="items" >
-  </div>
-</div>  
+  </div> -->
+
+  
+  
+     
 <!--<div class="col-sm-6">
   <div ui-tree id="tree-root2">
       <ol ui-tree-nodes ng-model="folders" data-clone-enabled="true" data-nodrop-enabled="true">
@@ -88,12 +126,17 @@
     </div>
     <pre class="code">{{ folders | json }}</pre>
   </div>
-  -->
+  
    <div class="col-sm-6">
     
   </div>
+  -->
 
 </div>
+
+
+
+      
 
 
 

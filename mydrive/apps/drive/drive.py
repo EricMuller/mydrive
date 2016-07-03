@@ -6,7 +6,13 @@ from django.core.exceptions import ValidationError
 from rest_framework import serializers
 from drive.models import Repository
 from django.db import transaction
+# from drive.serializers import TypeRepositorySerializer
+from drive.serializers import IdSerializer
 # Arbre intervallaire
+# from collections import namedtuple
+# Constants = namedtuple('Constants', ['DEFAULT_TYPE_CODE'])
+# constants = Constants('DRVF')
+from drive.constants import DriveConstants
 
 
 class Mptt:
@@ -53,7 +59,7 @@ class Mptt:
         return repositories
 
     @transaction.non_atomic_requests
-    def createChild(self, id, libelle):
+    def createChild(self, id, libelle, type):
 
         parent = Repository.objects.get(pk=id)
 
@@ -64,7 +70,7 @@ class Mptt:
             node_l=F('node_l') + 2)
 
         repository = Repository.create(
-            parent.node_r, parent.node_r + 1, libelle, parent)
+            parent.node_r, parent.node_r + 1, libelle, type, parent)
 
         repository.save()
 
@@ -203,6 +209,7 @@ class RepositoryNode():
         self.updated_at = repo.updated_at
         self.items = []
         self.parent_id = repo.parent_id
+        self.type = repo.type
 
 
 class Items(object):
@@ -222,25 +229,26 @@ class ItemField(serializers.Field):
             msg = self.error_messages['invalid']
             raise ValidationError(msg)
 
-    def to_representation(self, value):
-
+    def to_representation(self, nodes):
         # value = json.dumps(value)
         values = []
-        for tree in value:
-            serializer = DriveSerializer(tree)
+        for node in nodes:
+            serializer = RepositoryNodeSerializer(node)
             values.append(serializer.data)
-            pass
 
         return values
 
 
-class DriveSerializer(serializers.Serializer):
+class RepositoryNodeSerializer(serializers.Serializer):
     id = serializers.IntegerField()
     parent_id = serializers.IntegerField()
     libelle = serializers.CharField(max_length=30)
     items = ItemField()
+    type = IdSerializer()
+    # type_id = serializers.PrimaryKeyRelatedField(source='type'
+    #                                , read_only=True)
 
     class Meta:
         model = RepositoryNode
         fields = (
-            'id', 'parent_id', 'libelle', 'items')
+            'id', 'parent_id', 'libelle', 'items', 'type')
